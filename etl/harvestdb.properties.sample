@@ -1,0 +1,11 @@
+#This is a sample properties file for Postgres databases you can edit with your details
+#You can also replace with one for another RDBMS system
+driverClassName=org.postgresql.Driver
+jdbcUri=dbc:postgresql://your_database_server_here/your_harvest_schema_here
+user=username
+schema=your_harvest_schema_here
+password=your_harvest_user_password_here
+#If your server requires SSL, you need these for it to work, otherwise, delete
+ssl=true
+sslfactory=org.postgresql.ssl.NonValidatingFactory
+
