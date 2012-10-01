@@ -1,0 +1,17 @@
+include requirements.pip
+include wsgi.py
+include bin/manage.py
+include Makefile
+
+graft _site
+graft server
+
+global-exclude .DS_Store
+
+exclude static/scripts/javascript/app.build.js
+exclude static/scripts/javascript/min/build.txt
+exclude openmrs/conf/local_settings.py
+
+prune _site/static
+prune static/scripts/coffeescript
+prune static/stylesheets/scss
