@@ -1,2 +1,4 @@
 *.swp
 etl/harvestdb.properties
+etl/harvestdb_postgres.properties
+etl/harvestdb_sqlite.properties
