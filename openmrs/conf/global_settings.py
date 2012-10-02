@@ -14,6 +14,7 @@ PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..'
 # https://docs.djangoproject.com/en/1.3/intro/tutorial01/#creating-models
 INSTALLED_APPS = (
     'openmrs.apps.core',
+    'openmrs.apps.emr',
 
     'avocado',
     'cilantro',
@@ -25,6 +26,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.humanize',
     'django.contrib.markup',
+    'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
@@ -46,21 +48,6 @@ INTERNAL_IPS = ('127.0.0.1', '::1')
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
-
-#
-# DATABASES
-# Each database can be specified here, but passwords should be in a separate
-# file that is not versioned. Use ``local_settings.py``.
-#
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_PATH, 'app.db')
-    }
-}
-
 
 #
 # LOCALITY
@@ -182,13 +169,12 @@ ROOT_URLCONF = 'openmrs.conf.urls'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     # 'siteauth.middleware.SiteAuthenticationMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 
@@ -198,7 +184,7 @@ MIDDLEWARE_CLASSES = (
 
 SUPPORT_EMAIL = 'support@example.com'
 DEFAULT_FROM_EMAIL = 'support@example.com'
-EMAIL_SUBJECT_PREFIX = '[App] '
+EMAIL_SUBJECT_PREFIX = '[Harvest+OpenMRS] '
 
 
 #
@@ -254,11 +240,11 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 # SESSIONS AND COOKIES
 #
 
-CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_COOKIE_NAME = 'openmrs_csrftoken'
 
 # SESSION_COOKIE_AGE = 60 * 20
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_NAME = 'openmrs_sessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = False
 
@@ -284,3 +270,10 @@ IGNORABLE_404_PATHS = (
 
 # The primary key of the ``Site`` object for the Sites Framework
 SITE_ID = 1
+
+
+MODELTREES = {
+    'default': {
+        'model': 'emr.patient',
+    }
+}
