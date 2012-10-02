@@ -20,44 +20,55 @@ import edu.chop.cbmi.dataExpress.dataWriters.sql._
 
 //Set up the connections to the OpenMRS source schema and the Harvest demo db
 
-//register store SqlDb("openmrsdb.properties") as "openmrs"
-//register store SqlDb("harvestdb.properties") as "harvest"
-val harvest = SqlBackendFactory("harvestdb.properties")
-val openmrs = SqlBackendFactory("openmrsdb.properties")
+val harvest:SqlBackend = SqlBackendFactory("harvestdb.properties")
+val openmrs:SqlBackend = SqlBackendFactory("openmrsdb.properties")
 
-
+harvest.connect
+openmrs.connect
 
 
 /*
+
     Copy the person table
 
 */
-
 def copyPerson = {
-    val patients = """SELECT person_id as 'id',
+    val patients = """SELECT person_id as "id",
                           gender,
 	                      birthdate,
-                          birthdate_estimated
+                          case birthdate_estimated
+                              when 0 then 'f'
+                              when 1 then 't'
+                              else null
+                          end as birthdate_estimated
                      FROM person"""
     
-  
-    val source = DataTable(openmrs,patients )
-    val writer = SqlTableWriter(harvest, schemaName(harvest))
-     
-    writer.insert_rows("person", source)
+    val source = DataTable(openmrs, patients)
+    val writer = SqlTableWriter(harvest)
+    //Need to cast the last column to a boolean data type, this should be way easier than it is
+    source.foreach {r:DataRow[Any] =>
+        val row = DataRow("id" -> r.id.as[Int].getOrElse(null),
+                          "gender" -> r.gender.as[String].getOrElse(null),
+                          "birthdate" -> r.birthdate.as[java.sql.Date].getOrElse(null),
+                          "birthdate_estimated" -> {r.birthdate_estimated.as[String].get match {
+                                      case "t" => true
+                                      case "f" => false
+                                      case _ => false
+                           }})
+        writer.insert_row("patient", row)
+
+    }
     harvest commit
 
 }
 
 /*
+
     Copy the encounters, denormalizing a bit for convenience
+
 */
-
-
-
-
 def copyEncounter = {
-    val encounters = """SELECT e.encounter_id, 
+    val encounters = """SELECT e.encounter_id as id,
                                e.patient_id, 
                         	   e.encounter_datetime,
                                encounter_type.description
@@ -65,7 +76,7 @@ def copyEncounter = {
                LEFT OUTER JOIN (encounter_type) ON (e.encounter_type = encounter_type.encounter_type_id)"""    
     
     val source = DataTable(openmrs,encounters)
-    val writer = SqlTableWriter(harvest, schemaName(harvest))
+    val writer = SqlTableWriter(harvest)
      
     writer.insert_rows("encounter", source)
     harvest commit
@@ -73,6 +84,7 @@ def copyEncounter = {
 
 
 /*
+
     Copy cbc labs, pivoting to make them relational
 
 */
@@ -96,12 +108,36 @@ def copyCbc = {
 					                                      '1017',
 						                                  '1018')
                                    AND (cname.concept_name_type = 'SHORT' OR 
-                                         (cname.name = 'PLATELETS' ANDl cname.concept_name_type ='FULLY_SPECIFIED'))
+                                         (cname.name = 'PLATELETS' AND cname.concept_name_type ='FULLY_SPECIFIED'))
                                    AND cname.voided = 0
                               ORDER BY encounter_id"""
+    val writer = SqlTableWriter(harvest)
 
+    //Need to pivot the data to fit into the new Harvest schema, approach below leads to last row
+    //getting kicked back which needs to be inserted outside the fold left
+    val lastRow = DataTable(openmrs,cbcvalues).foldLeft(Map[String,Any]()){(r,c) =>
+                    if (r.isEmpty) {
+                          Map[String,Any]() + ("encounter_id" -> c.encounter_id.as[Int].get,
+                                                           c.name.as[String].get -> c.value_numeric.as[Double].get)
+                    }
+                    else if (c.encounter_id.as[Int].get == r.get("encounter_id").get) {
+                         r + (c.name.as[String].get -> c.value_numeric.as[Double].get)
+                    }
+                    else   {
+                        //println(r) //commit goes here eventually
+                        val names = r.toSeq.map{(_._1.toLowerCase)}
+                        val values = r.toSeq.map{(_._2)}
+                        val dr = DataRow(names)(values.map{Option(_)})
+                        writer.insert_row("cbc_result", dr)
+                        Map[String,Any]("encounter_id" -> c.encounter_id.as[Int].get)
+                    }
+    }
 
-
+    val names = lastRow.toSeq.map{(_._1.toLowerCase)}
+    val values = lastRow.toSeq.map{(_._2)}
+    val dr = DataRow(names)(values.map{Option(_)})
+    writer.insert_row("cbc_result", dr)
+    harvest commit
 }
 
 
@@ -110,7 +146,7 @@ def copyCbc = {
 
 copyPerson
 copyEncounter
-
+copyCbc
 
 /* Utility functions */
 
