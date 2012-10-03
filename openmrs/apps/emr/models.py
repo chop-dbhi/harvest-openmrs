@@ -49,4 +49,19 @@ class VitalSigns(models.Model):
 
     class Meta(object):
         db_table = u'vital_signs'
-        verbose_name_plural = 'vital signs'
+        verbose_name_plural = u'vital signs'
+
+
+class Chem7(models.Model):
+    encounter = models.ForeignKey(Encounter)
+    cr = models.FloatField('creatinine', null=True)
+    bun = models.FloatField('blood urea nitrogen', null=True)
+    glu = models.FloatField('glucose', null=True)
+    na = models.FloatField('sodium', null=True)
+    k = models.FloatField('potassium', null=True)
+    cl = models.FloatField('chlorine', null=True)
+    co2 = models.FloatField('carbon dioxide', null=True)
+
+    class Meta(object):
+        db_table = u'chem7'
+        verbose_name_plural = u'chem7'
