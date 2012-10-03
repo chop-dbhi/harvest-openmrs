@@ -107,24 +107,25 @@ def copyCbc = {
 def copyVitalSigns = {
     val conceptNames = List("SBP", "DBP","HR", "TEMP (C)", "WT", "HT", "RR", "HC").map{Option(_)}
     val vitalSigns = numericConceptQuery(conceptNames)
-
-
-
+    val columnOverride = Map("TEMP (C)" -> "temp")
+    pivotNumericObservation(DataTable(openmrs,vitalSigns,conceptNames), harvest, "vital_signs", columnOverride)
+    harvest commit
 }
 
 /* Here is where we actually call each component */
 
-//copyPerson
-//copyEncounter
+copyPerson
+copyEncounter
 copyCbc
-
+copyVitalSigns
 
 
 
 
 /* Utility functions */
 
-def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String) = {
+def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String,
+    columnOverride:Map[String,String] = Map.empty[String,String]) = {
    val writer = SqlTableWriter(target)
 
    val lastRow = dataTable.foldLeft(Map[String,Any]()){ (r,c) =>
@@ -134,10 +135,10 @@ def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, table
 
                     if (r.isEmpty) {
                           Map[String,Any]() + ("encounter_id" -> currentEncounter,
-                                               currentConceptName -> currentConceptValue)
+                                               columnOverride.getOrElse(currentConceptName, currentConceptName) -> currentConceptValue)
                     }
                     else if (currentEncounter == r.get("encounter_id").get) {
-                         r + (currentConceptName -> currentConceptValue)
+                         r + (columnOverride.getOrElse(currentConceptName, currentConceptName) -> currentConceptValue)
                     }
                     else   {
                         val names = r.toSeq.map{(_._1.toLowerCase)}
