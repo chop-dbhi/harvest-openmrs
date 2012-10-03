@@ -19,8 +19,10 @@ class Encounter(models.Model):
         db_table = u'encounter'
 
 
-class CBCResult(models.Model):
+class LabResult(models.Model):
     encounter = models.ForeignKey(Encounter)
+
+    # CBC panel
     hgb = models.FloatField('hemoglobin (HGB)', null=True)
     wbc = models.FloatField('white blood cells (WBC)', null=True)
     rbc = models.FloatField('red blood cells (RBC)', null=True)
@@ -31,29 +33,7 @@ class CBCResult(models.Model):
     mchc = models.FloatField('mean cell hemoglobin concentration (MCHC)', null=True)
     mch = models.FloatField('mean corpuscular hemoglobin (MCH)', null=True)
 
-    class Meta(object):
-        db_table = u'cbc_result'
-        verbose_name = 'CBC result'
-
-
-class VitalSigns(models.Model):
-    encounter = models.ForeignKey(Encounter)
-    sbp = models.FloatField('systolic blood pressure', null=True)
-    dbp = models.FloatField('diastolic blood pressure', null=True)
-    hr = models.FloatField('heart rate', null=True)
-    temp = models.FloatField('temperature (C)', null=True)
-    wt = models.FloatField('weight (kg)', null=True)
-    ht = models.FloatField('height (cm)', null=True)
-    rr = models.FloatField('respiratory rate (bpm)', null=True)
-    hc = models.FloatField('head circumference (cm)', null=True)
-
-    class Meta(object):
-        db_table = u'vital_signs'
-        verbose_name_plural = u'vital signs'
-
-
-class Chem7(models.Model):
-    encounter = models.ForeignKey(Encounter)
+    # Chem7
     cr = models.FloatField('creatinine', null=True)
     bun = models.FloatField('blood urea nitrogen', null=True)
     glu = models.FloatField('glucose', null=True)
@@ -62,6 +42,11 @@ class Chem7(models.Model):
     cl = models.FloatField('chlorine', null=True)
     co2 = models.FloatField('carbon dioxide', null=True)
 
+    cd4 = models.FloatField('CD4', null=True)
+    cd4_percent = models.FloatField('CD4 %', null=True)
+    cd8 = models.FloatField('CD8', null=True)
+    sgpt = models.FloatField('SGPT', null=True)
+    alc = models.FloatField('ALC', null=True)
+
     class Meta(object):
-        db_table = u'chem7'
-        verbose_name_plural = u'chem7'
+        db_table = u'lab_result'
