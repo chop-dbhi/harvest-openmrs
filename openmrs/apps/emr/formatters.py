@@ -15,16 +15,23 @@ class AgeFormatter(HTMLFormatter):
 
         else:
             today = date.today()
-            age = str(((today - dob).total_seconds())/60/60/24/365)
-            age = round(float(age),1)
+            age = ((today - dob).total_seconds())/60/60/24/365.242
+            age = round(age, 1)
             
             time = "years"
             if age < 1.0:
-                age = str(((today - dob).total_seconds())/60/60/24/30)
-                age = round(float(age),1)
+                age = ((today - dob).total_seconds())/60/60/24/30.4368
+                age = round(age, 1)
                 time = "months"
-                if age == 1.0:
+                if age < 1.0:
+                    age =((today - dob).total_seconds())/60/60/24
+                    age = round(age, 1)
+                    time = "days"
+                    if age == 1.0:
+                        time = "day"
+                elif age == 1.0:
                     time = "month"
+
             elif age == 1.0:
                 time ="year"
 

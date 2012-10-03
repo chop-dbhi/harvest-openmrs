@@ -5,7 +5,7 @@ except ImportError:
 from datetime import date, timedelta
 from django.test import TestCase
 from django.core import management
-from avocado.models import DataField, DataConcept, DataConceptField
+from avocado.models import DataField, DataConcept, DataConceptField 
 from avocado.formatters import registry
 
 class FormatTest(TestCase):
@@ -21,9 +21,6 @@ class FormatTest(TestCase):
 
         DataConceptField(concept=concept, field=birthdate_field, order=1).save()
         DataConceptField(concept=concept, field=estimate_field, order=2).save()
-
-        #self.values = [({'birthdate': date(1992, 10, 3), 'birthdate_estimated':False})]
-        self.values = [date(1992, 10, 3), False]
 
         formatter = registry.get('Age')
         self.f = formatter(concept)
@@ -166,5 +163,37 @@ class FormatTest(TestCase):
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
             ('Birthdate', '1.5 months old'),
+            ]), fvalues)
+
+    def test_one_day(self):
+        dob = date.today() - timedelta(days=1)
+        self.values = [dob, False]
+        fvalues = self.f(self.values, preferred_formats=['html'])
+        self.assertEqual(OrderedDict([
+            ('Birthdate', '1.0 day old'),
+            ]), fvalues)
+    
+    def test_one_day_est(self):
+        dob = date.today() - timedelta(days=1)
+        self.values = [dob, True]
+        fvalues = self.f(self.values, preferred_formats=['html'])
+        self.assertEqual(OrderedDict([
+            ('Birthdate', '1.0 day old <em>(estimated)</em>'),
+            ]), fvalues)
+
+    def test_24_days(self):
+        dob = date.today() - timedelta(days=24)
+        self.values = [dob, False]
+        fvalues = self.f(self.values, preferred_formats=['html'])
+        self.assertEqual(OrderedDict([
+            ('Birthdate', '24.0 days old'),
+            ]), fvalues)
+   
+    def test_24_daysi_est(self):
+        dob = date.today() - timedelta(days=24)
+        self.values = [dob, True]
+        fvalues = self.f(self.values, preferred_formats=['html'])
+        self.assertEqual(OrderedDict([
+            ('Birthdate', '24.0 days old <em>(estimated)</em>'),
             ]), fvalues)
 
