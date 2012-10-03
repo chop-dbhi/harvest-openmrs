@@ -16,6 +16,7 @@ MANIFEST
 etl/harvestdb.properties
 etl/harvestdb_postgres.properties
 etl/harvestdb_sqlite.properties
+etl/harvestdb.sqlite
 
 # Sass/Coffee
 .watch-pid
