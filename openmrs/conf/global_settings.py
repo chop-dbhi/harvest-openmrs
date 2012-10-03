@@ -17,6 +17,7 @@ INSTALLED_APPS = (
     'openmrs.apps.emr',
 
     'avocado',
+    'serrano',
     'cilantro',
     'south',
 
