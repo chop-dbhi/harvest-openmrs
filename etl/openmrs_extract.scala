@@ -2,6 +2,8 @@
     This script uses the DataExpress ETL scripting environment to transform data from the 
     OpenMRS demo data set into the schema for the Harvest demo project.
 
+    This script requires DataExpress 0.9.0.1 to work properly
+
     Version 1.0
 
 
@@ -89,8 +91,72 @@ def copyEncounter = {
 
 */
 def copyCbc = {
+    val conceptNames = List("HGB", "WBC", "RBC", "PLATELETS", "MCV", "HCT", "RDW", "MCHC", "MCH").map{Option(_)}
 
-    val cbcvalues = """SELECT DISTINCT obs.person_id,
+    val cbcvalues = numericConceptQuery(conceptNames)
+    println(cbcvalues)
+
+    pivotNumericObservation(DataTable(openmrs,cbcvalues,conceptNames), harvest, "cbc_result")
+    harvest commit
+}
+
+/*
+    Vital Signs
+*/
+
+def copyVitalSigns = {
+    val conceptNames = List("SBP", "DBP","HR", "TEMP (C)", "WT", "HT", "RR", "HC").map{Option(_)}
+    val vitalSigns = numericConceptQuery(conceptNames)
+
+
+
+}
+
+/* Here is where we actually call each component */
+
+//copyPerson
+//copyEncounter
+copyCbc
+
+
+
+
+
+/* Utility functions */
+
+def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String) = {
+   val writer = SqlTableWriter(target)
+
+   val lastRow = dataTable.foldLeft(Map[String,Any]()){ (r,c) =>
+                    val currentEncounter = c.encounter_id.as[Int].get
+                    val currentConceptName = c.name.as[String].get
+                    val currentConceptValue =  c.value_numeric.as[Double].get
+
+                    if (r.isEmpty) {
+                          Map[String,Any]() + ("encounter_id" -> currentEncounter,
+                                               currentConceptName -> currentConceptValue)
+                    }
+                    else if (currentEncounter == r.get("encounter_id").get) {
+                         r + (currentConceptName -> currentConceptValue)
+                    }
+                    else   {
+                        val names = r.toSeq.map{(_._1.toLowerCase)}
+                        val values = r.toSeq.map{(_._2)}
+                        val dr = DataRow(names)(values.map{Option(_)})
+                        writer.insert_row(tableName, dr)
+                        Map[String,Any]("encounter_id" -> currentEncounter)
+                    }
+    }
+
+    val names = lastRow.toSeq.map{(_._1.toLowerCase)}
+    val values = lastRow.toSeq.map{(_._2)}
+    val dr = DataRow(names)(values.map{Option(_)})
+    writer.insert_row(tableName, dr)
+}
+
+
+def numericConceptQuery(conceptNames:List[Option[String]]) = {
+    val query = """SELECT DISTINCT obs.person_id,
 	                                   obs.encounter_id,
                                        obs.concept_id,
                                        cname.name,
@@ -98,57 +164,12 @@ def copyCbc = {
                                 FROM   obs
                        LEFT OUTER JOIN (concept_name cname) on (obs.concept_id = cname.concept_id)
 		                          JOIN (concept_numeric cnum) on (obs.concept_id = cnum.concept_id)
-                                 WHERE obs.concept_id IN ('21',
-                                                          '678',
-					                                   	  '679',
-						                                  '729',
-						                                  '851',
-						                                  '1015',
-						                                  '1016',
-					                                      '1017',
-						                                  '1018')
-                                   AND (cname.concept_name_type = 'SHORT' OR 
-                                         (cname.name = 'PLATELETS' AND cname.concept_name_type ='FULLY_SPECIFIED'))
+                                 WHERE cname.name IN (%s)
                                    AND cname.voided = 0
                               ORDER BY encounter_id"""
-    val writer = SqlTableWriter(harvest)
 
-    //Need to pivot the data to fit into the new Harvest schema, approach below leads to last row
-    //getting kicked back which needs to be inserted outside the fold left
-    val lastRow = DataTable(openmrs,cbcvalues).foldLeft(Map[String,Any]()){(r,c) =>
-                    if (r.isEmpty) {
-                          Map[String,Any]() + ("encounter_id" -> c.encounter_id.as[Int].get,
-                                                           c.name.as[String].get -> c.value_numeric.as[Double].get)
-                    }
-                    else if (c.encounter_id.as[Int].get == r.get("encounter_id").get) {
-                         r + (c.name.as[String].get -> c.value_numeric.as[Double].get)
-                    }
-                    else   {
-                        //println(r) //commit goes here eventually
-                        val names = r.toSeq.map{(_._1.toLowerCase)}
-                        val values = r.toSeq.map{(_._2)}
-                        val dr = DataRow(names)(values.map{Option(_)})
-                        writer.insert_row("cbc_result", dr)
-                        Map[String,Any]("encounter_id" -> c.encounter_id.as[Int].get)
-                    }
-    }
-
-    val names = lastRow.toSeq.map{(_._1.toLowerCase)}
-    val values = lastRow.toSeq.map{(_._2)}
-    val dr = DataRow(names)(values.map{Option(_)})
-    writer.insert_row("cbc_result", dr)
-    harvest commit
+   query.format(List.fill(conceptNames.size)("?").mkString(","))
 }
-
-
-
-/* Here is where we actually call each component */
-
-copyPerson
-copyEncounter
-copyCbc
-
-/* Utility functions */
 
 def schemaName(backend: SqlBackend) = {
 
