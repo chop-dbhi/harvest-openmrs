@@ -108,15 +108,15 @@ def copyLabs = {
     val columnOverride = Map("TEMP (C)" -> "temp", "CD4 PERCENT" -> "cd4_percent")
 
     val allLabs = numericConceptQuery(conceptNames)
-    pivotNumericObservation(DataTable(openmrs, allLabs, conceptNames), harvest, "lab_result")
+    pivotNumericObservation(DataTable(openmrs, allLabs, conceptNames), harvest, "lab_result", columnOverride)
 
     harvest commit
 }
 /* Here is where we actually call each component */
 
-//copyPerson
-//copyEncounter
-//copyVitalSigns
+copyPerson
+copyEncounter
+copyVitalSigns
 copyLabs
 
 
