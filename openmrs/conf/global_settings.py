@@ -133,7 +133,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'openmrs.apps.core.context_processors.static',
-    'cilantro.context_processors.static',
+    'cilantro.context_processors.cilantro',
 )
 
 
