@@ -1,18 +1,38 @@
 from avocado.formatters import registry
 from serrano.formatters import HTMLFormatter
+from datetime import date
 
 
-class GenderFormatter(HTMLFormatter):
+class AgeFormatter(HTMLFormatter):
     def to_html(self, values, **context):
+        
         dob = values['birthdate']
         est = values['birthdate_estimated']
+        
 
-        output = str(dob)
-        if est:
-            output = '{} <em>(estimated)</em>'.format(output)
-        return output
+        if not dob:
+            return "Age not available"
+
+        else:
+            today = date.today()
+            age = str(((today - dob).total_seconds())/60/60/24/365)
+            age = round(float(age),1)
+            
+            time = "years"
+            if age < 1.0:
+                age = str(((today - dob).total_seconds())/60/60/24/30)
+                age = round(float(age),1)
+                time = "months"
+                if age == 1.0:
+                    time = "month"
+            elif age == 1.0:
+                time ="year"
+
+            if est:
+                return "{} {} old <em>(estimated)</em>".format(age, time)
+            else: 
+                return "{} {} old".format(age,time)
 
     to_html.process_multiple = True
 
-
-registry.register(GenderFormatter, 'Gender')
+registry.register(AgeFormatter, 'Age')
