@@ -30,9 +30,7 @@ openmrs.connect
 
 
 /*
-
-    Copy the person table
-
+    Person table
 */
 def copyPerson = {
     val patients = """SELECT person_id as "id",
@@ -65,9 +63,7 @@ def copyPerson = {
 }
 
 /*
-
-    Copy the encounters, denormalizing a bit for convenience
-
+    Encounters, denormalizing a bit for convenience
 */
 def copyEncounter = {
     val encounters = """SELECT e.encounter_id as id,
@@ -86,45 +82,48 @@ def copyEncounter = {
 
 
 /*
-
-    Copy cbc labs, pivoting to make them relational
-
-*/
-def copyCbc = {
-    val conceptNames = List("HGB", "WBC", "RBC", "PLATELETS", "MCV", "HCT", "RDW", "MCHC", "MCH").map{Option(_)}
-
-    val cbcvalues = numericConceptQuery(conceptNames)
-    println(cbcvalues)
-
-    pivotNumericObservation(DataTable(openmrs,cbcvalues,conceptNames), harvest, "cbc_result")
-    harvest commit
-}
-
-/*
     Vital Signs
 */
 
 def copyVitalSigns = {
     val conceptNames = List("SBP", "DBP","HR", "TEMP (C)", "WT", "HT", "RR", "HC").map{Option(_)}
     val vitalSigns = numericConceptQuery(conceptNames)
-
-
-
+    val columnOverride = Map("TEMP (C)" -> "temp")
+    pivotNumericObservation(DataTable(openmrs, vitalSigns, conceptNames), harvest, "vital_signs", columnOverride)
+    harvest commit
 }
 
+/*
+    Labs from cbc, chem7, and other miscellaneous tests
+*/
+
+def copyLabs = {
+    val cbc = List("HGB", "WBC", "RBC", "PLATELETS", "MCV", "HCT", "RDW", "MCHC", "MCH")
+    val chem7 = List("CR", "BUN", "GLU", "NA", "K", "CL", "CO2")
+    val other = List("CD4", "CD4 PERCENT", "CD8", "SGPT", "ALC")
+
+    val conceptNames = (cbc ::: chem7 ::: other).map{Option(_)}
+
+    //Needed since the method we're using assumes the concept names will be the column names by default
+    val columnOverride = Map("TEMP (C)" -> "temp", "CD4 PERCENT" -> "cd4_percent")
+
+    val allLabs = numericConceptQuery(conceptNames)
+    pivotNumericObservation(DataTable(openmrs, allLabs, conceptNames), harvest, "lab_result", columnOverride)
+
+    harvest commit
+}
 /* Here is where we actually call each component */
 
-//copyPerson
-//copyEncounter
-copyCbc
-
-
-
+copyPerson
+copyEncounter
+copyVitalSigns
+copyLabs
 
 
 /* Utility functions */
 
-def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String) = {
+def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String,
+    columnOverride:Map[String,String] = Map.empty[String,String]) = {
    val writer = SqlTableWriter(target)
 
    val lastRow = dataTable.foldLeft(Map[String,Any]()){ (r,c) =>
@@ -134,10 +133,10 @@ def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, table
 
                     if (r.isEmpty) {
                           Map[String,Any]() + ("encounter_id" -> currentEncounter,
-                                               currentConceptName -> currentConceptValue)
+                                               columnOverride.getOrElse(currentConceptName, currentConceptName) -> currentConceptValue)
                     }
                     else if (currentEncounter == r.get("encounter_id").get) {
-                         r + (currentConceptName -> currentConceptValue)
+                         r + (columnOverride.getOrElse(currentConceptName, currentConceptName) -> currentConceptValue)
                     }
                     else   {
                         val names = r.toSeq.map{(_._1.toLowerCase)}

@@ -19,8 +19,10 @@ class Encounter(models.Model):
         db_table = u'encounter'
 
 
-class CBCResult(models.Model):
+class LabResult(models.Model):
     encounter = models.ForeignKey(Encounter)
+
+    # CBC panel
     hgb = models.FloatField('hemoglobin (HGB)', null=True)
     wbc = models.FloatField('white blood cells (WBC)', null=True)
     rbc = models.FloatField('red blood cells (RBC)', null=True)
@@ -31,6 +33,20 @@ class CBCResult(models.Model):
     mchc = models.FloatField('mean cell hemoglobin concentration (MCHC)', null=True)
     mch = models.FloatField('mean corpuscular hemoglobin (MCH)', null=True)
 
+    # Chem7
+    cr = models.FloatField('creatinine', null=True)
+    bun = models.FloatField('blood urea nitrogen', null=True)
+    glu = models.FloatField('glucose', null=True)
+    na = models.FloatField('sodium', null=True)
+    k = models.FloatField('potassium', null=True)
+    cl = models.FloatField('chlorine', null=True)
+    co2 = models.FloatField('carbon dioxide', null=True)
+
+    cd4 = models.FloatField('CD4', null=True)
+    cd4_percent = models.FloatField('CD4 %', null=True)
+    cd8 = models.FloatField('CD8', null=True)
+    sgpt = models.FloatField('SGPT', null=True)
+    alc = models.FloatField('ALC', null=True)
+
     class Meta(object):
-        db_table = u'cbc_result'
-        verbose_name = 'CBC result'
+        db_table = u'lab_result'
