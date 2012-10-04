@@ -56,7 +56,7 @@ class SystemsReview(models.Model):
     encounter = models.ForeignKey(Encounter)
     heent = models.CharField('head, eye, ear, neck, throat (HEENT) exam', max_length=30, null=True)
     chest = models.CharField('chest exam', max_length=30, null=True)
-    abdominal = models.CharField('abdominal', max_length=30, null=True)
+    abdominal = models.CharField('abdominal exam', max_length=30, null=True)
     cardiac = models.CharField('cardiac exam', max_length=30, null=True)
     musculoskeletal = models.CharField('musculoskeletal exam', max_length=30, null=True)
     neurologic = models.CharField('neurologic exam', max_length=30, null=True)
