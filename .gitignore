@@ -25,14 +25,17 @@ etl/harvestdb.sqlite
 # Ignore local settings file intended for environment-specific settings
 local_settings.py
 
+# Ignore compiled coffeescripts
+openmrs/static/scripts/javascript/src/core/mixins.js
+openmrs/static/scripts/javascript/src/environ.js
+openmrs/static/scripts/javascript/src/main.js
+
 # Ignore optimized javascripts
 openmrs/static/scripts/javascript/min
 
 # All Sass files will be compiled into this directory
 openmrs/static/stylesheets/css/*.css
 !openmrs/static/stylesheets/img
-!openmrs/static/stylesheets/css/bootstrap*
-!openmrs/static/stylesheets/css/prettify.css
 
 # Collected static files via Django's staticfiles app
 _site/static
