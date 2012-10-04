@@ -1,17 +1,23 @@
 from distribute_setup import use_setuptools
 use_setuptools()
+from setuptools import setup, find_packages
 
-PACKAGE = ''
-VERSION = __import__(MAIN_PACKAGE).get_version()
+PACKAGE = 'openmrs'
+VERSION = __import__(PACKAGE).get_version()
 
 kwargs = {
     'name': PACKAGE,
     'version': VERSION,
 
-    'packages': find_packages(exclude=['tests', '*.tests', 'tests.*', '*.tests.*'])
+    'packages': find_packages(exclude=['tests', '*.tests',
+        'tests.*', '*.tests.*']),
+
+    'install_requires': [
+        'south',
+    ],
 
     # Tests
-    'test_suit': 'test_suite',
+    'test_suite': 'test_suite',
     'tests_require': [
         'coverage',
     ],
@@ -24,6 +30,5 @@ kwargs = {
     'url': '',
     'classifiers': [],
 }
-
 
 setup(**kwargs)

@@ -13,15 +13,13 @@ PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..'
 # Read more about projects vs. apps here:
 # https://docs.djangoproject.com/en/1.3/intro/tutorial01/#creating-models
 INSTALLED_APPS = (
-    'openmrs.apps.core',
-    'openmrs.apps.emr',
+    'openmrs',
 
     'avocado',
     'serrano',
     'cilantro',
     'south',
 
-    # built-in Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,7 +71,7 @@ USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
-USE_L10N = True
+USE_L10N = False
 
 
 #
@@ -108,15 +106,11 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
 
-    # This project's static files directory
-    os.path.join(PROJECT_PATH, 'static'),
-)
-
+# Put strings here, like "/home/html/static" or "C:/www/django/static".
+# Always use forward slashes, even on Windows.
+# Don't forget to use absolute paths, not relative paths.
+STATICFILES_DIRS = ()
 
 #
 # TEMPLATES
@@ -124,17 +118,14 @@ STATICFILES_DIRS = (
 
 # Project level templates and template directories that override
 # third-party app templates.
-TEMPLATE_DIRS = (
-    # This project's templates directory
-    os.path.join(PROJECT_PATH, 'openmrs/templates'),
-)
+TEMPLATE_DIRS = ()
 
 # Context processors are simply functions that return a dict which augments the
 # template context.
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'openmrs.apps.core.context_processors.static',
     'cilantro.context_processors.cilantro',
+    'openmrs.context_processors.static',
 )
 
 
@@ -173,9 +164,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     # 'siteauth.middleware.SiteAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 
@@ -186,6 +177,7 @@ MIDDLEWARE_CLASSES = (
 SUPPORT_EMAIL = 'support@example.com'
 DEFAULT_FROM_EMAIL = 'support@example.com'
 EMAIL_SUBJECT_PREFIX = '[Harvest+OpenMRS] '
+SEND_BROKEN_LINK_EMAILS = False
 
 
 #
@@ -225,7 +217,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'unique',
-        'KEY_PREFIX': '',
+        'KEY_PREFIX': 'openmrs',
         'VERSION': 1,
     }
 }
@@ -234,7 +226,7 @@ CACHE_MIDDLEWARE_SECONDS = 0
 
 # This is not necessary to set if the above `KEY_PREFIX` value is set since
 # the `KEY_PREFIX` namespaces all cache set by this application
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+CACHE_MIDDLEWARE_KEY_PREFIX = 'openmrs'
 
 
 #
@@ -255,15 +247,10 @@ SESSION_SAVE_EVERY_REQUEST = False
 #
 
 # USE_ETAGS = True
-SEND_BROKEN_LINK_EMAILS = False
 IGNORABLE_404_PATHS = (
     r'robots.txt$',
     r'favicon.ico$',
 )
-
-# django-registration2
-# REGISTRATION_ACTIVATION_DAYS = 0
-# REGISTRATION_MODERATION = True
 
 #
 # VARIOUS APP SETTINGS

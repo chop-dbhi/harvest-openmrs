@@ -1,4 +1,4 @@
-include requirements.pip
+include requirements.txt
 include wsgi.py
 include bin/manage.py
 include Makefile
@@ -8,10 +8,11 @@ graft server
 
 global-exclude .DS_Store
 
-exclude static/scripts/javascript/app.build.js
-exclude static/scripts/javascript/min/build.txt
+exclude openmrs/static/scripts/javascript/app.build.js
+exclude openmrs/static/scripts/javascript/min/build.txt
 exclude openmrs/conf/local_settings.py
 
 prune _site/static
-prune static/scripts/coffeescript
-prune static/stylesheets/scss
+prune openmrs/static/scripts/coffeescript
+prune openmrs/static/stylesheets/scss
+prune tests
