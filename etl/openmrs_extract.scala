@@ -112,15 +112,70 @@ def copyLabs = {
 
     harvest commit
 }
+
+/* 
+    Review of systems
+*/
+
+def copySystemReview = {
+    val systems = List("HEENT EXAM FINDINGS", "CHEST EXAM FINDINGS", "CARDIAC EXAM FINDINGS",
+                       "ABDOMINAL EXAM FINDINGS", "MUSCULOSKELETAL EXAM FINDINGS",
+                       "NEUROLOGIC EXAM FINDINGS").map{Option(_)}
+    val columnOverride = Map("HEENT EXAM FINDINGS" -> "heent", 
+                             "CHEST EXAM FINDINGS" -> "chest", 
+                             "CARDIAC EXAM FINDINGS" -> "cardiac",
+                             "ABDOMINAL EXAM FINDINGS" -> "abdominal",
+                             "MUSCULOSKELETAL EXAM FINDINGS" -> "musculoskeletal",
+                             "NEUROLOGIC EXAM FINDINGS" -> "neurologic")
+
+    val allSystems = codedConceptQuery(systems)
+    
+    pivotCodedObservation(DataTable(openmrs, allSystems, systems), harvest, "systems_review", columnOverride)
+
+    harvest commit
+}
+
+
 /* Here is where we actually call each component */
 
-copyPerson
-copyEncounter
-copyVitalSigns
-copyLabs
-
+//copyPerson
+//copyEncounter
+//copyVitalSigns
+//copyLabs
+copySystemReview
 
 /* Utility functions */
+
+def pivotCodedObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String,
+    columnOverride:Map[String,String] = Map.empty[String,String]) = {
+   val writer = SqlTableWriter(target)
+   val lastRow = dataTable.foldLeft(Map[String,Any]()){ (r,c) =>
+                    val currentEncounter = c.encounter_id.as[Int].get
+                    val currentConceptName = c.name.as[String].get
+                    val currentConceptValue =  c.coded_value.as[String].get
+                                        
+                    if (r.isEmpty) {
+                          Map[String,Any]() + ("encounter_id" -> currentEncounter,
+                                               columnOverride.getOrElse(currentConceptName, currentConceptName) -> currentConceptValue)
+                    }
+                    else if (currentEncounter == r.get("encounter_id").get) {
+                         r + (columnOverride.getOrElse(currentConceptName, currentConceptName) -> currentConceptValue)
+                    }
+                    else   {
+                        val names = r.toSeq.map{(_._1.toLowerCase)}
+                        val values = r.toSeq.map{(_._2)}
+                        val dr = DataRow(names)(values.map{Option(_)})
+                        writer.insert_row(tableName, dr)
+                        Map[String,Any]("encounter_id" -> currentEncounter)
+                    }
+    }
+
+    val names = lastRow.toSeq.map{(_._1.toLowerCase)}
+    val values = lastRow.toSeq.map{(_._2)}
+    val dr = DataRow(names)(values.map{Option(_)})
+    writer.insert_row(tableName, dr)
+}
+
 
 def pivotNumericObservation(dataTable: DataTable[Any], target: SqlBackend, tableName: String,
     columnOverride:Map[String,String] = Map.empty[String,String]) = {
@@ -166,6 +221,24 @@ def numericConceptQuery(conceptNames:List[Option[String]]) = {
                                  WHERE cname.name IN (%s)
                                    AND cname.voided = 0
                               ORDER BY encounter_id"""
+
+   query.format(List.fill(conceptNames.size)("?").mkString(","))
+}
+
+def codedConceptQuery(conceptNames:List[Option[String]]) = {
+    
+    val query = """SELECT DISTINCT obs.person_id,
+                                   obs.encounter_id,
+                                       obs.concept_id,
+                                       cname.name,
+									   cname2.name as coded_value
+                                FROM   obs
+                       LEFT OUTER JOIN (concept_name cname) on (obs.concept_id = cname.concept_id)
+                                  JOIN (concept_name cname2) on (obs.value_coded = cname2.concept_id)
+                                 WHERE cname.name IN (%s)
+                                   AND cname.voided = 0
+								   AND cname2.voided = 0
+                              ORDER BY encounter_id """
 
    query.format(List.fill(conceptNames.size)("?").mkString(","))
 }
