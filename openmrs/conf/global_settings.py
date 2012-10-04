@@ -262,6 +262,6 @@ SITE_ID = 1
 
 MODELTREES = {
     'default': {
-        'model': 'emr.patient',
+        'model': 'openmrs.patient',
     }
 }
