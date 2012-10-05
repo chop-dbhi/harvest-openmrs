@@ -193,6 +193,28 @@ def copySystemReview = {
     harvest commit
  }
 
+def copyDrugEncounter = {
+
+    val loadedDrugs = """SELECT name, id FROM drug"""
+    val drugMap = DataTable(harvest, loadedDrugs).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
+
+    val encounterDrug = """SELECT DISTINCT obs.encounter_id, cn.name AS drug_name
+                                 FROM obs, concept_name cn
+                                WHERE obs.concept_id IN (1088, 1111, 1110, 1112, 1109)
+                                  AND cn.concept_id = obs.value_coded
+                                  AND concept_name_type = 'FULLY_SPECIFIED'
+                                  AND cn.name <>'NONE' """
+   val writer = SqlTableWriter(harvest)
+   
+   DataTable(openmrs, encounterDrug).foreach{row =>
+                val dr = DataRow("encounter_id" -> row.encounter_id.as[Int].get,
+                                 "drug_id" -> drugMap.get(row.drug_name.as[String].get).get)
+                writer.insert_row("encounter_drug", dr)
+
+    }
+   harvest commit 
+}
+
 
 
 /* Here is where we actually call each component */
@@ -202,7 +224,8 @@ def copySystemReview = {
 //copyVitalSigns
 //copyLabs
 //copySystemReview
-copyDrugs
+//copyDrugs
+copyDrugEncounter
 
 
 /* Utility functions */
