@@ -326,7 +326,31 @@ def copyDiagnoses = {
    harvest commit
 }
 
+/*
+    Diagnosis Encounter
 
+*/
+
+def copyDiagnosisEncounter = {
+    val loadedDiagnoses = """SELECT name, id FROM diagnosis"""
+    val diagMap = DataTable(harvest, loadedDiagnoses).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
+
+    val encounterDiagnosis = """SELECT DISTINCT obs.encounter_id, cn.name AS diagnosis_name
+                                 FROM obs, concept_name cn
+                                WHERE obs.concept_id = 6042
+                                  AND cn.concept_id = obs.value_coded
+                                  AND concept_name_type = 'FULLY_SPECIFIED'
+                                  AND cn.name <>'NONE' """
+   val writer = SqlTableWriter(harvest)
+   
+   DataTable(openmrs, encounterDiagnosis).foreach{row =>
+                val dr = DataRow("encounter_id" -> row.encounter_id.as[Int].get,
+                                 "diagnosis_id" -> diagMap.get(row.diagnosis_name.as[String].get).get)
+                writer.insert_row("encounter_diagnosis", dr)
+
+    }
+   harvest commit 
+}
 
 /* Here is where we actually call each component */
 
@@ -339,8 +363,8 @@ def copyDiagnoses = {
 //copyDrugEncounter
 //copyVaccines
 //copyVaccineEncounter
-copyDiagnoses
-
+//copyDiagnoses
+copyDiagnosisEncounter
 
 
 
