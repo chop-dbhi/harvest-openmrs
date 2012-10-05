@@ -14,6 +14,9 @@ PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..'
 # https://docs.djangoproject.com/en/1.3/intro/tutorial01/#creating-models
 INSTALLED_APPS = (
     'openmrs',
+    'openmrs.drugs',
+    'openmrs.vaccines',
+    'openmrs.diagnoses',
 
     'avocado',
     'serrano',

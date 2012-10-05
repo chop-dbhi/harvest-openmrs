@@ -1,4 +1,7 @@
 from django.db import models
+from .drugs.models import Drug
+from .vaccines.models import Vaccine
+from .diagnoses.models import Diagnosis
 
 
 class Patient(models.Model):
@@ -10,13 +13,34 @@ class Patient(models.Model):
         db_table = 'patient'
 
 
+class Referral(models.Model):
+    name = models.CharField(max_length=200)
+
+    class Meta(object):
+        db_table = 'referral'
+
+
 class Encounter(models.Model):
     patient = models.ForeignKey(Patient)
     encounter_datetime = models.DateTimeField(null=True, blank=True)
     description = models.TextField(blank=True)
 
+    drugs = models.ManyToManyField(Drug, db_table='encounter_drug')
+    vaccines = models.ManyToManyField(Vaccine, through='EncounterVaccine')
+    diagnoses = models.ManyToManyField(Diagnosis, db_table='encounter_diagnosis')
+    referrals = models.ManyToManyField(Referral, db_table='encounter_referral')
+
     class Meta(object):
         db_table = 'encounter'
+
+
+class EncounterVaccine(models.Model):
+    encounter = models.ForeignKey(Encounter)
+    vaccine = models.ForeignKey(Vaccine)
+    status = models.CharField(max_length=100, null=True)
+
+    class Meta(object):
+        db_table = 'encounter_vaccine'
 
 
 class LabResult(models.Model):
