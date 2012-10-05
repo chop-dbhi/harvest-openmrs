@@ -248,7 +248,6 @@ def copyVaccines = {
                                       AND cn1.name NOT LIKE '%NO.%'"""
 
     val loadedVaccines = """SELECT name, id FROM vaccine"""
-
     val vaccineMap = DataTable(harvest, loadedVaccines).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
 
       DataTable(openmrs, vaccineAlias).foreach{row =>
@@ -260,6 +259,39 @@ def copyVaccines = {
    harvest commit
 
 }
+
+
+/* 
+    Vaccine-encounter relationship
+*/
+
+def copyVaccineEncounter = {
+    val loadedVaccines = """SELECT name, id FROM vaccine"""
+    val vaccineMap = DataTable(harvest, loadedVaccines).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
+    val encounterVaccine = """SELECT DISTINCT obs.encounter_id, cn.name AS vaccine_name, cn2.name AS status
+                                 FROM obs
+                                 JOIN (concept_name cn) ON (cn.concept_id = obs.value_coded)
+                                 JOIN (concept_name cn2) ON (cn2.concept_id = obs.concept_id)
+                                WHERE obs.concept_id IN (1198, 984)
+                                  AND cn.concept_name_type = 'FULLY_SPECIFIED'
+                                  AND cn2.concept_name_type = 'FULLY_SPECIFIED'
+                                  AND cn.name <>'NONE'"""
+    val writer = SqlTableWriter(harvest)
+   
+    DataTable(openmrs, encounterVaccine).foreach{row =>
+                val dr = DataRow("encounter_id" -> row.encounter_id.as[Int].get,
+                                 "vaccine_id" -> vaccineMap.get(row.vaccine_name.as[String].get).get,
+                                 "status" -> row.status.as[String].get)
+                writer.insert_row("encounter_vaccine", dr)
+    }
+   
+   harvest commit 
+
+}
+
+
+
+
 /* Here is where we actually call each component */
 
 //copyPerson
@@ -269,7 +301,13 @@ def copyVaccines = {
 //copySystemReview
 //copyDrugs
 //copyDrugEncounter
-copyVaccines
+//copyVaccines
+copyVaccineEncounter
+
+
+
+
+
 
 /* Utility functions */
 
