@@ -134,6 +134,65 @@ def copySystemReview = {
 
     harvest commit
 }
+/*
+    Drugs
+*/
+
+ def copyDrugs = {
+       val canonicalDrugs = """
+             SELECT DISTINCT cn.name AS name, 'HIV' AS disease
+                FROM obs, concept_name cn
+               WHERE obs.concept_id = 1088
+                 AND cn.concept_id = obs.value_coded
+                 AND concept_name_type = 'FULLY_SPECIFIED'
+                 AND cn.name <>'NONE'
+            UNION ALL
+            SELECT DISTINCT cn.name AS name, 'Tuberculosis' AS disease 
+                FROM obs, concept_name cn
+               WHERE obs.concept_id IN (1111, 1110)
+                 AND cn.concept_id = obs.value_coded
+                 AND concept_name_type = 'FULLY_SPECIFIED'
+                 AND cn.name <>'NONE'
+            UNION ALL
+            SELECT DISTINCT cn.name AS name, 'Cryptococcus' AS disease 
+                FROM obs, concept_name cn
+               WHERE obs.concept_id = 1112
+                 AND cn.concept_id = obs.value_coded
+                 AND concept_name_type = 'FULLY_SPECIFIED'
+                 AND cn.name <>'NONE'
+            UNION ALL
+            SELECT DISTINCT cn.name AS name, 'Pneumocystis pneumonia' AS disease 
+                FROM obs, concept_name cn
+               WHERE obs.concept_id = 1109
+                 AND cn.concept_id = obs.value_coded
+                 AND concept_name_type = 'FULLY_SPECIFIED'
+                 AND cn.name <>'NONE'""" 
+
+    val source = DataTable(openmrs,canonicalDrugs)
+    val writer = SqlTableWriter(harvest)
+     
+    writer.insert_rows("drug", source)
+    harvest commit
+
+    val loadedDrugs = """SELECT name, id FROM drug"""
+    val drugMap = DataTable(harvest, loadedDrugs).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
+
+    val drugAlias = """SELECT DISTINCT cn1.name as name, cn2.name as alias
+                         FROM obs
+                         JOIN (concept_name cn1) ON (obs.value_coded = cn1.concept_id)
+                         JOIN (concept_name cn2) ON (cn1.concept_id = cn2.concept_id)
+                        WHERE obs.concept_id IN (1088, 1111, 1112, 1110, 1109)
+                          AND cn2.concept_name_type = 'FULLY_SPECIFIED'
+                          AND cn1.name <>'NONE'""" 
+
+    DataTable(openmrs, drugAlias).foreach{row =>
+        val dr = DataRow("name" -> row.name.as[String].get,
+                         "drug_id" -> drugMap.get(row.alias.as[String].get).get)
+        writer.insert_row("drug_synonym", dr)
+    }
+    harvest commit
+ }
+
 
 
 /* Here is where we actually call each component */
@@ -142,7 +201,9 @@ def copySystemReview = {
 //copyEncounter
 //copyVitalSigns
 //copyLabs
-copySystemReview
+//copySystemReview
+copyDrugs
+
 
 /* Utility functions */
 
