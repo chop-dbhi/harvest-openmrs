@@ -242,10 +242,9 @@ def copyVaccines = {
                                      FROM obs
                                      JOIN (concept_name cn1) ON (obs.value_coded = cn1.concept_id)
                                      JOIN (concept_name cn2) ON (cn1.concept_id = cn2.concept_id)
-                                    WHERE obs.concept_id IN (1198, 984)
+                                    WHERE obs.concept_id = 6042
                                       AND cn2.concept_name_type = 'FULLY_SPECIFIED'
-                                      AND cn1.name <>'NONE'
-                                      AND cn1.name NOT LIKE '%NO.%'"""
+                                      AND cn1.name <>'NONE' """
 
     val loadedVaccines = """SELECT name, id FROM vaccine"""
     val vaccineMap = DataTable(harvest, loadedVaccines).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
@@ -289,6 +288,43 @@ def copyVaccineEncounter = {
 
 }
 
+/*
+    Diagnoses
+*/
+
+def copyDiagnoses = {
+    val canonicalDiagnoses = """SELECT DISTINCT cn.name 
+	                                       FROM obs, concept_name cn
+                                          WHERE obs.concept_id = 6042
+                                            AND cn.concept_id = obs.value_coded
+                                            AND concept_name_type = 'FULLY_SPECIFIED'"""
+
+    val source = DataTable(openmrs,canonicalDiagnoses)
+    val writer = SqlTableWriter(harvest)
+     
+    writer.insert_rows("diagnosis", source)
+    harvest commit
+    
+    def diagnosisAlias = """SELECT DISTINCT cn1.concept_id, cn1.name as name, cn2.name as alias
+                                     FROM obs
+                                     JOIN (concept_name cn1) ON (obs.value_coded = cn1.concept_id)
+                                     JOIN (concept_name cn2) ON (cn1.concept_id = cn2.concept_id)
+                                    WHERE obs.concept_id = 6042
+                                      AND cn2.concept_name_type = 'FULLY_SPECIFIED'
+                                      AND cn1.name <>'NONE'
+									  AND cn1.name not IN ('FUNTIME', 'CLINICAL', 'PRESUMED')"""
+
+    val loadedDiagnoses = """SELECT name, id FROM diagnosis"""
+    val diagnosisMap = DataTable(harvest, loadedDiagnoses).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
+
+      DataTable(openmrs, diagnosisAlias).foreach{row =>
+        val dr = DataRow("name" -> row.name.as[String].get,
+                         "diagnosis_id" -> diagnosisMap.get(row.alias.as[String].get).get)
+        writer.insert_row("diagnosis_synonym", dr)
+    }      
+   
+   harvest commit
+}
 
 
 
@@ -302,8 +338,8 @@ def copyVaccineEncounter = {
 //copyDrugs
 //copyDrugEncounter
 //copyVaccines
-copyVaccineEncounter
-
+//copyVaccineEncounter
+copyDiagnoses
 
 
 
