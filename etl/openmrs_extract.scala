@@ -352,6 +352,52 @@ def copyDiagnosisEncounter = {
    harvest commit 
 }
 
+/*
+    Referral
+
+*/
+
+def copyReferrals = {
+    val referrals = """SELECT DISTINCT name 
+	       FROM obs, concept_name cn
+          WHERE obs.concept_id = 1272
+            AND cn.concept_id = obs.value_coded
+			AND cn.name <> 'NONE'"""
+
+    val source = DataTable(openmrs,referrals)
+    val writer = SqlTableWriter(harvest)
+     
+    writer.insert_rows("referral", source)
+    harvest commit
+}
+
+/*
+     Referral Encounter
+
+*/
+
+def copyReferralEncounter = {
+    val loadedReferrals = """SELECT name, id FROM referral"""
+    val referralMap = DataTable(harvest, loadedReferrals).foldLeft(Map[String,Int]())((r,c) => r + (c.name.as[String].get -> c.id.as[Int].get))
+
+    val encounterReferral = """SELECT DISTINCT obs.encounter_id, cn.name AS referral_name
+                                 FROM obs, concept_name cn
+                                WHERE obs.concept_id = 1272
+                                  AND cn.concept_id = obs.value_coded
+                                  AND cn.name <>'NONE' """
+   val writer = SqlTableWriter(harvest)
+   
+   DataTable(openmrs, encounterReferral).foreach{row =>
+                val dr = DataRow("encounter_id" -> row.encounter_id.as[Int].get,
+                                 "referral_id" -> referralMap.get(row.referral_name.as[String].get).get)
+                writer.insert_row("encounter_referral", dr)
+
+    }
+   harvest commit  
+}
+
+
+
 /* Here is where we actually call each component */
 
 //copyPerson
@@ -364,8 +410,9 @@ def copyDiagnosisEncounter = {
 //copyVaccines
 //copyVaccineEncounter
 //copyDiagnoses
-copyDiagnosisEncounter
-
+//copyDiagnosisEncounter
+//copyReferrals
+copyReferralEncounter
 
 
 
