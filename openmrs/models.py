@@ -87,3 +87,53 @@ class SystemsReview(models.Model):
 
     class Meta(object):
         db_table = 'systems_review'
+
+
+class HIVDetails(models.Model):
+    encounter = models.ForeignKey(Encounter)
+    plan = models.CharField(max_length=30, null=True)
+    treat_adhere = models.CharField('treatment adherence last week', max_length=30, null=True)
+    stage_adult = models.CharField('stage (adult)', max_length=30, null=True)
+    stage_adult_last = models.CharField('stage change since last visit (adult)', max_length=30, null=True)
+    stage_peds = models.CharField('stage (peds)', max_length=30, null=True)
+    cdc_category = models.CharField('CDC category', max_length=30, null=True)
+    taking_antiretrovirals = models.CharField('currently taking antiretrovial medications', max_length=10, null=True)
+    discordant_couple = models.CharField(max_length=10, null=True)
+
+    class Meta(object):
+        db_table = 'hiv_details'
+        verbose_name = 'hiv details'
+        verbose_name_plural = verbose_name
+
+
+class CryptococcusDetails(models.Model):
+    encounter = models.ForeignKey(Encounter)
+    plan = models.CharField(max_length=30, null=True)
+
+    class Meta(object):
+        db_table = 'cc_details'
+        verbose_name = 'cryptococcus details'
+        verbose_name_plural = verbose_name
+
+
+class TBDetails(models.Model):
+    encounter = models.ForeignKey(Encounter)
+    plan = models.CharField(max_length=30, null=True)
+    treat_adhere = models.CharField('treatment adherence last week', max_length=30, null=True)
+    pro_adhere = models.CharField('prophylaxis adherence last week', max_length=30, null=True)
+
+    class Meta(object):
+        db_table = 'tb_details'
+        verbose_name = 'tuberculosis details'
+        verbose_name_plural = verbose_name
+
+
+class PCPDetails(models.Model):
+    encounter = models.ForeignKey(Encounter)
+    plan = models.CharField(max_length=30, null=True)
+    pro_adhere = models.CharField('prophylaxis adherence last week', max_length=30, null=True)
+
+    class Meta(object):
+        db_table = 'pcp_details'
+        verbose_name = 'PCP details'
+        verbose_name_plural = verbose_name
