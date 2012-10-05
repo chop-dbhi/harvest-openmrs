@@ -118,9 +118,10 @@ class CryptococcusDetails(models.Model):
 
 class TBDetails(models.Model):
     encounter = models.ForeignKey(Encounter)
-    plan = models.CharField(max_length=30, null=True)
     treat_adhere = models.CharField('treatment adherence last week', max_length=30, null=True)
+    treat_plan = models.CharField('treatment plan', max_length=30, null=True)
     pro_adhere = models.CharField('prophylaxis adherence last week', max_length=30, null=True)
+    pro_plan = models.CharField('prophylaxis plan', max_length=30, null=True)
 
     class Meta(object):
         db_table = 'tb_details'
