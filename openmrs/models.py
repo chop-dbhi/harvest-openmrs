@@ -106,16 +106,6 @@ class HIVDetails(models.Model):
         verbose_name_plural = verbose_name
 
 
-class CryptococcusDetails(models.Model):
-    encounter = models.ForeignKey(Encounter)
-    plan = models.CharField(max_length=30, null=True)
-
-    class Meta(object):
-        db_table = 'cc_details'
-        verbose_name = 'cryptococcus details'
-        verbose_name_plural = verbose_name
-
-
 class TBDetails(models.Model):
     encounter = models.ForeignKey(Encounter)
     treat_adhere = models.CharField('treatment adherence last week', max_length=30, null=True)
