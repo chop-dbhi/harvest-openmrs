@@ -463,19 +463,7 @@ def copyPCPDetails = {
     
 }
 
-def copyCcDetails = {
-     val conceptNames = List("CRYPTOCOCCAL TREATMENT PLAN").map{Option(_)}
-     
-     
-     //Needed since the method we're using assumes the concept names will be the column names by default
-    val columnOverride = Map("CRYPTOCOCCAL TREATMENT PLAN" -> "plan")
-    val allConcepts = codedConceptQuery(conceptNames)
-    pivotCodedObservation(DataTable(openmrs, allConcepts, conceptNames), harvest, "pcp_details", columnOverride)
 
-    harvest commit
-
-    
-}
 
 /* Here is where we actually call each component */
 
@@ -494,8 +482,7 @@ def copyCcDetails = {
 //copyReferralEncounter
 //copyHIVDetails
 //copyTBDetails
-//copyPCPDetails
-copyCcDetails
+copyPCPDetails
 
 /* Utility functions */
 
