@@ -1,6 +1,7 @@
+from django.core.urlresolvers import reverse
 from avocado.formatters import registry
 from serrano.formatters import HTMLFormatter
-from datetime import date, time, datetime 
+from datetime import date
 
 
 def process_age(dob, date_end, est):
@@ -9,14 +10,14 @@ def process_age(dob, date_end, est):
     else:
         age = ((date_end - dob).total_seconds())/60/60/24/365.242
         age = round(age, 1)
-        
+
         time = "years"
         if age < 1.0:
             age = ((date_end - dob).total_seconds())/60/60/24/30.4368
             age = round(age, 1)
             time = "months"
             if age < 1.0:
-                age =((date_end - dob).total_seconds())/60/60/24
+                age = ((date_end - dob).total_seconds())/60/60/24
                 age = round(age, 1)
                 time = "days"
                 if age == 1.0:
@@ -25,35 +26,35 @@ def process_age(dob, date_end, est):
                 time = "month"
 
         elif age == 1.0:
-            time ="year"
+            time = "year"
 
         if est:
             return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
-        else: 
-            return "{} {} old".format(age,time)
+        else:
+            return "{} {} old".format(age, time)
 
 
 class AgeFormatter(HTMLFormatter):
-    
+
     def to_html(self, values, **context):
         dob = values['birthdate']
         est = values['birthdate_estimated']
-        
+
         if not dob:
             return "Current age not available"
         p = process_age(dob, date.today(), est)
         return p
-       
+
     to_html.process_multiple = True
 
 
 class EncounterAgeFormatter(HTMLFormatter):
-    
+
     def to_html(self, values, **context):
         dob = values['birthdate']
         est = values['birthdate_estimated']
         enc = values['encounter_datetime']
-        
+
         if not enc or not enc.date:
             return ''
         enc_date = date(enc.year, enc.month, enc.day)
@@ -63,22 +64,23 @@ class EncounterAgeFormatter(HTMLFormatter):
 
 
 class GenderFormatter(HTMLFormatter):
-    
+
     def to_html(self, value, **context):
-        gender_map = {'M': 'Male',
-                      'F': 'Female',
-                    }
-        if gender_map.has_key(value):
+        gender_map = {
+            'M': 'Male',
+            'F': 'Female',
+        }
+        if value in gender_map:
             return gender_map[value]
         return '<div class="muted"> Unknown </div>'
 
 
 class CbcPannelFormatter(HTMLFormatter):
- 
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['hgb','wbc','rbc','platelets','mcv','hct','rdw','mchc','mch']
-        
+
         html_str = ""
         for name in test_names:
             if values[name] != None:
@@ -92,11 +94,11 @@ class CbcPannelFormatter(HTMLFormatter):
 
 
 class Chem7PannelFormatter(HTMLFormatter):
- 
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['cr','bun','glu','na','k','cl','co2']
-        
+
         html_str = ""
         for name in test_names:
             if values[name] != None:
@@ -110,11 +112,11 @@ class Chem7PannelFormatter(HTMLFormatter):
 
 
 class MiscPannelFormatter(HTMLFormatter):
- 
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['cd4','cd4_percent','cd8','sgpt','alc']
-        
+
         html_str = ""
         for name in test_names:
             if values[name] != None:
@@ -128,11 +130,11 @@ class MiscPannelFormatter(HTMLFormatter):
 
 
 class SystemsFormatter(HTMLFormatter):
- 
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['heent','chest','abdominal','cardiac','musculoskeletal', 'neurologic']
-        
+
         html_str = ""
         for name in test_names:
             if values[name] != None:
@@ -149,7 +151,7 @@ class SystemsFormatter(HTMLFormatter):
 
 
 class HIVDetailFormatter(HTMLFormatter):
-    
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['plan','treat_adhere','stage_adult','stage_adult_last','stage_peds','cdc_category', 'taking_antiretrovirals', 'discordant_couple']
@@ -167,7 +169,7 @@ class HIVDetailFormatter(HTMLFormatter):
 
 
 class TBDetailFormatter(HTMLFormatter):
-    
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['treat_adhere','treat_plan','pro_adhere','pro_plan']
@@ -184,7 +186,7 @@ class TBDetailFormatter(HTMLFormatter):
 
 
 class PCPDetailFormatter(HTMLFormatter):
-    
+
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['plan','pro_adhere']
@@ -199,6 +201,13 @@ class PCPDetailFormatter(HTMLFormatter):
 
     to_html.process_multiple = True
 
+
+class MRNFormatter(HTMLFormatter):
+    def to_html(self, value, **context):
+        url = reverse('patient-detail', kwargs={'pk': value})
+        return '<a href="{}">MR{}</a>'.format(url, str(value).zfill(8))
+
+
 registry.register(AgeFormatter, 'Age')
 registry.register(GenderFormatter, 'Gender')
 registry.register(EncounterAgeFormatter, 'EncounterAge')
@@ -209,3 +218,4 @@ registry.register(SystemsFormatter, 'SystemsReview')
 registry.register(HIVDetailFormatter, 'HIVDetail')
 registry.register(TBDetailFormatter, 'TBDetail')
 registry.register(PCPDetailFormatter, 'PCPDetail')
+registry.register(MRNFormatter, 'MRN')
