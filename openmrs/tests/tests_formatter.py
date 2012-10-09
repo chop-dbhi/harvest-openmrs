@@ -11,10 +11,10 @@ from avocado.formatters import registry
 class FormatTest(TestCase):
     
     def setUp(self):
-        management.call_command('avocado', 'sync', 'emr')
+        management.call_command('avocado', 'sync', 'openmrs')
 
-        birthdate_field = DataField.objects.get_by_natural_key('emr', 'patient', 'birthdate')
-        estimate_field = DataField.objects.get_by_natural_key('emr','patient', 'birthdate_estimated')
+        birthdate_field = DataField.objects.get_by_natural_key('openmrs', 'patient', 'birthdate')
+        estimate_field = DataField.objects.get_by_natural_key('openmrs','patient', 'birthdate_estimated')
 
         self.concept = concept = DataConcept(name="Birthdate")
         concept.save()

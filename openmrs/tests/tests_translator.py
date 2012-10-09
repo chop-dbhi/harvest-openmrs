@@ -7,14 +7,14 @@ from django.test import TestCase
 from django.core import management
 from avocado.models import DataField, DataConcept, DataConceptField 
 from avocado.query.translators import registry
-from openmrs.apps.emr.models import Patient
+from openmrs.models import Patient
 
 class TranslatorTest(TestCase):
     
     def setUp(self):
-        management.call_command('avocado', 'sync', 'emr')
+        management.call_command('avocado', 'sync', 'openmrs')
 
-        self.birthdate = DataField.objects.get_by_natural_key('emr', 'patient', 'birthdate')
+        self.birthdate = DataField.objects.get_by_natural_key('openmrs', 'patient', 'birthdate')
         self.t = registry.get('Age')
 
     def test_trans_years(self):
