@@ -4,7 +4,7 @@ from serrano.formatters import HTMLFormatter
 from datetime import date
 
 
-def process_age(dob, date_end, est):
+def process_age(dob, date_end):
     if not dob or not date_end:
         return "<em class='muted'>Unknown</em>"
     else:
@@ -28,11 +28,8 @@ def process_age(dob, date_end, est):
         elif age == 1.0:
             time = "year"
 
-        if est:
-            return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
-        else:
-            return "{} {} old".format(age, time)
-
+        return age, time
+       
 
 class AgeFormatter(HTMLFormatter):
 
@@ -42,10 +39,62 @@ class AgeFormatter(HTMLFormatter):
 
         if not dob:
             return "Current age not available"
-        p = process_age(dob, date.today(), est)
-        return p
+        age, time = process_age(dob, date.today())
+
+        if est:
+            return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
+        else:
+            return "{} {} old".format(age, time)
 
     to_html.process_multiple = True
+
+    def to_string(self, values, **context):
+        dob = values['birthdate']
+        est = values['birthdate_estimated']
+
+        if not dob:
+            return [{'value': None, 'time': None, 'est':None}]
+        
+        age, time = process_age(dob, date.today())
+
+        if est:
+            return [{'value':str(age), 'time':time, 'est': 'estimated'}]
+        else:
+            return [{'value':str(age), 'time':time, 'est':''}]
+
+    to_string.process_multiple = True
+
+    def to_boolean(self, values, **context):
+        dob = values['birthdate']
+        est = values['birthdate_estimated']
+
+        if not dob:
+            return [{'value': None, 'time': None, 'est':None}]
+        
+        age, time = process_age(dob, date.today())
+
+        if est:
+            return [{'value':age, 'time':time, 'est': True}]
+        else:
+            return [{'value':age, 'time':time, 'est': False}]
+
+    to_boolean.process_multiple = True
+
+    def to_number(self,values, **context):
+        dob = values['birthdate']
+        est = values['birthdate_estimated']
+
+        if not dob:
+            return [{'value': None, 'time': None, 'est':None}]
+        
+        age, time = process_age(dob, date.today())
+
+        if est:
+            return [{'age':age, 'time':time, 'est':est}]
+        else:
+            return [{'age':age, 'time':time, 'est':est}]
+
+    to_number.process_multiple = True
 
 
 class EncounterAgeFormatter(HTMLFormatter):
@@ -58,7 +107,16 @@ class EncounterAgeFormatter(HTMLFormatter):
         if not enc or not enc.date:
             return ''
         enc_date = date(enc.year, enc.month, enc.day)
-        return process_age(dob, enc_date, est)
+        
+        age, time = process_age(dob, enc_date)
+        
+        if est:
+            return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
+        else:
+            return "{} {} old".format(age, time)
+
+        
+        
 
     to_html.process_multiple = True
 
