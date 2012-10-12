@@ -42,11 +42,11 @@ def patient_view(request, pk=None):
     p = Patient.objects.get(pk=pk)
     enc = Encounter.objects.filter(patient=p).order_by('-encounter_datetime')
 
-    dc = DataConcept.objects.get(name="Birthdate") 
+    dc = DataConcept.objects.get(ident="inter_birthdate") 
     age = dc.format([p.birthdate, p.birthdate_estimated], preferred_formats=['html'])
-    p.age = age['Birthdate']
+    p.age = age['inter_birthdate']
 
-    dc = DataConcept.objects.get(name='Gender')
+    dc = DataConcept.objects.get(name='inter_gender')
     gender = dc.format(p.gender, preferred_formats=['html'])
     p.gender = gender['gender']
 
@@ -57,39 +57,28 @@ def patient_view(request, pk=None):
         results = LabResult.objects.filter(encounter=e)
        
         for r in results: 
-            dc = DataConcept.objects.get(name="CBCLab")
-            dc.formatter_name = "CbcPannel"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_cbclab")
             table = dc.format([r.hgb, r.wbc, r.rbc, r.platelets, r.mcv, r.hct, r.rdw, r.mchc, r.mch], preferred_formats=['html'])
+            r.cbc_table = table['inter_cbclab']
             
-            r.cbc_table = table['CBCLab']
-            
-            dc = DataConcept.objects.get(name="Chem 7")
-            dc.formatter_name = "Chem7"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_chem7")
             table = dc.format([r.cr, r.bun, r.glu, r.na, r.k, r.cl, r.co2], preferred_formats=['html'])
-            r.chem_table = table['Chem 7']
+            r.chem_table = table['inter_chem7']
 
-            dc = DataConcept.objects.get(name="MiscLab")
-            dc.formatter_name = "MiscLab"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_misclab")
             table = dc.format([r.cd4, r.cd4_percent, r.cd8, r.sgpt, r.sgpt, r.alc], preferred_formats=['html'])
-            r.misc_table = table['MiscLab']
+            r.misc_table = table['inter_misclab']
         
         # Likewise, get all SystemReview objects and pass into 
         sys_reviews = SystemsReview.objects.filter(encounter=e)
         for s in sys_reviews:
-            dc = DataConcept.objects.get(name="SystemsReview")
-            dc.formatter_name = "SystemsReview"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_systemsreview")
             table = dc.format([s.heent, s.chest, s.abdominal, s.cardiac, s.musculoskeletal, s.neurologic], preferred_formats=['html'])
-            s.table = table['SystemsReview']
+            s.table = table['inter_systemsreview']
 
-        dc = DataConcept.objects.get(name='EncounterAge') 
-        dc.formatter_name = 'EncounterAge'
-        dc.save()
+        dc = DataConcept.objects.get(ident='inter_encounterage') 
         vals = dc.format([p.birthdate, p.birthdate_estimated, e.encounter_datetime], preferred_formats=['html'])
-        e.date_age = vals['EncounterAge']
+        e.date_age = vals['inter_encounterage']
         
         vaccines = get_vaccine_table(e)
       
@@ -109,32 +98,25 @@ def patient_view(request, pk=None):
 
         hiv_details = HIVDetails.objects.filter(encounter=e)
         for h in hiv_details:
-            dc = DataConcept.objects.get(name="HIVDetail")
-            dc.formatter_name = "HIVDetail"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_hivdetail")
             table = dc.format([h.plan, h.treat_adhere, h.stage_adult, h.stage_adult_last, h.stage_peds, h.cdc_category, h.taking_antiretrovirals, h.discordant_couple], preferred_formats=['html'])
-            
-            h.table = table['HIVDetail']
+            h.table = table['inter_hivdetail']
         
         # Get TB details table
         tb_details = TBDetails.objects.filter(encounter=e)
 
         for tb in tb_details:
-            dc = DataConcept.objects.get(name="TBDetail")
-            dc.formatter_name = "TBDetail"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_tbdetail")
             table = dc.format([tb.treat_adhere, tb.treat_plan, tb.pro_adhere, tb.pro_plan], preferred_formats=['html'])
-            tb.table = table['TBDetail']
+            tb.table = table['inter_tbdetail']
         
         # Get pcp details table
         pcp_details = PCPDetails.objects.filter(encounter=e)
 
         for pcp in pcp_details:
-            dc = DataConcept.objects.get(name="PCPDetail")
-            dc.formatter_name = "PCPDetail"
-            dc.save()
+            dc = DataConcept.objects.get(ident="inter_pcpdetail")
             table = dc.format([pcp.plan, pcp.pro_adhere], preferred_formats=['html'])
-            pcp.table = table['PCPDetail']
+            pcp.table = table['inter_pcpdetail']
 
         enc_list.append([e, results, sys_reviews, vaccines, drug_list, diagnoses, hiv_details, tb_details, pcp_details])
     context = {'patient' : p,
