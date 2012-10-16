@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from avocado.models import DataConcept
 from openmrs.models import (Patient, Encounter, LabResult, SystemsReview,
     EncounterVaccine, HIVDetails, TBDetails, PCPDetails)
@@ -31,9 +31,10 @@ def get_vaccine_table(encounter):
         return "<h4> Vaccinations </h4><table class='table table-bordered table-condensed'><thead><tr></tr><tr><th class='text-warning'>ORDERED</th><th class='text-info'>PREVIOUSLY RECIEVED</th></tr></thead><tbody>{}</tbody></table>".format(vaccine_rows)
     return ""
 
-def patient_view(request, pk=None):
-    all_patients = Patient.objects.all()
-    p = Patient.objects.get(pk=pk)
+
+def patient_view(request, pk):
+    p = get_object_or_404(Patient, pk=pk)
+
     enc = Encounter.objects.filter(patient=p).order_by('-encounter_datetime')
 
     dc = DataConcept.objects.get(ident="inter_birthdate")
@@ -118,5 +119,4 @@ def patient_view(request, pk=None):
     return render(request, 'patient.html', {
         'patient': p,
         'encounters': enc_list,
-        'all_p': all_patients,
     })
