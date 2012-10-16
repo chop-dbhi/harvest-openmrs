@@ -29,10 +29,9 @@ def process_age(dob, date_end):
             time = "year"
 
         return age, time
-       
+
 
 class AgeFormatter(HTMLFormatter):
-
     def to_html(self, values, **context):
         dob = values['birthdate']
         est = values['birthdate_estimated']
@@ -54,7 +53,7 @@ class AgeFormatter(HTMLFormatter):
 
         if not dob:
             return [{'value': None, 'time': None, 'est':None}]
-        
+
         age, time = process_age(dob, date.today())
 
         if est:
@@ -70,7 +69,7 @@ class AgeFormatter(HTMLFormatter):
 
         if not dob:
             return [{'value': None, 'time': None, 'est':None}]
-        
+
         age, time = process_age(dob, date.today())
 
         if est:
@@ -86,7 +85,7 @@ class AgeFormatter(HTMLFormatter):
 
         if not dob:
             return [{'value': None, 'time': None, 'est':None}]
-        
+
         age, time = process_age(dob, date.today())
 
         if est:
@@ -107,22 +106,18 @@ class EncounterAgeFormatter(HTMLFormatter):
         if not enc or not enc.date:
             return ''
         enc_date = date(enc.year, enc.month, enc.day)
-        
+
         age, time = process_age(dob, enc_date)
-        
+
         if est:
             return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
         else:
             return "{} {} old".format(age, time)
 
-        
-        
-
     to_html.process_multiple = True
 
 
 class GenderFormatter(HTMLFormatter):
-
     def to_html(self, value, **context):
         gender_map = {
             'M': 'Male',
@@ -130,11 +125,10 @@ class GenderFormatter(HTMLFormatter):
         }
         if value in gender_map:
             return gender_map[value]
-        return '<div class="muted"> Unknown </div>'
+        return '<span class="muted">Unknown</span>'
 
 
-class CbcPannelFormatter(HTMLFormatter):
-
+class CbcPanelFormatter(HTMLFormatter):
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['hgb','wbc','rbc','platelets','mcv','hct','rdw','mchc','mch']
@@ -146,13 +140,12 @@ class CbcPannelFormatter(HTMLFormatter):
                 html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
         if html_str != "":
             return "<table class='table table-striped'>{}</table>".format(html_str)
-        return "<div class='hero-unit muted'><h2>No Complete Blood Count Pannel</h2></div>"
+        return "<div class='muted'><h5>No Complete Blood Count Panel</h5></div>"
 
     to_html.process_multiple = True
 
 
-class Chem7PannelFormatter(HTMLFormatter):
-
+class Chem7PanelFormatter(HTMLFormatter):
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['cr','bun','glu','na','k','cl','co2']
@@ -164,13 +157,12 @@ class Chem7PannelFormatter(HTMLFormatter):
                 html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
         if html_str != "":
             return "<table class='table table-striped'>{}</table>".format(html_str)
-        return "<div class='hero-unit muted'><h2>No Chem7 Pannel</h2></div>"
+        return "<div class='muted'><h5>No Chem7 Panel</h5></div>"
 
     to_html.process_multiple = True
 
 
-class MiscPannelFormatter(HTMLFormatter):
-
+class MiscPanelFormatter(HTMLFormatter):
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['cd4','cd4_percent','cd8','sgpt','alc']
@@ -188,7 +180,6 @@ class MiscPannelFormatter(HTMLFormatter):
 
 
 class SystemsFormatter(HTMLFormatter):
-
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['heent','chest','abdominal','cardiac','musculoskeletal', 'neurologic']
@@ -209,7 +200,6 @@ class SystemsFormatter(HTMLFormatter):
 
 
 class HIVDetailFormatter(HTMLFormatter):
-
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['plan','treat_adhere','stage_adult','stage_adult_last','stage_peds','cdc_category', 'taking_antiretrovirals', 'discordant_couple']
@@ -227,7 +217,6 @@ class HIVDetailFormatter(HTMLFormatter):
 
 
 class TBDetailFormatter(HTMLFormatter):
-
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['treat_adhere','treat_plan','pro_adhere','pro_plan']
@@ -244,7 +233,6 @@ class TBDetailFormatter(HTMLFormatter):
 
 
 class PCPDetailFormatter(HTMLFormatter):
-
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['plan','pro_adhere']
@@ -269,9 +257,9 @@ class MRNFormatter(HTMLFormatter):
 registry.register(AgeFormatter, 'Age')
 registry.register(GenderFormatter, 'Gender')
 registry.register(EncounterAgeFormatter, 'EncounterAge')
-registry.register(CbcPannelFormatter, 'CbcPannel')
-registry.register(Chem7PannelFormatter, 'Chem7')
-registry.register(MiscPannelFormatter, 'MiscLab')
+registry.register(CbcPanelFormatter, 'CbcPanel')
+registry.register(Chem7PanelFormatter, 'Chem7')
+registry.register(MiscPanelFormatter, 'MiscLab')
 registry.register(SystemsFormatter, 'SystemsReview')
 registry.register(HIVDetailFormatter, 'HIVDetail')
 registry.register(TBDetailFormatter, 'TBDetail')

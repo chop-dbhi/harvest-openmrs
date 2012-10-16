@@ -14,8 +14,9 @@ class VaccineFormatter(HTMLFormatter):
         elif status == "IMMUNIZATIONS ORDERED":
             status = "(ORDERED)"
             return "<strong>" + name + "</strong> " + "<span class='text-warning'>" + status + "</span></br>"
-        return "<h5>" + name + " " + status + "</h5>"    
+        return "<h5>" + name + " " + status + "</h5>"
+
     to_html.process_multiple = True
 
+
 registry.register(VaccineFormatter, 'Vaccine')
-        

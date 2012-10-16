@@ -2,91 +2,96 @@
 {% load url from future %}
 
 {% block content %}
-    <div class=row-fluid>
-        <div class=span12>
-            <div class=hero-unit>
-                <h3> Patient - {{ patient.pk }}</h3>
-                <h4> Gender: {{patient.gender}} </h4>
-                <h4> Birthdate: {{patient.birthdate}} </h4>
-                <h5> Current Age: {{patient.age|safe}} </h5>
+    <div class=container-fluid>
+        <div class=row-fluid>
+            <div class=span12>
+                <div class=well>
+                    <h3>Patient - {{ patient.pk }}</h3>
+                    <h4>Gender: {{patient.gender}} </h4>
+                    <h4>Birthdate: {{patient.birthdate}} </h4>
+                    <h5>Current Age: {{patient.age|safe}} </h5>
+                </div>
             </div>
         </div>
+
+        {% for e, results, sys_reviews, vaccines, drug_list, diagnoses, hiv_details, tb_details, pcp_details in encounters %}
+
+        <h3> {{e.encounter_datetime.date}} - {{e.date_age|safe}} </h3>
+
+        <div class=well>
+            <h5> {{e.description}} </h5>
+            {% if e.referrals.all %}
+                <h4>Referrvals</h4>
+            {% endif %}
+            {% for ref in e.referrals.all %}
+                <h6>* {{ref.name}}</h6>
+            {% endfor %}
+            {% if results %}
+                <h4> Lab Results </h4>
+            {% endif %}
+            {% for r in results %}
+                <div class=row-fluid>
+                    <div class='span4'>
+                        {{r.cbc_table|safe}}
+                    </div>
+                    <div class=span4>
+                        {{r.chem_table|safe}}
+                    </div>
+                    <div class=span4>
+                        {{r.misc_table|safe}}
+                    </div>
+                </div>
+                {% endfor %}
+                <br>
+            {% if sys_reviews %}
+                <h4>Systems Review</h4>
+            {% endif %}
+            {% for s in sys_reviews %}
+                <div class=row-fluid>
+                    <div class=span5>
+                        {{s.table|safe}} 
+                    </div>
+                </div>
+                {% endfor %}
+            {% for h in hiv_details %}
+                <div class=row-fluid>
+                    <div class=span5>
+                            {{h.table|safe}} 
+                    </div>
+                </div>
+            {% endfor %}
+            {% for t in tb_details %}
+                <div class=row-fluid>
+                    <div class=span5>
+                            {{t.table|safe}} 
+                    </div>
+                </div>
+            {% endfor %}
+            {% for pcp in pcp_details %}
+                <div class=row-fluid>
+                    <div class=span5>
+                            {{pcp.table|safe}} 
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class=row-fluid>
+                <div class=span12>
+                    {{vaccines|safe}}
+                </div>
+            </div>
+            <div class=row-fluid>
+                <div class=span12>
+                    {{drug_list|safe}}
+                </div>
+            </div>
+             <div class=row-fluid>
+                <div class=span12>
+                    {{diagnoses|safe}}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% for e, results, sys_reviews, vaccines, drug_list, diagnoses, hiv_details, tb_details, pcp_details in encounters %}
-    <h3> {{e.encounter_datetime.date}} - {{e.date_age|safe}} </h3>
-    <hr/>
-        <h5> {{e.description}} </h5>
-        {% if e.referrals.all %}
-            <h4>Referrvals</h4>
-        {% endif %}
-        {% for ref in e.referrals.all %}
-            <h6>* {{ref.name}}</h6>
-        {% endfor %}
-        {% if results %}
-            <h4> Lab Results </h4>
-        {% endif %}
-        {% for r in results %}
-            <div class=row-fluid>
-                <div class='span4'>
-                    {{r.cbc_table|safe}}
-                </div>
-                <div class=span4>
-                    {{r.chem_table|safe}}
-                </div>
-                <div class=span4>
-                    {{r.misc_table|safe}}
-                </div>
-            </div>
-            {% endfor %}
-            <br>
-        {% if sys_reviews %}
-            <h4>Systems Review</h4>
-        {% endif %}
-        {% for s in sys_reviews %}
-            <div class=row-fluid>
-                <div class=span5>
-                    {{s.table|safe}} 
-                </div>
-            </div>
-            {% endfor %}
-        {% for h in hiv_details %}
-            <div class=row-fluid>
-                <div class=span5>
-                        {{h.table|safe}} 
-                </div>
-            </div>
-        {% endfor %}
-        {% for t in tb_details %}
-            <div class=row-fluid>
-                <div class=span5>
-                        {{t.table|safe}} 
-                </div>
-            </div>
-        {% endfor %}
-        {% for pcp in pcp_details %}
-            <div class=row-fluid>
-                <div class=span5>
-                        {{pcp.table|safe}} 
-                </div>
-            </div>
-        {% endfor %}
-
-        <div class=row-fluid>
-            <div class=span12>
-                {{vaccines|safe}}
-            </div>
-        </div>
-        <div class=row-fluid>
-            <div class=span12>
-                {{drug_list|safe}}
-            </div>
-        </div>
-         <div class=row-fluid>
-            <div class=span12>
-                {{diagnoses|safe}}
-            </div>
-        </div>
-
-    {% endfor %}
 {% endblock %}
 
