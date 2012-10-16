@@ -2,25 +2,15 @@
 {% load url from future %}
 
 {% block content %}
-    <div class=row-fluid>
-        <div class=span12>
-            <div class=hero-unit>
-                <h1 class=heading>Harvest + OpenMRS</h1>    
-                <h4>Explore a subset of the OpenMRS demo data with Harvest</h4>
-                <a href="{% url "cilantro:discover" %}" class="btn btn-primary">To The Demo!</a>
+    <div class=container-fluid>
+        <div class=row-fluid>
+            <div class=span12>
+                <div class=hero-unit>
+                    <h1 class=heading>Harvest + OpenMRS</h1>    
+                    <h4>Explore a subset of the OpenMRS demo data with Harvest</h4>
+                    <a href="{% url "cilantro:discover" %}" class="btn btn-primary">To The Demo!</a>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class=row-fluid>
-        <div class="span4 well">
-        </div>
-
-        <div class="span4 well">
-        </div>
-
-        <div class="span4 well">
-
         </div>
     </div>
 {% endblock %}
