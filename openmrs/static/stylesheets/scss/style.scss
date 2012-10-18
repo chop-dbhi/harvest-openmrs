@@ -1,7 +1,29 @@
 @import "lib/bourbon/bourbon";
-@import "lib/bootstrap";
-@import "lib/bootstrap-responsive";
 
-body {
-    padding-top: 40px;
+#tutorial {
+    .step-number {
+        @include border-radius(50px);
+        display: inline-block;
+        font-size: 32px;
+        font-weight: bold;
+        width: 50px;
+        height: 50px;
+        background-color: #D3E3F2;
+        text-align: center;
+        margin-top: 5px;
+
+        > span {
+            position: relative;
+            top: 14px;
+        }
+    }
+
+    > .row-fluid {
+        margin-bottom: 40px;
+    }
+}
+
+
+code {
+    color: #000;
 }
