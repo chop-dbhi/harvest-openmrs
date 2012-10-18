@@ -14,7 +14,7 @@
     {{ block.super }}
 
     <script>
-        require(['jquery'], function($) {
+        require(['environ', 'jquery'], function(environ, $) {
             $(function() {
                 var url = App.SCRIPT_NAME + '/',
                     modal = $('#tutorial-modal'),
