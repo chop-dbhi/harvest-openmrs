@@ -1,11 +1,8 @@
 {% extends "cilantro/_base.html" %}
 
-{% block jsconfig %}
+{% block styles %}
     {{ block.super }}
-    <script>
-        App.defaults.dataview = {
-            columns: [10, 1, 2, 48, 50, 8],
-            ordering: [[10, 'asc']]
-        };
-    </script>
+    <link rel=stylesheet href="{{ CSS_URL }}/style.css">
 {% endblock %}
+
+
