@@ -150,7 +150,7 @@ ROOT_URLCONF = 'openmrs.conf.urls'
 # For non-publicly accessible applications, the siteauth app can be used to
 # restrict access site-wide.
 # SITEAUTH_ACCESS_ORDER = 'allow/deny'
-# 
+#
 # SITEAUTH_ALLOW_URLS = (
 #     r'^$',
 #     r'^log(in|out)/',
@@ -168,7 +168,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'siteauth.middleware.SiteAuthenticationMiddleware',
+    'serrano.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
