@@ -16,7 +16,7 @@ psycopg2
 modeltree
 git+git://github.com/cbmi/avocado@2.x
 git+git://github.com/cbmi/serrano@2.x
-git+git://github.com/cbmi/cilantro@2.x
+cilantro==2.0a1
 
 git+git://github.com/bruth/restlib2
 
