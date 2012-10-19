@@ -29,7 +29,6 @@ sqlite.connect
 
 sqlite.execute("PRAGMA foreign_keys = ON")
 
-//TODO: blow away entire database first
 
 val tableQuery = """SELECT relname
                       FROM pg_stat_user_tables
@@ -38,6 +37,8 @@ val tableQuery = """SELECT relname
 
 val tablenames = DataTable(postgres, tableQuery).map{r => r.relname.as[String].get}.toList
 
+
+tablenames.foreach{ table => sqlite dropTable table}
 
 tablenames.foreach {table =>
 
@@ -51,8 +52,7 @@ tablenames.foreach {table =>
 
 sqlite commit
 
+tablenames.filter(_.startsWith("auth_")).foreach{ table =>
+    sqlite truncateTable table
+}
 
-//TODO: truncate all tables that begin with auth_
-
-sqlite close
-postgres close
