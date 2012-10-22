@@ -1,5 +1,3 @@
-from distribute_setup import use_setuptools
-use_setuptools()
 from setuptools import setup, find_packages
 
 PACKAGE = 'openmrs'
@@ -8,20 +6,8 @@ VERSION = __import__(PACKAGE).get_version()
 kwargs = {
     'name': PACKAGE,
     'version': VERSION,
-
-    'packages': find_packages(exclude=['tests', '*.tests',
-        'tests.*', '*.tests.*']),
-
-    'install_requires': [
-        'south',
-    ],
-
-    # Tests
+    'packages': find_packages(),
     'test_suite': 'test_suite',
-    'tests_require': [
-        'coverage',
-    ],
-
     'author': '',
     'author_email': '',
     'description': '',

@@ -17,22 +17,5 @@
 
     paths: {},
 
-    shim: {
-        underscore: {
-            exports: '_'
-        },
-        backbone: {
-            deps: ['underscore', 'jquery'],
-            exports: 'Backbone'
-        },
-        bootstrap: ['jquery']
-    },
-    
-    modules: [{
-        name: 'main',
-        exclude: ['environ', 'jquery', 'underscore', 'backbone']
-    }, {
-        name: 'environ',
-        include: ['jquery', 'underscore', 'backbone', 'core/mixins', 'bootstrap'] 
-    }]
+    name: 'main'
 })

@@ -3,6 +3,9 @@ from django.conf.urls import url, patterns, include
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.template import add_to_builtins
+
+add_to_builtins('avocado.templatetags.avocado_tags')
 
 admin.autodiscover()
 

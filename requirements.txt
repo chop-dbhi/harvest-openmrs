@@ -13,12 +13,9 @@ uWSGI
 # Database Drivers, the Python stdlib has support for SQLite
 psycopg2
 
-modeltree
-git+git://github.com/cbmi/avocado@2.x
-git+git://github.com/cbmi/serrano@2.x
-cilantro==2.0a1
-
-git+git://github.com/bruth/restlib2
+avocado>=2.0,<2.1
+serrano>=2.0,<2.1
+cilantro>=2.0,<2.1
 
 numpy
 #scipy==0.11.0

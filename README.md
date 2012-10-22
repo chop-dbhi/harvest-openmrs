@@ -1,39 +1,62 @@
-# Harvest OpenMRS
+# Harvest+OpenMRS
 
-## Makefile Commands
+## Prerequisites
 
-- ``build`` - builds and initializes all submodules, compiles SCSS and
-    CoffeeScript and optimizes JavaScript
-- ``watch`` - watches the CoffeeScript and SCSS files in the background
-for changes and automatically recompiles the files
-- ``unwatch`` - stops watching the CoffeeScript and SCSS files
-- ``sass`` - one-time explicit recompilation of SCSS files
-- ``coffee`` - one-time explicit recompilation of CoffeeScript files
+- Python 2.7
 
-## Local Settings
+## Setup & Install
 
-``local_settings.py`` is intentionally not versioned (via .gitignore). It should
-contain any environment-specific settings and/or sensitive settings such as
-passwords, the ``SECRET_KEY`` and other information that should not be in version
-control. Defining ``local_settings.py`` is not mandatory but will warn if it does
-not exist.
+Install [virtualenv](http://pypi.python.org/pypi/virtualenv):
 
-## CoffeeScript/JavaScript Development
+```bash
+$ wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.8.2.tar.gz
+$ tar zxf virtualenv-1.8.2.tar.gz
+$ cd virtualenv-1.8.2
+$ python setup.py install
+```
+_You may need to do that last step as root. Just make sure you use the
+correct Python binary for OSes with multiple Python versions._
 
-CoffeeScript is lovely. The flow is simple:
+Create a virtual environment for the project:
 
-- write some CoffeeScript which automatically gets compiled in JavaScript
-(assuming you did ``make watch``)
-- when ready to test non-``DEBUG`` mode, run ``make optimize``
+```bash
+$ virtualenv myproject-env
+$ cd myproject-env
+$ source bin/activate
+```
 
-The ``app.build.js`` file will need to be updated to define which modules
-should be compiled to single files. It is recommended to take a tiered
-approach to reduce overall file size across pages and increase cache potential
-for libraries that won't change for a while, for example jQuery.
+## Clone or Download
 
-## SCSS Development
+**Clone using Git.** The advantages of cloning the repository is to keep-up-date
+as updates to the project happen.
 
-[Sass](http://sass-lang.com/) is awesome. SCSS is a superset of CSS so you can
-use as much or as little SCSS syntax as you want. It is recommended to write
-all of your CSS rules as SCSS, since at the very least the Sass minifier can
-be taken advantage of.
+```bash
+$ git clone git://github.com/cbmi/harvest-openmrs
+$ cd harvest-openmrs
+$ git checkout demo
+```
+
+Alternatively, you can download a zipped version, the `<random-chars>` shown
+below will vary depending on the version of the build. 
+
+```bash
+$ wget https://github.com/cbmi/harvest-openmrs/zipball/demo
+$ unzip cbmi-harvest-openmrs-<random-chars>.zip
+$ mv cbmi-harvest-openmrs-<random-chars> harvest-openmrs
+$ cd harvest-openmrs
+```
+
+## Setup
+
+```bash
+$ pip install -r requirements.txt
+$ make collect
+```
+
+## Run It
+
+```bash
+$ ./bin/manage.py
+```
+
+Open up your web browser to http://localhost:8000
