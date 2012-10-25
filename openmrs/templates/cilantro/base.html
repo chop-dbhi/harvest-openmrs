@@ -1,15 +1,5 @@
 {% extends "cilantro/_base.html" %}
 
-{# Extends the block to include a namespaced path for project-level modules #}
-{% block jsconfig %}
-    {{ block.super }}
-    <script>
-        require['paths'] = {
-            'project': '{{ JAVASCRIPT_URL }}'
-        };
-    </script>
-{% endblock jsconfig %}
-
 {% block styles %}
     {{ block.super }}
     <link rel=stylesheet href="{{ CSS_URL }}/style.css">

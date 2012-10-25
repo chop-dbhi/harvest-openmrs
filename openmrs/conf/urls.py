@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^patient/(?P<pk>\d+)/$', 'openmrs.views.patient_view', name='patient-detail'),
 
     # Harvest UI components
-    url(r'', include('cilantro.urls')),
+    url(r'^', include('cilantro.urls')),
+    url(r'^workspace/', 'cilantro.views.app', name='cilantro'),
 
     # Harvest API
     url(r'^api/', include('serrano.urls')),

@@ -15,7 +15,7 @@ psycopg2
 
 avocado>=2.0,<2.1
 serrano>=2.0,<2.1
-cilantro>=2.0,<2.1
+cilantro>=2.0.1,<2.1
 
 numpy
 #scipy==0.11.0
