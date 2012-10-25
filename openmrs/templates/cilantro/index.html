@@ -1,15 +1,5 @@
 {% extends "cilantro/_index.html" %}
 
-{% block jsconfig %}
-    {{ block.super }}
-    <script>
-        App.defaults.dataview = {
-            columns: [10, 1, 2, 48, 50, 8],
-            ordering: [[10, 'asc']]
-        };
-    </script>
-{% endblock %}
-
 {% block scripts %}
     {{ block.super }}
 
@@ -33,7 +23,7 @@
                 });
 
                 var li = $('<li />').append(tutorial);
-                $('.navbar .nav.pull-right').append(li);
+                $('header.navbar .nav.pull-right').append(li);
             });
         });
     </script>
