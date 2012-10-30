@@ -4,8 +4,7 @@ from global_settings import *
 try:
     from local_settings import *
 except ImportError:
-    import warnings
-    warnings.warn('Local settings have not been found (src.conf.local_settings)')
+    pass
 
 # FORCE_SCRIPT_NAME overrides the interpreted 'SCRIPT_NAME' provided by the
 # web server. since the URLs below are used for various purposes outside of

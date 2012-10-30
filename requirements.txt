@@ -8,16 +8,16 @@
 django>=1.4,<1.5
 markdown
 south
-uWSGI
-
-# Database Drivers, the Python stdlib has support for SQLite
-psycopg2
 
 avocado>=2.0.2,<2.1
 serrano>=2.0.1,<2.1
 cilantro>=2.0.2,<2.1
 
-numpy
-#scipy==0.11.0
 django-haystack==1.2.7
 whoosh==2.4.0
+
+# Required for distribution charts. NumPy must be installed before
+# SciPy. To install SciPy on your system, refer to the installation
+# instructions http://www.scipy.org/Installing_SciPy
+# numpy
+# scipy==0.11.0

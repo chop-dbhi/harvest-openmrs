@@ -76,6 +76,17 @@ USE_I18N = False
 # calendars according to the current locale
 USE_L10N = False
 
+#
+# DATABASES
+#
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_PATH, 'openmrs.db'),
+    }
+}
+
 
 #
 # STATIC AND MEDIA
