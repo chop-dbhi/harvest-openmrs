@@ -48,9 +48,16 @@ tablenames.foreach {table =>
     writer.insert_table(table, sourceTable.dataTypes, sourceTable, SqlTableWriter.OVERWRITE_OPTION_TRUNCATE)
 }
 
-sqlite commit
+//Truncate authentication tables
 
 tablenames.filter(_.startsWith("auth_")).foreach{ table =>
     sqlite truncateTable table
 }
+
+//Truncate select avocado tables
+
+sqlite truncateTable "avocado_datacontext"
+sqlite truncateTable "avocado_dataview"
+
+sqlite commit
 
