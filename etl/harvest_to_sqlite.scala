@@ -37,13 +37,6 @@ val tableQuery = """SELECT relname
 
 val tablenames = DataTable(postgres, tableQuery).map{r => r.relname.as[String].get}.toList
 
-//Get rid of any tables that might already be in the sqlite database
-val existingTableQuery = """SELECT name
-                              FROM sqlite_master
-                             WHERE type = 'table'"""
-val existingTables = DataTable(sqlite, existingTableQuery).map{r => r.name.as[String].get}.toList
-existingTables.foreach{ table => println("Dropping sqlite table: %s".format(table))
-                                 sqlite dropTable table}
 
 tablenames.foreach {table =>
     println("Fetching table: %s".format(table))
@@ -52,7 +45,7 @@ tablenames.foreach {table =>
 
     val writer = SqlTableWriter(sqlite)
     println("Inserting records into sqlite table")
-    writer.insert_table(table, sourceTable.dataTypes, sourceTable, SqlTableWriter.OVERWRITE_OPTION_DROP)
+    writer.insert_table(table, sourceTable.dataTypes, sourceTable, SqlTableWriter.OVERWRITE_OPTION_TRUNCATE)
 }
 
 sqlite commit
