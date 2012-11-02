@@ -6,7 +6,7 @@
     Utility to snapshot the Postgres schema used by Harvest on the demo site
     and package it up as a standalone sqlite database
 
-    -- Requires DataExpress 0.9.0.2
+    -- Requires DataExpress 0.9.0.3
 
 */
 
