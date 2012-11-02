@@ -37,7 +37,6 @@ val tableQuery = """SELECT relname
 
 val tablenames = DataTable(postgres, tableQuery).map{r => r.relname.as[String].get}.toList
 
-
 tablenames.foreach {table =>
     println("Fetching table: %s".format(table))
     val query = """SELECT * from %s""".format(table)

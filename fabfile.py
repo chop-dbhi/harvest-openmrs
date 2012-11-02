@@ -14,7 +14,6 @@ directory. It is a JSON file with the following structure:
 
     {
         "_": {
-            "user": "bruth",
             "host_string": "example.com",
             "path": "~/sites/project-env/project",
             "repo_url": "git@github.com/bruth/project.git",
@@ -34,7 +33,6 @@ The "_" entry acts as the default/fallback for the other host
 settings, so you only have to define the host-specific settings.
 The below settings are required:
 
-* `user` - username to SSH into the host
 * `host_string` - hostname or IP address of the host server
 * `path` - path to the deployed project *within* it's virtual environment
 * `repo_url` - URL to project git repository
@@ -54,7 +52,6 @@ if not os.path.exists(hosts_file):
     abort(white(HOSTS_MESSAGE))
 
 base_settings = {
-    'user': '',
     'host_string': '',
     'path': '',
     'repo_url': '',
@@ -62,7 +59,7 @@ base_settings = {
     'supervisor_conf_dir': '',
 }
 
-required_settings = ['user', 'host_string', 'path', 'repo_url',
+required_settings = ['host_string', 'path', 'repo_url',
     'nginx_conf_dir', 'supervisor_conf_dir']
 
 
@@ -123,8 +120,8 @@ def syncdb_migrate():
 def symlink_nginx():
     "Symlinks the nginx config to the host's nginx conf directory."
     with cd(env.path):
-        run('ln -sf $PWD/server/nginx/{host}.conf '
-            '{nginx_conf_dir}/openmrs-{host}.conf'.format(**env))
+        sudo('ln -sf $PWD/server/nginx/{host}.conf '
+            '{nginx_conf_dir}/harvest-openmrs-{host}.conf'.format(**env))
 
 
 @host_context
@@ -132,9 +129,8 @@ def reload_nginx():
     "Reloads nginx if the config test succeeds."
     symlink_nginx()
 
-    if run('nginx -t').succeeded:
-        pid = run('supervisorctl pid nginx')
-        run('kill -HUP {}'.format(pid))
+    if sudo('/etc/init.d/nginx configtest').succeeded:
+        sudo('/etc/init.d/nginx reload')
     elif not confirm(yellow('nginx config test failed. continue?')):
         abort('nginx config test failed. Aborting')
 
@@ -143,18 +139,20 @@ def reload_nginx():
 def reload_supervisor():
     "Re-link supervisor config and force an update to supervisor."
     with cd(env.path):
-        run('ln -sf $PWD/server/supervisor/{host}.ini '
-            '{supervisor_conf_dir}/openmrs-{host}.ini'.format(**env))
-
+        sudo('ln -sf $PWD/server/supervisor/{host}.ini '
+            '{supervisor_conf_dir}/harvest-openmrs-{host}.ini'.format(**env))
     run('supervisorctl update')
-    run('supervisorctl reread')
 
 
 @host_context
 def reload_wsgi():
     "Gets the PID for the wsgi process and sends a HUP signal."
-    pid = run('supervisorctl pid openmrs')
-    run('kill -HUP {}'.format(pid))
+    pid = run('supervisorctl pid harvest-openmrs-{host}'.format(host=env.host))
+    try:
+        int(pid)
+        sudo('kill -HUP {}'.format(pid))
+    except (TypeError, ValueError):
+        pass
 
 
 @host_context
@@ -185,6 +183,7 @@ def setup():
     parent, project = os.path.split(env.path)
 
     if not exists(parent):
+        run('mkdir -p {}'.format(parent))
         run('virtualenv {}'.format(parent))
 
     with cd(parent):
@@ -198,8 +197,7 @@ def upload_settings():
     local_path = os.path.join(curdir, 'settings/{}.py'.format(env.host))
     if os.path.exists(local_path):
         remote_path = os.path.join(env.path, 'openmrs/conf/local_settings.py')
-        local('scp {local_path} {user}@{host_string}:{remote_path}'\
-            .format(local_path=local_path, remote_path=remote_path, **env))
+        put(local_path, remote_path)
     elif not confirm(yellow('No local settings found for host "{}". Continue anyway?'.format(env.host))):
         abort('No local settings found for host "{}". Aborting.')
 
