@@ -38,7 +38,7 @@ def patient_view(request, pk):
     enc = Encounter.objects.filter(patient=p).order_by('-encounter_datetime')
 
     dc = DataConcept.objects.get(ident="inter_birthdate")
-    age = dc.format([p.birthdate_estimated, p.birthdate], preferred_formats=['html'])
+    age = dc.format([p.birthdate, p.birthdate_estimated], preferred_formats=['html'])
     p.age = age['inter_birthdate']
 
     dc = DataConcept.objects.get(ident='inter_gender')
@@ -115,7 +115,7 @@ def patient_view(request, pk):
 
         enc_list.append([e, results, sys_reviews, vaccines, drug_list,
             diagnoses, hiv_details, tb_details, pcp_details])
-
+    
     return render(request, 'patient.html', {
         'patient': p,
         'encounters': enc_list,
