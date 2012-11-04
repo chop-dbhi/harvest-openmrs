@@ -4,7 +4,17 @@
 
 - Python 2.7
 
-## Setup & Install
+
+## The Simple Way
+
+```bash
+pip install harvest
+harvest init-demo openmrs
+```
+
+## The Hard Way
+
+### Setup & Install
 
 Install [virtualenv](http://pypi.python.org/pypi/virtualenv):
 
@@ -25,7 +35,7 @@ $ cd myproject-env
 $ source bin/activate
 ```
 
-## Clone or Download
+### Clone or Download
 
 **Clone using Git.** The advantages of cloning the repository is to keep-up-date
 as updates to the project happen.
@@ -46,14 +56,14 @@ $ mv cbmi-harvest-openmrs-<random-chars> harvest-openmrs
 $ cd harvest-openmrs
 ```
 
-## Setup
+### Setup
 
 ```bash
 $ pip install -r requirements.txt
 $ make collect
 ```
 
-## Run It
+### Run It
 
 ```bash
 $ ./bin/manage.py
