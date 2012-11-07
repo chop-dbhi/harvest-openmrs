@@ -263,6 +263,8 @@ SESSION_SAVE_EVERY_REQUEST = False
 # OTHER PROJECT SETTINGS
 #
 
+SECRET_KEY = '665li+vump;*-9ve4=mp;e18s7&S^yvftr4o&aao2xnu_r*6wlou=)_'
+
 # USE_ETAGS = True
 IGNORABLE_404_PATHS = (
     r'robots.txt$',
