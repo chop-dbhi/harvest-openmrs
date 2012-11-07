@@ -1,15 +1,15 @@
 try:
     from collections import OrderedDict
 except ImportError:
-    from orderddict import OrderedDict
+    from ordereddict import OrderedDict
 from datetime import date, timedelta
 from django.test import TestCase
 from django.core import management
-from avocado.models import DataField, DataConcept, DataConceptField 
+from avocado.models import DataField, DataConcept, DataConceptField
 from avocado.formatters import registry
 
 class FormatTest(TestCase):
-    
+
     def setUp(self):
         management.call_command('avocado', 'sync', 'openmrs')
 
@@ -28,17 +28,17 @@ class FormatTest(TestCase):
     def test_dateage(self):
         self.values = [date(1992, 10, 3), False]
         fvalues = self.f(self.values, preferred_formats=['html'])
-        age = round((date.today() - date(1992,10,3)).total_seconds()/60/60/24/365, 1) 
+        age = round((date.today() - date(1992,10,3)).total_seconds()/60/60/24/365, 1)
         self.assertEqual(OrderedDict([
-            ('Birthdate', '{} years old'.format(age)),
+            ('Birthdate', '{0} years old'.format(age)),
             ]), fvalues)
-        
+
     def test_estimated(self):
         self.values = [date(1992, 10, 3), True]
         fvalues = self.f(self.values, preferred_formats=['html'])
-        age = round((date.today() - date(1992,10,3)).total_seconds()/60/60/24/365, 1) 
+        age = round((date.today() - date(1992,10,3)).total_seconds()/60/60/24/365, 1)
         self.assertEqual(OrderedDict([
-            ('Birthdate', '{} years old <em>(estimated)</em>'.format(age)),
+            ('Birthdate', '{0} years old <em>(estimated)</em>'.format(age)),
             ]), fvalues)
 
     def test_year(self):
@@ -48,7 +48,7 @@ class FormatTest(TestCase):
         self.assertEqual(OrderedDict([
             ('Birthdate', '1.0 year old'),
             ]), fvalues)
-    
+
     def test_year_est(self):
         dob = date.today() - timedelta(days=366)
         self.values = [dob, True]
@@ -156,7 +156,7 @@ class FormatTest(TestCase):
         self.assertEqual(OrderedDict([
             ('Birthdate', '2.5 years old'),
             ]), fvalues)
-    
+
     def test_half_month_empty_est(self):
         dob = date.today() - timedelta(days=45)
         self.values = [dob, None]
@@ -172,7 +172,7 @@ class FormatTest(TestCase):
         self.assertEqual(OrderedDict([
             ('Birthdate', '1.0 day old'),
             ]), fvalues)
-    
+
     def test_one_day_est(self):
         dob = date.today() - timedelta(days=1)
         self.values = [dob, True]
@@ -188,7 +188,7 @@ class FormatTest(TestCase):
         self.assertEqual(OrderedDict([
             ('Birthdate', '24.0 days old'),
             ]), fvalues)
-   
+
     def test_24_daysi_est(self):
         dob = date.today() - timedelta(days=24)
         self.values = [dob, True]

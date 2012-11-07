@@ -41,9 +41,9 @@ class AgeFormatter(HTMLFormatter):
         age, time = process_age(dob, date.today())
 
         if est:
-            return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
+            return "{0} {1} old <em class='muted'>(estimated)</em>".format(age, time)
         else:
-            return "{} {} old".format(age, time)
+            return "{0} {1} old".format(age, time)
 
     to_html.process_multiple = True
 
@@ -110,9 +110,9 @@ class EncounterAgeFormatter(HTMLFormatter):
         age, time = process_age(dob, enc_date)
 
         if est:
-            return "{} {} old <em class='muted'>(estimated)</em>".format(age, time)
+            return "{0} {1} old <em class='muted'>(estimated)</em>".format(age, time)
         else:
-            return "{} {} old".format(age, time)
+            return "{0} {1} old".format(age, time)
 
     to_html.process_multiple = True
 
@@ -137,9 +137,9 @@ class CbcPanelFormatter(HTMLFormatter):
         for name in test_names:
             if values[name] != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return "<div class='muted'><h5>No Complete Blood Count Panel</h5></div>"
 
     to_html.process_multiple = True
@@ -154,9 +154,9 @@ class Chem7PanelFormatter(HTMLFormatter):
         for name in test_names:
             if values[name] != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return "<div class='muted'><h5>No Chem7 Panel</h5></div>"
 
     to_html.process_multiple = True
@@ -171,9 +171,9 @@ class MiscPanelFormatter(HTMLFormatter):
         for name in test_names:
             if values[name] != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
     to_html.process_multiple = True
@@ -189,11 +189,11 @@ class SystemsFormatter(HTMLFormatter):
             if values[name] != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'systemsreview', name)
                 if values[name] == 'ABNORMAL':
-                    html_str += "<tr class=error><td>{}</td><td class=text-error>{}</td></tr>".format(data_field, values[name])
+                    html_str += "<tr class=error><td>{0}</td><td class=text-error>{1}</td></tr>".format(data_field, values[name])
                 else:
-                    html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                    html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
     to_html.process_multiple = True
@@ -208,9 +208,9 @@ class HIVDetailFormatter(HTMLFormatter):
         for name in test_names:
             if values[name] != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'hivdetails', name)
-                html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
     to_html.process_multiple = True
@@ -224,9 +224,9 @@ class TBDetailFormatter(HTMLFormatter):
         for name in test_names:
             if values[name] != None and values[name] != 'NONE':
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'tbdetails', name)
-                html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
     to_html.process_multiple = True
@@ -240,9 +240,9 @@ class PCPDetailFormatter(HTMLFormatter):
         for name in test_names:
             if values[name] != None and values[name] != 'NONE':
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'pcpdetails', name)
-                html_str += "<tr><td>{}</td><td>{}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
         if html_str != "":
-            return "<table class='table table-striped'>{}</table>".format(html_str)
+            return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
     to_html.process_multiple = True
@@ -251,7 +251,7 @@ class PCPDetailFormatter(HTMLFormatter):
 class MRNFormatter(HTMLFormatter):
     def to_html(self, value, **context):
         url = reverse('patient-detail', kwargs={'pk': value})
-        return '<a href="{}">MR{}</a>'.format(url, str(value).zfill(8))
+        return '<a href="{0}">MR{1}</a>'.format(url, str(value).zfill(8))
 
 
 registry.register(AgeFormatter, 'Age')
