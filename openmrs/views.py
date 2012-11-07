@@ -26,9 +26,9 @@ def get_vaccine_table(encounter):
                 r = recieved.pop(0)
             if len(ordered) > 0:
                 o = ordered.pop(-1)
-            vaccine_rows += "<tr><td>{}</td><td>{}</td></tr>".format(o, r)
+            vaccine_rows += "<tr><td>{0}</td><td>{1}</td></tr>".format(o, r)
 
-        return "<h4> Vaccinations </h4><table class='table table-bordered table-condensed'><thead><tr></tr><tr><th class='text-warning'>ORDERED</th><th class='text-info'>PREVIOUSLY RECIEVED</th></tr></thead><tbody>{}</tbody></table>".format(vaccine_rows)
+        return "<h4> Vaccinations </h4><table class='table table-bordered table-condensed'><thead><tr></tr><tr><th class='text-warning'>ORDERED</th><th class='text-info'>PREVIOUSLY RECIEVED</th></tr></thead><tbody>{0}</tbody></table>".format(vaccine_rows)
     return ""
 
 
@@ -87,9 +87,9 @@ def patient_view(request, pk):
         diags = ""
         diagnoses  = ""
         for diagnoses in e.diagnoses.all():
-            diags += "<li>{}</li>".format(diagnoses.name)
+            diags += "<li>{0}</li>".format(diagnoses.name)
         if diags:
-            diagnoses = "<h4>Diagnoses</h4><ul>{}</ul>".format(diags)
+            diagnoses = "<h4>Diagnoses</h4><ul>{0}</ul>".format(diags)
 
         hiv_details = HIVDetails.objects.filter(encounter=e)
         for h in hiv_details:
