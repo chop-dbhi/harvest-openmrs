@@ -9,9 +9,9 @@ django>=1.4,<1.5
 markdown
 south
 
-avocado>=2.0.3,<2.1
-serrano>=2.0.2,<2.1
-cilantro>=2.0.3,<2.1
+avocado>=2.0.7,<2.1
+serrano>=2.0.5,<2.1
+cilantro>=2.0.5,<2.1
 
 django-haystack==1.2.7
 whoosh==2.4.0

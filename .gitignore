@@ -24,6 +24,7 @@ etl/harvestdb.sqlite
 .sass-cache
 
 # Ignore local settings file intended for environment-specific settings
+settings
 local_settings.py
 
 # Collected static files via Django's staticfiles app
