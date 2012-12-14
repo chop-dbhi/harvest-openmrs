@@ -174,7 +174,10 @@ def deploy(commit, force=False):
 def make():
     "Rebuilds all static files using the Makefile."
     with prefix('rvm use default'):
-        verun('make')
+        if env.host == 'production':
+            verun('make sass collect')
+        else:
+            verun('make')
 
 
 @host_context
