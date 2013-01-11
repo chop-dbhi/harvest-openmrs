@@ -5,13 +5,13 @@
 #     pip install -U -r requirements.txt
 
 # Core requirements
-django>=1.4,<1.5
+django>=1.4.3,<1.5
 markdown
 south
 
-avocado==2.0.9
-serrano==2.0.7
-cilantro==2.0.6
+avocado==2.0.15
+serrano==2.0.11
+cilantro==2.0.7
 
 django-haystack==1.2.7
 whoosh==2.4.0
@@ -19,5 +19,5 @@ whoosh==2.4.0
 # Required for distribution charts. NumPy must be installed before
 # SciPy. To install SciPy on your system, refer to the installation
 # instructions http://www.scipy.org/Installing_SciPy
-# numpy
+# numpy==1.6.2
 # scipy==0.11.0
