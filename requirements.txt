@@ -14,8 +14,8 @@ Fabric==1.4.4
 # Database Drivers, the Python stdlib has support for SQLite
 psycopg2
 
-avocado==2.0.15
-serrano==2.0.11
+avocado==2.0.17
+serrano==2.0.13
 cilantro==2.0.7
 
 numpy==1.6.2
