@@ -284,3 +284,5 @@ MODELTREES = {
         'model': 'openmrs.patient',
     }
 }
+
+SERRANO_CORS_ENABLED = True
