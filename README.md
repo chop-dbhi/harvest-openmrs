@@ -66,7 +66,7 @@ $ make collect
 ### Run It
 
 ```bash
-$ ./bin/manage.py
+$ ./bin/manage.py runserver
 ```
 
 Open up your web browser to http://localhost:8000
