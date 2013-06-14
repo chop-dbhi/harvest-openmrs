@@ -4,6 +4,9 @@ from openmrs.models import (Patient, Encounter, LabResult, SystemsReview,
     EncounterVaccine, HIVDetails, TBDetails, PCPDetails)
 
 
+def landing(request):
+    return render(request, 'landing.html')
+
 def get_vaccine_table(encounter):
     # Get all Vaccine information
     enc_vac = EncounterVaccine.objects.filter(encounter=encounter)
@@ -30,7 +33,6 @@ def get_vaccine_table(encounter):
 
         return "<h4> Vaccinations </h4><table class='table table-bordered table-condensed'><thead><tr></tr><tr><th class='text-warning'>ORDERED</th><th class='text-info'>PREVIOUSLY RECIEVED</th></tr></thead><tbody>{0}</tbody></table>".format(vaccine_rows)
     return ""
-
 
 def patient_view(request, pk):
     p = get_object_or_404(Patient, pk=pk)

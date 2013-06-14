@@ -1,0 +1,10 @@
+.field-control {
+    > .control {
+        @include box-sizing(border-box);
+        @include inline-block;
+    }
+
+    .control-input {
+        @include inline-block;
+    }
+}

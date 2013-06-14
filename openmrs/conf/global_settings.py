@@ -20,7 +20,6 @@ INSTALLED_APPS = (
 
     'avocado',
     'serrano',
-    'cilantro',
     'south',
 
     'django.contrib.admin',
@@ -122,7 +121,6 @@ TEMPLATE_DIRS = ()
 # template context.
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'cilantro.context_processors.cilantro',
     'openmrs.context_processors.static',
 )
 

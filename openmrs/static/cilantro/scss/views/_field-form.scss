@@ -1,0 +1,40 @@
+.field-form {
+    .actions {
+        text-align: right;
+        border-top: 1px dashed #ccc;
+        padding-top: 10px;
+
+        > * {
+            margin-left: 5px;
+        }
+    }
+
+    &.condensed {
+        .stats-region, .chart-region {
+            display: none;
+        }
+
+        .info-region {
+            font-size: 0.9em;
+        }
+
+        .info-bar-chart {
+            .toolbar {
+                display: none;
+            }
+
+            .info-bar {
+                height: 20px;
+
+                .bar {
+                    height: 20px;
+                }
+
+                .bar-mask {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+}

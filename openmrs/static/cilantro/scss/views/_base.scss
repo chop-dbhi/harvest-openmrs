@@ -1,0 +1,15 @@
+.load-view, .error-view, .empty-view {
+    > i {
+        margin-right: 5px;
+    }
+}
+
+.load-view, .empty-view {
+    color: #999;
+}
+
+.error-view {
+    i {
+        @extend .text-error;
+    }
+}

@@ -1,0 +1,22 @@
+.concept-form {
+    .fields-region .field-form {
+        border-bottom: 1px dashed #ccc;
+        padding: 10px 0;
+
+        // No extra margins..
+        &:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+    }
+
+    .actions {
+        text-align: right;
+        border-top: 1px dashed #ccc;
+        padding-top: 10px;
+
+        > * {
+            margin-left: 5px;
+        }
+    }
+}
