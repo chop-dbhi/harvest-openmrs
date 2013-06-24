@@ -41,8 +41,12 @@ def patient_view(request, pk):
 
     dc = DataConcept.objects.get(ident="inter_birthdate")
     age = dc.format([p.birthdate_estimated, p.birthdate], preferred_formats=['html'])
-    p.age = age['inter_birthdate']
-
+    try:
+        p.age = age['birthdate_estimated']
+    except:
+        p.age = age['inter_birthdate']
+    finally:
+        p.age = '<em>Unavailable</em>'
     dc = DataConcept.objects.get(ident='inter_gender')
     gender = dc.format(p.gender, preferred_formats=['html'])
     p.gender = gender['gender']
