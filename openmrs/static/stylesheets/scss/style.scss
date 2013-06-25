@@ -181,12 +181,6 @@ body {
     margin-right: 10px;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
-    body {
-        background-image: url('images/furley_bg_@2x.png');
-    }
-}
-
 @media (max-width: 979px) {
     body {
         padding-top: 0;
