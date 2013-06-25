@@ -1,10 +1,10 @@
 Django==1.5.1
 South==0.8.1
-avocado==2.0.25b1
+avocado==2.0.24
 django-haystack==1.2.7
 django-preserialize==1.0.4
 jsonfield==0.9.4
 modeltree==1.1.7
 restlib2==0.3.7
-serrano==2.0.17b1
+serrano==2.0.16
 wsgiref==0.1.2
