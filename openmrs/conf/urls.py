@@ -10,15 +10,19 @@ add_to_builtins('avocado.templatetags.avocado_tags')
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
+    
+    # Landing Page
+    url(r'^$', 'openmrs.views.landing', name='landing'),
 
+    # Custom Patient Summary View
     url(r'^patient/(?P<pk>\d+)/$', 'openmrs.views.patient_view', name='patient-detail'),
 
-    # Harvest UI components
-    url(r'^', include('cilantro.urls')),
-    url(r'^workspace/', 'cilantro.views.app', name='cilantro'),
+    # Cilantro Pages
+    url(r'^workspace/', TemplateView.as_view(template_name='index.html'), name='workspace'),
+    url(r'^query/', TemplateView.as_view(template_name='index.html'), name='query'),
+    url(r'^results/', TemplateView.as_view(template_name='index.html'), name='results'),
 
-    # Harvest API
+    # Serrano Endpoint
     url(r'^api/', include('serrano.urls')),
 
     # Administrative components

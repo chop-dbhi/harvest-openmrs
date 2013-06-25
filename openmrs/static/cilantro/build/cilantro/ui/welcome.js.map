@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "welcome.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "welcome.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA;;kSAAA;;AAAA,CAAA,CAEI,CACD,GAHH,EAAO,CAGJ,mBAHI;CAKH,KAAA,qBAAA;CAAA,CAFA,qDAEA;CAAA,CAAA,CAAY,GAAA,GAAZ;CAAA,CAGM;CACF;;;;;CAAA;;CAAA,EAAW,MAAX;;CAAA,EAEU,IAFV,CAEA,CAAmB;;CAFnB;;CADkB,SAAY;SAMlC;CAAA,CAAE,EAAA,GAAF;CAXD;CAAA"
+}

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "nodes.js",
+  "sourceRoot": "../../../../coffee/cilantro/models/context/",
+  "sources": [
+    "nodes.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAID,GANH,GAMG,GANI,EAAA,EAAA,GAAA;CAQH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

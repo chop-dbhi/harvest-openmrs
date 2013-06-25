@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "numbers.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "numbers.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,CAAO,CAEJ,CAAA,GAFH,EAAO,CAEH;SAKA;CAAA,CAAa,CAAA,CAAb,CAAa,GAAA,CAAC,EAAd;;GAAmC,KAAT;QACtB;CAAA,GAAO,EAAP,OAAA;CACQ,EAAD,CAAH,IAAA,OAAA;MADJ,EAAA;CAGQ,CACe,CADhB,CAAH,CAAgB,EAAhB,KAAS,GAAT,EACmB;QALd;CAAb,IAAa;CALd;CAAA"
+}

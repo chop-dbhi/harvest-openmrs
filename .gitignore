@@ -8,7 +8,7 @@
 *.sock
 dist
 sdist
-build
+#build
 pip-log.txt
 MANIFEST
 
@@ -25,7 +25,7 @@ etl/harvestdb.sqlite
 # Ignore local settings file intended for environment-specific settings
 settings
 local_settings.py
-
+openmrs.db
 # Ignore compiled coffeescripts
 openmrs/static/scripts/javascript/src/core/mixins.js
 openmrs/static/scripts/javascript/src/environ.js

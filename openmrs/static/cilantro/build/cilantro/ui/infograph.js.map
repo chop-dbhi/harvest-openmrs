@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "infograph.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "infograph.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CACD,GAHH,EAAO,CAGJ,QAHI;CAKH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

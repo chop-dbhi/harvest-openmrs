@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "context.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "context.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAED,GAJH,GAAO,OAAA;CAMH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

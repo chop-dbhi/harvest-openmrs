@@ -8,6 +8,7 @@ class Patient(models.Model):
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthdate = models.DateField(null=True, blank=True)
     birthdate_estimated = models.NullBooleanField('birthdate estimated?', blank=True)
+    mrn_id = models.CharField(max_length=10, blank=False, null = False)
 
     class Meta(object):
         db_table = 'patient'

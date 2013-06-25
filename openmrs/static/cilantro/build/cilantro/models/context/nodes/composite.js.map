@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "composite.js",
+  "sourceRoot": "../../../../../coffee/cilantro/models/context/nodes/",
+  "sources": [
+    "composite.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA;kSAAA;;AAAA,CAAA,CAEG,CAAA,CAAA,EAFH,EAAO,CAEH;CAGA,KAAA,kBAAA;CAAA,CAAM;CACF;;;;;CAAA;;CAAA,EAAU,KAAV,GAAA;;CAAA,EAEU,EAAA,GAAV,CAAW;CACP,GAAO,EAAP,iBAAA;CACI,cAAO,aAAP;QAFE;CAFV,IAEU;;CAFV;;CAD6B,GAAI;SAQrC;CAAA,CAAE,EAAA,cAAF;CAXD;CAAA"
+}

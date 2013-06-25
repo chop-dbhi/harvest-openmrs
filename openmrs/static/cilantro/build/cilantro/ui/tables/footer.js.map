@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "footer.js",
+  "sourceRoot": "../../../../coffee/cilantro/ui/tables/",
+  "sources": [
+    "footer.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA;kSAAA;;AAAA,CAAA,CAEI,CACD,GAHH,CAAO,EAAA;CAMH,KAAA,MAAA;CAAA,CAAM;CACF;;;;;CAAA;;CAAA,EAAS,IAAT;;CAAA,EAEU,KAAV,CAAU;;CAFV;;CADiB,SAAY;SAMjC;CAAA,CAAE,EAAA,EAAF;CATD;CAAA"
+}

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "channels.js",
+  "sourceRoot": "../../../coffee/cilantro/session/",
+  "sources": [
+    "channels.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,CAAO,EAAA,GAAP,GAAO;SAEH;CAAA,CAAiB,EAAjB,WAAA,EAAA;CAAA,CACe,EAAf,SAAA,EADA;CAAA,CAEsB,EAAtB,gBAAA,EAFA;CAAA,CAGgB,EAAhB,UAAA,EAHA;CAAA,CAIgB,EAAhB,UAAA,EAJA;CAFG;CAAA"
+}

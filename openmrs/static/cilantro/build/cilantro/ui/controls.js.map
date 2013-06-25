@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "controls.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "controls.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAED,GAJH,EAAO,CAIJ,QAJI,CAAA;CAMH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

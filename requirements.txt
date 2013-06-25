@@ -1,24 +1,10 @@
-# This file collects all required third-party applications that are needed
-# to run this project. Later you can install all these apps in a row
-# using pip. Example::
-#
-#     pip install -U -r requirements.txt
-
-# Core requirements
-django>=1.4.3,<1.5
-markdown
-south
-uWSGI
-Fabric==1.4.4
-
-# Database Drivers, the Python stdlib has support for SQLite
-psycopg2
-
-avocado==2.0.17
-serrano==2.0.13
-cilantro==2.0.7
-
-numpy==1.6.2
-#scipy==0.11
+Django==1.5.1
+South==0.8.1
+avocado==2.0.24
 django-haystack==1.2.7
-whoosh==2.4.0
+django-preserialize==1.0.4
+jsonfield==0.9.4
+modeltree==1.1.7
+restlib2==0.3.7
+serrano==2.0.16
+wsgiref==0.1.2

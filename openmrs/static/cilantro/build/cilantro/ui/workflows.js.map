@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "workflows.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "workflows.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAED,GAJH,EAAO,CAIJ,UAJI,EAAA;CAMH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}
