@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "charts.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "charts.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAGD,GALH,EAAO,CAKJ,MALI,IAAA;CAOH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

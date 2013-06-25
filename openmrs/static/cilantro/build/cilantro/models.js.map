@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "models.js",
+  "sourceRoot": "../../coffee/cilantro/",
+  "sources": [
+    "models.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAQD,GAVH,EAAO,CAUJ,MAVI,CAAA,EAAA,CAAA,CAAA;CAYH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

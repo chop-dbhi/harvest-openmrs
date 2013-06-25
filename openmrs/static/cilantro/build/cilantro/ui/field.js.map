@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "field.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "field.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAID,GANH,EAAO,CAMJ,KANI,CAAA,GAAA;CAQH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}

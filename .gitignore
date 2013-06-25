@@ -8,7 +8,7 @@
 *.sock
 dist
 sdist
-build
+#build
 pip-log.txt
 MANIFEST
 

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "changelog.js",
+  "sourceRoot": "../../coffee/cilantro/",
+  "sources": [
+    "changelog.coffee"
+  ],
+  "names": [],
+  "mappings": "AAIA,CAAO,EAAA,GAAP,GAAO;CAEH,QAAO;KACH;CAAA,CAAS,IAAT,CAAA;CAAA,CACS,IAAT,CAAA;SACI;CAAA,CAAS,KAAT,GAAA,OAAA;UADK;QADT;MADG;CAFJ,GAEH;CAFG"
+}

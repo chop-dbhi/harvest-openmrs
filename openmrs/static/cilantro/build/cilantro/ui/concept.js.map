@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "concept.js",
+  "sourceRoot": "../../../coffee/cilantro/ui/",
+  "sources": [
+    "concept.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA,IAAA,cAAA;;AAAA,CAAA,CAEI,CAOD,GATH,EAAO,CASJ,OATI,CAAA,CAAA,CAAA,EAAA;CAWH,KAAA,OAAA;CAAA,CAFA,qDAEA;CAAC,CAAc,EAAA,EAAf,EAAA,CAAA,IAAW;CAFZ"
+}
