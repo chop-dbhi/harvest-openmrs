@@ -1,23 +1,15 @@
-# This file collects all required third-party applications that are needed
-# to run this project. Later you can install all these apps in a row
-# using pip. Example::
-#
-#     pip install -U -r requirements.txt
+Markdown
 
-# Core requirements
-django>=1.4.3,<1.5
-markdown
-south
+# WSGI server
+# uWSGI
 
-avocado==2.0.17
-serrano==2.0.13
-cilantro==2.0.7
+# Deployment with fabfile.py
+Fabric==1.4.4
 
+# Harvest components
+serrano==2.0.18
+
+# Harvest extensions
 django-haystack==1.2.7
 whoosh==2.4.0
-
-# Required for distribution charts. NumPy must be installed before
-# SciPy. To install SciPy on your system, refer to the installation
-# instructions http://www.scipy.org/Installing_SciPy
-# numpy==1.6.2
-# scipy==0.11.0
+openpyxl

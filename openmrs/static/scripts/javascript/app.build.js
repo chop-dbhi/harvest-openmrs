@@ -4,7 +4,7 @@
 ({
     // Optimize relative to this url (i.e. the current directory)
     baseUrl: '.',
-    
+
     // The source directory of the modules
     appDir: 'src',
 
@@ -15,7 +15,10 @@
 
     optimizeCss: 'none',
 
-    paths: {},
+    paths: {
+        'cilantro': 'empty:',
+        'project': '.'
+    },
 
     name: 'main'
 })

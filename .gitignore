@@ -19,13 +19,12 @@ etl/harvestdb_postgres.properties
 etl/harvestdb_sqlite.properties
 etl/harvestdb.sqlite
 
-# Sass/Coffee
-.watch-pid
-.sass-cache
-
 # Ignore local settings file intended for environment-specific settings
 settings
 local_settings.py
+
+# Ignore optimized javascripts
+openmrs/static/scripts/javascript/min
 
 # Collected static files via Django's staticfiles app
 _site/static

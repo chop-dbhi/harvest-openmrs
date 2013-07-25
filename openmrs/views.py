@@ -4,6 +4,10 @@ from openmrs.models import (Patient, Encounter, LabResult, SystemsReview,
     EncounterVaccine, HIVDetails, TBDetails, PCPDetails)
 
 
+def landing(request):
+    return render(request, 'landing.html')
+
+
 def get_vaccine_table(encounter):
     # Get all Vaccine information
     enc_vac = EncounterVaccine.objects.filter(encounter=encounter)

@@ -1,6 +1,6 @@
 import os
 
-# Import global settings to make it easier to extend settings. 
+# Import global settings to make it easier to extend settings.
 from django.conf.global_settings import *
 
 # Import the project module to calculate directories relative to the module
@@ -20,7 +20,6 @@ INSTALLED_APPS = (
 
     'avocado',
     'serrano',
-    'cilantro',
     'south',
 
     'django.contrib.admin',
@@ -133,7 +132,6 @@ TEMPLATE_DIRS = ()
 # template context.
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'cilantro.context_processors.cilantro',
     'openmrs.context_processors.static',
 )
 
@@ -201,6 +199,11 @@ SEND_BROKEN_LINK_EMAILS = False
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
     'handlers': {
         'null': {
             'level': 'DEBUG',
@@ -212,6 +215,7 @@ LOGGING = {
         },
         'mail_admins': {
             'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
         },
     },

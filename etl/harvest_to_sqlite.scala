@@ -57,6 +57,8 @@ tablenames.filter(_.startsWith("auth_")).foreach{ table =>
 
 sqlite truncateTable "avocado_datacontext"
 sqlite truncateTable "avocado_dataview"
+sqlite truncateTable "avocado_dataquery"
+sqlite truncateTable "avocado_log"
 
 sqlite commit
 
