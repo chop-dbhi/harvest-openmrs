@@ -6,6 +6,8 @@
 *.egg-info
 *.egg
 *.sock
+.fabhosts
+whoosh.index
 dist
 sdist
 build
