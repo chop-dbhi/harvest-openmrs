@@ -21,6 +21,7 @@ INSTALLED_APPS = (
     'avocado',
     'serrano',
     'south',
+    'haystack',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -275,3 +276,11 @@ MODELTREES = {
         'model': 'openmrs.patient',
     }
 }
+
+#
+# Haystack
+#
+
+HAYSTACK_SITECONF = 'avocado.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_PATH, 'whoosh.index')
