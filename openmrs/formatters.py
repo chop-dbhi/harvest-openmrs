@@ -250,8 +250,8 @@ class PCPDetailFormatter(HTMLFormatter):
 
 class MRNFormatter(HTMLFormatter):
     def to_html(self, value, **context):
-        url = reverse('patient-detail', kwargs={'pk': value})
-        return '<a href="{0}">MR{1}</a>'.format(url, str(value).zfill(8))
+        url = reverse('patient-detail', kwargs={'mrn': value})
+        return '<a href="{0}">{1}</a>'.format(url, value)
 
 
 registry.register(AgeFormatter, 'Age')
