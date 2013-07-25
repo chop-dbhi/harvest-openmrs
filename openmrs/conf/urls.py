@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # Serrano-compatible Endpoint
     url(r'^api/', include('serrano.urls')),
 
-    url(r'^patient/(?P<pk>\d+)/$', 'openmrs.views.patient_view', name='patient-detail'),
+    url(r'^patient/(?P<mrn>MRN\d+)/$', 'openmrs.views.patient_view', name='patient-detail'),
 
     # Administrative components
     url(r'^admin/', include(admin.site.urls)),

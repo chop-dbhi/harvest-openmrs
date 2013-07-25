@@ -36,8 +36,8 @@ def get_vaccine_table(encounter):
     return ""
 
 
-def patient_view(request, pk):
-    p = get_object_or_404(Patient, pk=pk)
+def patient_view(request, mrn):
+    p = get_object_or_404(Patient, mrn=mrn)
 
     enc = Encounter.objects.filter(patient=p).order_by('-encounter_datetime')
 
