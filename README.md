@@ -1,5 +1,7 @@
 # Harvest+OpenMRS
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/cbmi/harvest-openmrs/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 ## Prerequisites
 
 - Python 2.7
