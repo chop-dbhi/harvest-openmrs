@@ -17,6 +17,7 @@
 
     paths: {
         'cilantro': 'empty:',
+		'jquery': 'empty:',
         'project': '.'
     },
 

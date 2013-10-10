@@ -1,10 +1,3 @@
-{% load url from future %}
-
-var urlRoot = '{{ request.META.SCRIPT_NAME }}';
-if (urlRoot.charAt(urlRoot.length-1) !== '/') {
-    urlRoot = urlRoot + '/';
-}
-
 var csrf_token = '{{ csrf_token }}',
 
     require = {
@@ -21,11 +14,5 @@ var csrf_token = '{{ csrf_token }}',
 
     cilantro = {
         url: '{% url "serrano:root" %}',
-        autoload: true,
-        ui: {
-            main: '#content'
-        },
-        routes: {
-            root: urlRoot
-        }
+        main: '#content'
     };

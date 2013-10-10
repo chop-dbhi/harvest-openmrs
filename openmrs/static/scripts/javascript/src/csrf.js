@@ -1,4 +1,4 @@
-define(['cilantro'], function(c) {
+define(['jquery'], function($) {
 
     function sameOrigin(url) {
         var host = document.location.host,
