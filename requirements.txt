@@ -1,3 +1,4 @@
+Django>=1.5,<1.6
 Markdown
 
 # WSGI server
@@ -7,7 +8,7 @@ Markdown
 Fabric==1.4.4
 
 # Harvest components
-serrano==2.0.18
+serrano==2.1.1
 
 # Harvest extensions
 django-haystack==1.2.7

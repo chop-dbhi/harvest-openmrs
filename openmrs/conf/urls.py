@@ -11,6 +11,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name='landing.html'), name='landing'),
+    url(r'^workspace/', TemplateView.as_view(template_name='index.html'), name='workspace'),
     url(r'^query/', TemplateView.as_view(template_name='index.html'), name='query'),
     url(r'^results/', TemplateView.as_view(template_name='index.html'), name='results'),
 
