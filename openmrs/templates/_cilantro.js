@@ -14,5 +14,6 @@ var csrf_token = '{{ csrf_token }}',
 
     cilantro = {
         url: '{% url "serrano:root" %}',
-        main: '#content'
+        main: '#content',
+        root: '{{ request.META.SCRIPT_NAME }}'
     };
