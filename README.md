@@ -53,8 +53,8 @@ below will vary depending on the version of the build.
 
 ```bash
 $ wget https://github.com/cbmi/harvest-openmrs/zipball/demo
-$ unzip cbmi-harvest-openmrs-<random-chars>.zip
-$ mv cbmi-harvest-openmrs-<random-chars> harvest-openmrs
+$ unzip harvest-openmrs-<random-chars>.zip
+$ mv harvest-openmrs-<random-chars> harvest-openmrs
 $ cd harvest-openmrs
 ```
 

@@ -14,7 +14,7 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel=stylesheet href="{{ STATIC_URL }}cilantro/css/style.css">
-        <link rel=stylesheet href="{{ CSS_URL }}/style.css">
+        <link rel=stylesheet href="{{ STATIC_URL }}css/style.css">
         {% block styles %}{% endblock %}
     </head>
     <body>
@@ -42,7 +42,7 @@
         {% endblock %}
 
         <script>{% include "_cilantro.js" %}</script>
-        <script src="{{ STATIC_URL }}cilantro/js/require.js"></script>
+        <script data-main="cilantro/main" src="{{ STATIC_URL }}cilantro/js/require.js"></script>
         {% block scripts %}{% endblock scripts %}
 
         {% if not debug %}
