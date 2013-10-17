@@ -133,7 +133,6 @@ TEMPLATE_DIRS = ()
 # template context.
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'openmrs.context_processors.static',
 )
 
 
@@ -171,7 +170,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'serrano.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -299,3 +297,7 @@ SERRANO_CORS_ENABLED = True
 HAYSTACK_SITECONF = 'avocado.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_PATH, 'whoosh.index')
+
+AVOCADO = {
+    'DATA_CACHE_ENABLED': False,
+}
