@@ -9,7 +9,7 @@ psycopg2
 Fabric==1.4.4
 
 # Harvest components
-serrano==2.1.1
+serrano==2.1.2
 
 # Harvest extensions
 django-haystack==1.2.7
