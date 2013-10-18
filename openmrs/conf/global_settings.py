@@ -286,3 +286,5 @@ HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_PATH, 'whoosh.index')
 AVOCADO = {
     'DATA_CACHE_ENABLED': False,
 }
+
+SERRANO_CORS_ENABLED = True
