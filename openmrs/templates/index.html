@@ -1,1 +1,6 @@
 {% extends "base.html" %}
+
+{% block scripts %}
+    <script>{% include "_cilantro.js" %}</script>
+    <script data-main="cilantro/main" src="{{ STATIC_URL }}cilantro/js/require.js"></script>
+{% endblock %}
