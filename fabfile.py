@@ -164,7 +164,8 @@ def deploy(commit, force=False):
     install_deps(force)
     syncdb_migrate()
     make()
-    reload_nginx()
+    if env.host != 'production':
+        reload_nginx()
     reload_supervisor()
     reload_wsgi()
     mm_off()
@@ -173,11 +174,7 @@ def deploy(commit, force=False):
 @host_context
 def make():
     "Rebuilds all static files using the Makefile."
-    with prefix('rvm use default'):
-        if env.host == 'production':
-            verun('make sass collect')
-        else:
-            verun('make')
+    verun('make')
 
 
 @host_context
