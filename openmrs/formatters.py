@@ -95,6 +95,15 @@ class AgeFormatter(HTMLFormatter):
 
     to_number.process_multiple = True
 
+    def to_csv(self, values, **context):
+        return str(self.to_string(values, **context)[0]['value'])
+
+    to_csv.process_multiple = True
+
+    def to_excel(self, values, **context):
+        return self.to_csv(values, **context)
+
+    to_excel.process_multiple = True
 
 class EncounterAgeFormatter(HTMLFormatter):
 
