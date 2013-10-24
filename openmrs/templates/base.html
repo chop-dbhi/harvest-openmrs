@@ -18,8 +18,15 @@
         {% block styles %}{% endblock %}
     </head>
     <body>
-        <!--[if lt IE 9]><p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p><![endif]-->
-
+        <!--[if lt IE 9]>
+        <div class=container-fluid>
+            <div class=row-fluid>
+                <div class=span12>
+                    <div class="alert alert-block alert-error"><h4>You are using an outdated browser.</h4> Harvest currently requires Chrome, Firefox, Safari or Internet Explorer 9+. <a href="http://whatbrowser.org/">See what browser your are using and how to upgrade or download a different browser for free.</a></div>
+                </div>
+            </div>
+        </div>
+        <![endif]-->
 
         {% block header %}
             {% include "_header.html" %}
@@ -42,6 +49,8 @@
         {% endblock %}
 
         {% block scripts %}{% endblock scripts %}
+        <script>{% include "_cilantro.js" %}</script>
+        <script data-main="cilantro/main" src="{{ STATIC_URL }}cilantro/js/require.js"></script>
 
         {% if not debug %}
         <script>

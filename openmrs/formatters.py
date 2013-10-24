@@ -47,54 +47,22 @@ class AgeFormatter(HTMLFormatter):
 
     to_html.process_multiple = True
 
-    def to_string(self, values, **context):
+    def to_csv(self, values, **context):
         dob = values['birthdate']
-        est = values['birthdate_estimated']
 
         if not dob:
-            return [{'value': None, 'time': None, 'est':None}]
+            return 'N/A'
 
         age, time = process_age(dob, date.today())
 
-        if est:
-            return [{'value':str(age), 'time':time, 'est': 'estimated'}]
-        else:
-            return [{'value':str(age), 'time':time, 'est':''}]
+        return str(age)
 
-    to_string.process_multiple = True
+    to_csv.process_multiple = True
 
-    def to_boolean(self, values, **context):
-        dob = values['birthdate']
-        est = values['birthdate_estimated']
+    def to_excel(self, values, **context):
+        return self.to_csv(values, **context)
 
-        if not dob:
-            return [{'value': None, 'time': None, 'est':None}]
-
-        age, time = process_age(dob, date.today())
-
-        if est:
-            return [{'value':age, 'time':time, 'est': True}]
-        else:
-            return [{'value':age, 'time':time, 'est': False}]
-
-    to_boolean.process_multiple = True
-
-    def to_number(self,values, **context):
-        dob = values['birthdate']
-        est = values['birthdate_estimated']
-
-        if not dob:
-            return [{'value': None, 'time': None, 'est':None}]
-
-        age, time = process_age(dob, date.today())
-
-        if est:
-            return [{'age':age, 'time':time, 'est':est}]
-        else:
-            return [{'age':age, 'time':time, 'est':est}]
-
-    to_number.process_multiple = True
-
+    to_excel.process_multiple = True
 
 class EncounterAgeFormatter(HTMLFormatter):
 
