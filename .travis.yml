@@ -22,7 +22,7 @@ before_script:
     - "python headless_testing/test/start_ghostdriver.py"
 script:
     - "python -m unittest discover -s test --pattern=test*.py"
-    - coverage run --source='.' manage.py test openmrs	
+    - coverage run --source='.' ./bin/manage.py test openmrs	
     - ./bin/manage.py test openmrs
 after_success:
     - coveralls
