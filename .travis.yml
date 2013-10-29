@@ -1,12 +1,30 @@
 language: python
 
+branches:
+    only:
+        - test
 python:
-- "2.7"
-
-install: "pip install -r requirements.txt --use-mirrors"
-
-script:
-- "python -m unittest discover -s test --pattern=test*.py"
-
+    - 2.6
+    - 2.7
+env:
+    - DJANGO=1.4.5
+    - DJANGO=1.5.1
+virtualenv:
+    system_site_packages: true
+before_install:
+    - phantomjs --webdriver=10000 &
+install:
+    - pip install -q coveralls Django==$DJANGO --use-mirrors
+    - pip install -r requirements.txt --use-mirrors
+services:
+    - memcache
 before_script:
-- "python test/start_ghostdriver.py"
+    - "python headless_testing/test/start_ghostdriver.py"
+script:
+    - "python -m unittest discover -s test --pattern=test*.py"
+    - coverage run --source='.' manage.py test openmrs	
+    - ./bin/manage.py test openmrs
+after_success:
+    - coveralls
+
+
