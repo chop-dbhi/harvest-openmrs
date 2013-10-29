@@ -1,5 +1,8 @@
 language: python
 
+branches:
+    only:
+        - test
 python:
     - 2.6
     - 2.7
