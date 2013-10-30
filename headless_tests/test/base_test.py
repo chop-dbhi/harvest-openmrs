@@ -38,7 +38,7 @@ class BaseTest(unittest.TestCase):
         # Reading configuration
         self.config = properties.Properties()
         #self.config.load(open("../config.ini"))
-        self.config.load(open("headless_test/config.ini"))
+        self.config.load(open("headless_tests/config.ini"))
 
         # Preparing Capabilities
         self.caps = {

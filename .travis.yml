@@ -21,10 +21,10 @@ install:
 services:
     - memcache
 before_script:
-    - "python headless_test/test/start_ghostdriver.py"
-    - "cp headless_test/settings.py openmrs/conf/local_settings.py"
+    - "python headless_tests/test/start_ghostdriver.py"
+    - "cp headless_tests/settings.py openmrs/conf/local_settings.py"
 script:
-    - "python -m unittest discover -s headless_test/test --pattern=test*.py"
+    - "python -m unittest discover -s headless_tests/test --pattern=test*.py"
     - coverage run --source='.' ./bin/manage.py test openmrs	
     - ./bin/manage.py test openmrs
 after_success:
