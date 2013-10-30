@@ -58,7 +58,7 @@ class BaseTest(unittest.TestCase):
         else:
             self.driver = webdriver.Remote(
                 #command_executor="http://localhost:8080/wd/hub",
-                command_executor="http://localhost:1000/wd/hub",
+                command_executor="http://localhost:8150/wd/hub",
 		desired_capabilities=self.caps)
 
     def tearDown(self):
