@@ -16,6 +16,8 @@ before_install:
 install:
     - pip install -q coveralls Django==$DJANGO --use-mirrors
     - pip install -r requirements.txt --use-mirrors
+    - pip install discover==0.4.0
+    - pip install selenium==2.28.0 
 services:
     - memcache
 before_script:
