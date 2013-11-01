@@ -8,3 +8,9 @@ from global_settings import PROJECT_PATH, LOGGING, DATABASES
 
 SECRET_KEY = '12345678900987654321abcdefghijlmnopqrtuvwyz'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_PATH, 'openmrs.db'),
+    }
+}
