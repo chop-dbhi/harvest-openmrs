@@ -6,7 +6,9 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import base_test
 class VerifyPatientMRN000001(base_test.BaseTest):
-    def setUpOld(self):
+    def setUpNA(self):
+	#NOT APPLICABLE WITH PHANTOMJS
+	#PARENT SETUP WILL BE USED
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8004/"
@@ -20,9 +22,13 @@ class VerifyPatientMRN000001(base_test.BaseTest):
         driver.find_element_by_css_selector("div.heading").click()
         driver.find_element_by_link_text("Age").click()
         driver.find_element_by_xpath("//div[@id='content']/div/div[2]/div[3]/div/div[3]/div/button[2]").click()
-        driver.find_element_by_link_text("MRN000001").click()
-        driver.get_screenshot_as_file('screen_shots/VerifyPatientMRN000001.png')
-    
+        try:
+            driver.find_element_by_link_text("MRN000001").click()
+            assert 1
+        except:
+            driver.get_screenshot_as_file("{0}/{1}/{2}/{3}/{4}".format(os.getcwd(),"headless_tests","test","screen_shots","VerifyPatientMRN000001.png"))
+            assert 0, "Link MRN000001 not found"
+
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException, e: return False

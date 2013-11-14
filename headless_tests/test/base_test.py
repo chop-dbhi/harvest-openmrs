@@ -57,12 +57,11 @@ class BaseTest(unittest.TestCase):
             self.driver = webdriver.Firefox()
         else:
             self.driver = webdriver.Remote(
-                #command_executor="http://localhost:8080/wd/hub",
                 command_executor="http://localhost:8150/wd/hub",
 		desired_capabilities=self.caps)
             
         
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(2)
         
         self.base_url = "http://localhost:8004"
         self.verificationErrors = []
