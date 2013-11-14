@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import base_test
+import os
 class VerifyPatientMRN000001(base_test.BaseTest):
     def setUpNA(self):
 	#NOT APPLICABLE WITH PHANTOMJS
