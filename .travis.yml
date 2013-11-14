@@ -23,6 +23,7 @@ services:
 before_script:
     - "python headless_tests/test/start_ghostdriver.py"
     - "cp headless_tests/settings.py openmrs/conf/local_settings.py"
+    - "./bin/manage.py runserver 0.0.0.0:8004"
 script:
     - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatient*.py"
 #    - coverage run --source='.' ./bin/manage.py test openmrs	
