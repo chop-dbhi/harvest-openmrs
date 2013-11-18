@@ -29,8 +29,8 @@ before_script:
     - "rm -rf headless_tests/test/screen_shots/*"
     - "rm -rf headless_tests/test/log/*"
 script:
-#    - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatient*0000*.py"
-    - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN000001.py"
+    - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN*.py"
+#    - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN000001.py"
     - "ls headless_tests/test/screen_shots"
 #    - coverage run --source='.' ./bin/manage.py test openmrs	
 #    - ./bin/manage.py test openmrs
