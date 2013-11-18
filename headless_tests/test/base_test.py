@@ -28,7 +28,7 @@
 import properties
 import unittest
 from selenium import webdriver
-
+from settings import *
 
 class BaseTest(unittest.TestCase):
 
@@ -57,13 +57,13 @@ class BaseTest(unittest.TestCase):
             self.driver = webdriver.Firefox()
         else:
             self.driver = webdriver.Remote(
-                command_executor="http://localhost:8150/wd/hub",
+                command_executor="http://{0}:{1}/wd/hub".format(DEVELOPMENT_SERVER_HOST,PHANTOMJS_GHOSTDRIVER_PORT),
 		desired_capabilities=self.caps)
             
         
         self.driver.implicitly_wait(2)
         
-        self.base_url = "http://localhost:8004"
+        self.base_url = "http://{0}:{1}".format(DEVELOPMENT_SERVER_HOST,DEVELOPMENT_SERVER_PORT)
         self.verificationErrors = []
         self.accept_next_alert = True    
 
