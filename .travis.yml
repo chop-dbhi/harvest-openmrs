@@ -22,7 +22,7 @@ services:
     - memcache
 before_script:
     - "python headless_tests/test/start_ghostdriver.py"
-    - "sleep 10"	
+    - "sleep 10"
     - "cp headless_tests/settings.py openmrs/conf/local_settings.py"
     - "./bin/manage.py runserver 0.0.0.0:8004 &"
     - "sleep 10"
