@@ -12,7 +12,7 @@ env:
 virtualenv:
     system_site_packages: true
 before_install:
-    - phantomjs --webdriver=8150 &
+#    - phantomjs --webdriver=8150 &
 install:
     - pip install -q coveralls Django==$DJANGO --use-mirrors
     - pip install -r requirements.txt --use-mirrors
