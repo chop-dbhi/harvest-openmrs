@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unittest, time, re
 import base_test
 import os
-class VerifyPatientMRN00024301(unittest.TestCase):
+class VerifyPatientMRN000243(base_test.BaseTest):
     def setUpNA(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -14,7 +14,7 @@ class VerifyPatientMRN00024301(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_verify_patient_m_r_n00024301(self):
+    def test_verify_patient_m_r_n000243(self):
         driver = self.driver
         driver.get(self.base_url + "/")
         driver.find_element_by_link_text("To The Demo!").click()
