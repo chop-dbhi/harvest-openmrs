@@ -61,7 +61,7 @@ class BaseTest(unittest.TestCase):
 		desired_capabilities=self.caps)
             
         
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(20)
         
         self.base_url = "http://{0}:{1}".format(DEVELOPMENT_SERVER_HOST,DEVELOPMENT_SERVER_PORT)
         self.verificationErrors = []
