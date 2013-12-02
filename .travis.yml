@@ -9,6 +9,11 @@ python:
 env:
     - DJANGO=1.4.5
     - DJANGO=1.5.1
+    global:
+      - "ARTIFACTS_AWS_REGION=us-east-1"
+      - "ARTIFACTS_S3_BUCKET=chop_cbmi_tiu_travisci"
+      - secure: ".......long encrypted string............."
+      - secure: ".......another long encrypted string....."
 virtualenv:
     system_site_packages: true
 before_install:
@@ -28,6 +33,7 @@ before_script:
     - "sleep 10"
     - "rm -rf headless_tests/test/screen_shots/*"
     - "rm -rf headless_tests/test/log/*"
+    - "gem install travis-artifacts"
 script:
     - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN*.py"
 #    - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN000243.py"
