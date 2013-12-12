@@ -46,6 +46,8 @@ script:
   #- ./bin/manage.py test openmrs
 
 after_script:
+  #This should after_test , not sure why it didn't work there
+  "travis-artifacts upload --target-path headless_tests/test/screen_shots:screen_shots"
   #- "travis-artifacts upload --path logs --path a/long/nested/path:short_alias"
 
 after_failure: # this will of course run only on failure
