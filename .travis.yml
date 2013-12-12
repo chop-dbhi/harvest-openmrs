@@ -7,18 +7,21 @@ python:
   #- 2.6
   - 2.7
 env:
-  - DJANGO=1.4.5
-  - DJANGO=1.5.1
-     global:
-       - "ARTIFACTS_AWS_REGION=us-west-2"
-       - "ARTIFACTS_S3_BUCKET=chop_cbmi_tiu_travisci"
-       - secure: "eauLZfWhP3bliVwBebwrh99BuO1iqHoEkVwbD/kHsjKPQY5WwaBfsROKXgOhc0sQVMMX4pyQe33jSEgogFe5claLTLNlMnkf2NAMFlRlQ8/ICUfLyiif/N7vWk940Cztbh7wFQiWW69FdbAmI8/xBiTzjgNIdc+80qRfKMMGiK8="
-       - secure: "KX6OC+YNmd7QdlttAZi0h6ut++owxegM/cQdX5LsRUm1G9gIMbeusreinZi7twM/MWYry1bbGjEERtyBvKUrelrdSJ8jeaidrLjxWBWQhtYm9tEAhZkSywaXZ62cd5gdyhMJHTMCcwwmkpnYJTSCOzp3k+C9pct+5ZTbyQNFek4="
+  global:
+    - "ARTIFACTS_AWS_REGION=us-west-2"
+    - "ARTIFACTS_S3_BUCKET=chop_cbmi_tiu_travisci"
+    - secure: "eauLZfWhP3bliVwBebwrh99BuO1iqHoEkVwbD/kHsjKPQY5WwaBfsROKXgOhc0sQVMMX4pyQe33jSEgogFe5claLTLNlMnkf2NAMFlRlQ8/ICUfLyiif/N7vWk940Cztbh7wFQiWW69FdbAmI8/xBiTzjgNIdc+80qRfKMMGiK8="
+    - secure: "KX6OC+YNmd7QdlttAZi0h6ut++owxegM/cQdX5LsRUm1G9gIMbeusreinZi7twM/MWYry1bbGjEERtyBvKUrelrdSJ8jeaidrLjxWBWQhtYm9tEAhZkSywaXZ62cd5gdyhMJHTMCcwwmkpnYJTSCOzp3k+C9pct+5ZTbyQNFek4="
+     
+    - DJANGO=1.4.5
+    - DJANGO=1.5.1
 
 virtualenv:
   system_site_packages: true
+
 before_install:
   #- phantomjs --webdriver=8150 &
+
 install:
   - pip install -q coveralls Django==$DJANGO --use-mirrors
   - pip install -r requirements.txt --use-mirrors
