@@ -9,11 +9,12 @@ python:
 env:
     - DJANGO=1.4.5
     - DJANGO=1.5.1
-    global:
-      - "ARTIFACTS_AWS_REGION=us-east-1"
-      - "ARTIFACTS_S3_BUCKET=chop_cbmi_tiu_travisci"
-      - secure: ".......long encrypted string............."
-      - secure: ".......another long encrypted string....."
+      global:
+        - "ARTIFACTS_AWS_REGION=us-west-2"
+        - "ARTIFACTS_S3_BUCKET=chop_cbmi_tiu_travisci"
+        - secure: "eauLZfWhP3bliVwBebwrh99BuO1iqHoEkVwbD/kHsjKPQY5WwaBfsROKXgOhc0sQVMMX4pyQe33jSEgogFe5claLTLNlMnkf2NAMFlRlQ8/ICUfLyiif/N7vWk940Cztbh7wFQiWW69FdbAmI8/xBiTzjgNIdc+80qRfKMMGiK8="
+        - secure: "KX6OC+YNmd7QdlttAZi0h6ut++owxegM/cQdX5LsRUm1G9gIMbeusreinZi7twM/MWYry1bbGjEERtyBvKUrelrdSJ8jeaidrLjxWBWQhtYm9tEAhZkSywaXZ62cd5gdyhMJHTMCcwwmkpnYJTSCOzp3k+C9pct+5ZTbyQNFek4="
+
 virtualenv:
     system_site_packages: true
 before_install:
@@ -40,5 +41,15 @@ script:
     - "ls headless_tests/test/screen_shots"
 #    - coverage run --source='.' ./bin/manage.py test openmrs	
 #    - ./bin/manage.py test openmrs
+
+after_script:
+  - "travis-artifacts upload --path screenshots --path headless_tests/test/screen_shots:screen_shots"
+  #- "travis-artifacts upload --path logs --path a/long/nested/path:short_alias"
+
+after_failure: # this will of course run only on failure
+  #- "travis-artifacts upload --path debug/debug.log"
+
+
 after_success:
     - coveralls
+    #- "travis-artifacts upload --path build/build.tar.gz"
