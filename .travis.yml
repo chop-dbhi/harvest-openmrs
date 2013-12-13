@@ -9,7 +9,7 @@ python:
 env:
   global:
     - "ARTIFACTS_AWS_REGION=us-west-2"
-    - "ARTIFACTS_S3_BUCKET=edu_chop_cbmi_tiu_travisci"
+    - "ARTIFACTS_S3_BUCKET=edu.chop.cbmi.tiu.travisci"
     - secure: "eauLZfWhP3bliVwBebwrh99BuO1iqHoEkVwbD/kHsjKPQY5WwaBfsROKXgOhc0sQVMMX4pyQe33jSEgogFe5claLTLNlMnkf2NAMFlRlQ8/ICUfLyiif/N7vWk940Cztbh7wFQiWW69FdbAmI8/xBiTzjgNIdc+80qRfKMMGiK8="
     - secure: "KX6OC+YNmd7QdlttAZi0h6ut++owxegM/cQdX5LsRUm1G9gIMbeusreinZi7twM/MWYry1bbGjEERtyBvKUrelrdSJ8jeaidrLjxWBWQhtYm9tEAhZkSywaXZ62cd5gdyhMJHTMCcwwmkpnYJTSCOzp3k+C9pct+5ZTbyQNFek4="
     
