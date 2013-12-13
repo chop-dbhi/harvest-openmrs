@@ -50,11 +50,11 @@ script:
 
 after_script:
   #This should after_test , not sure why it didn't work there
-  - "travis-artifacts upload --target-path harvest-openmrs/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --path headless_tests/test/screen_shots/*"
+  - "travis-artifacts upload --target-path harvest-openmrs/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --path headless_tests/test/screen_shots"
   #- "travis-artifacts upload --path logs --path a/long/nested/path:short_alias"
 
 after_failure: # this will of course run only on failure
-  - "travis-artifacts upload --target-path harvest-openmrs/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --path headless_tests/test/log/*"
+  - "travis-artifacts upload --target-path harvest-openmrs/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --path headless_tests/test/log"
 
 
 after_success:
