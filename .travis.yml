@@ -62,5 +62,5 @@ after_success:
   #- "travis-artifacts upload --path build/build.tar.gz"
 
 after_test:
-  - "travis-artifacts upload --target-path headless_tests/test/screen_shots:screen_shots"
+  - "travis-artifacts upload --target-path headless_tests/test/screen_shots" --path VerifyPatientMRN000029.png"
 
