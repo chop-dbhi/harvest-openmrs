@@ -62,7 +62,7 @@ class BaseTest(unittest.TestCase):
             
         
         self.driver.implicitly_wait(20)
-        
+        self.driver.set_window_size((800,600) 
         self.base_url = "http://{0}:{1}".format(DEVELOPMENT_SERVER_HOST,DEVELOPMENT_SERVER_PORT)
         self.verificationErrors = []
         self.accept_next_alert = True    
