@@ -12,6 +12,6 @@ avocado>=2.2.1,<2.3.0
 serrano>=2.2.0,<2.3.0
 
 # Harvest extensions
-django-haystack==2.0.0
+django-haystack==1.2.7
 whoosh==2.4.1
 openpyxl
