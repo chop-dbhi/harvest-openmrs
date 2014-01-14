@@ -7,7 +7,8 @@ from .diagnoses.models import Diagnosis
 class Patient(models.Model):
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthdate = models.DateField(null=True, blank=True)
-    birthdate_estimated = models.NullBooleanField('birthdate estimated?', blank=True)
+    birthdate_estimated = models.NullBooleanField('birthdate estimated?',
+                                                  blank=True)
     mrn = models.CharField(max_length=10, null=True)
 
     class Meta(object):
@@ -28,7 +29,8 @@ class Encounter(models.Model):
 
     drugs = models.ManyToManyField(Drug, db_table='encounter_drug')
     vaccines = models.ManyToManyField(Vaccine, through='EncounterVaccine')
-    diagnoses = models.ManyToManyField(Diagnosis, db_table='encounter_diagnosis')
+    diagnoses = models.ManyToManyField(Diagnosis,
+                                       db_table='encounter_diagnosis')
     referrals = models.ManyToManyField(Referral, db_table='encounter_referral')
 
     class Meta(object):
@@ -55,7 +57,8 @@ class LabResult(models.Model):
     mcv = models.FloatField('mean corpuscular volume (MCV)', null=True)
     hct = models.FloatField('hematocrit', null=True)
     rdw = models.FloatField('red cell distribution width (RDW)', null=True)
-    mchc = models.FloatField('mean cell hemoglobin concentration (MCHC)', null=True)
+    mchc = models.FloatField('mean cell hemoglobin concentration (MCHC)',
+                             null=True)
     mch = models.FloatField('mean corpuscular hemoglobin (MCH)', null=True)
 
     # Chem7
@@ -79,11 +82,13 @@ class LabResult(models.Model):
 
 class SystemsReview(models.Model):
     encounter = models.ForeignKey(Encounter)
-    heent = models.CharField('head, eye, ear, neck, throat (HEENT) exam', max_length=30, null=True)
+    heent = models.CharField('head, eye, ear, neck, throat (HEENT) exam',
+                             max_length=30, null=True)
     chest = models.CharField('chest exam', max_length=30, null=True)
     abdominal = models.CharField('abdominal exam', max_length=30, null=True)
     cardiac = models.CharField('cardiac exam', max_length=30, null=True)
-    musculoskeletal = models.CharField('musculoskeletal exam', max_length=30, null=True)
+    musculoskeletal = models.CharField('musculoskeletal exam', max_length=30,
+                                       null=True)
     neurologic = models.CharField('neurologic exam', max_length=30, null=True)
 
     class Meta(object):
@@ -93,12 +98,17 @@ class SystemsReview(models.Model):
 class HIVDetails(models.Model):
     encounter = models.ForeignKey(Encounter)
     plan = models.CharField(max_length=30, null=True)
-    treat_adhere = models.CharField('treatment adherence last week', max_length=30, null=True)
+    treat_adhere = models.CharField('treatment adherence last week',
+                                    max_length=30, null=True)
     stage_adult = models.CharField('stage (adult)', max_length=30, null=True)
-    stage_adult_last = models.CharField('stage change since last visit (adult)', max_length=30, null=True)
+    stage_adult_last = models.CharField('stage change since last '
+                                        'visit (adult)', max_length=30,
+                                        null=True)
     stage_peds = models.CharField('stage (peds)', max_length=30, null=True)
     cdc_category = models.CharField('CDC category', max_length=30, null=True)
-    taking_antiretrovirals = models.CharField('currently taking antiretrovial medications', max_length=10, null=True)
+    taking_antiretrovirals = models.CharField('currently taking antiretrovial '
+                                              'medications', max_length=10,
+                                              null=True)
     discordant_couple = models.CharField(max_length=10, null=True)
 
     class Meta(object):
@@ -109,9 +119,11 @@ class HIVDetails(models.Model):
 
 class TBDetails(models.Model):
     encounter = models.ForeignKey(Encounter)
-    treat_adhere = models.CharField('treatment adherence last week', max_length=30, null=True)
+    treat_adhere = models.CharField('treatment adherence last week',
+                                    max_length=30, null=True)
     treat_plan = models.CharField('treatment plan', max_length=30, null=True)
-    pro_adhere = models.CharField('prophylaxis adherence last week', max_length=30, null=True)
+    pro_adhere = models.CharField('prophylaxis adherence last week',
+                                  max_length=30, null=True)
     pro_plan = models.CharField('prophylaxis plan', max_length=30, null=True)
 
     class Meta(object):
@@ -123,7 +135,8 @@ class TBDetails(models.Model):
 class PCPDetails(models.Model):
     encounter = models.ForeignKey(Encounter)
     plan = models.CharField(max_length=30, null=True)
-    pro_adhere = models.CharField('prophylaxis adherence last week', max_length=30, null=True)
+    pro_adhere = models.CharField('prophylaxis adherence last week',
+                                  max_length=30, null=True)
 
     class Meta(object):
         db_table = 'pcp_details'
