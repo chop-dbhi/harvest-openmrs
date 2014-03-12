@@ -116,7 +116,8 @@ def merge_commit(commit):
 @host_context
 def syncdb_migrate():
     "Syncs and migrates the database using South."
-    verun('./bin/manage.py syncdb --migrate')
+    verun('./bin/manage.py syncdb')
+    verun('./bin/manage.py migrate --ignore-ghost-migrations')
 
 @host_context
 def rebuild_search_index():
