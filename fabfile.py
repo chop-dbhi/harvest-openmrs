@@ -118,6 +118,10 @@ def syncdb_migrate():
     "Syncs and migrates the database using South."
     verun('./bin/manage.py syncdb --migrate')
 
+@host_context
+def rebuild_search_index():
+    "Rebuilds the search index."
+    verun('./bin/manage.py rebuild_index --noinput')
 
 @host_context
 def symlink_nginx():
@@ -167,6 +171,7 @@ def deploy(commit, force=False):
     install_deps(force)
     syncdb_migrate()
     make()
+    rebuild_search_index()
     if env.host != 'production':
         reload_nginx()
     reload_supervisor()
