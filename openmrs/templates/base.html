@@ -41,9 +41,8 @@
             {% include "_footer.html" %}
         {% endblock %}
 
-        {% block scripts %}{% endblock scripts %}
         <script>{% include "_cilantro.js" %}</script>
-        <script data-main="cilantro/main" src="{{ STATIC_URL }}cilantro/js/require.js"></script>
+        {% block scripts %}{% endblock scripts %}
 
         {% if not debug %}
         <script>
