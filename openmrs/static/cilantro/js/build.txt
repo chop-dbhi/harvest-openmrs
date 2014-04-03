@@ -14,14 +14,7 @@ cilantro/models/base.js
 cilantro/models/stats.js
 cilantro/models/field.js
 cilantro/models/concept.js
-cilantro/models/context/nodes/base.js
-cilantro/models/context/nodes/condition.js
-cilantro/models/context/nodes/branch.js
-cilantro/models/context/nodes/composite.js
-cilantro/models/context/nodes.js
-cilantro/evented.js
-cilantro/models/context/manager.js
-cilantro/models/context/model.js
+cilantro/models/filters.js
 cilantro/models/context.js
 cilantro/models/view.js
 cilantro/models/paginator.js
@@ -32,8 +25,6 @@ cilantro/models/exporter.js
 cilantro/models/query.js
 cilantro/models/value.js
 cilantro/models.js
-loglevel.js
-cilantro/logger.js
 cilantro/router.js
 cilantro/session.js
 text.js
@@ -70,10 +61,9 @@ tpl!templates/export/batch.html
 tpl!templates/export/progress.html
 tpl!templates/context/panel.html
 tpl!templates/context/actions.html
-tpl!templates/context/empty.html
 tpl!templates/context/info.html
-tpl!templates/context/item.html
-tpl!templates/context/tree.html
+tpl!templates/context/empty.html
+tpl!templates/context/filter.html
 tpl!templates/controls/infograph/bar.html
 tpl!templates/controls/infograph/layout.html
 tpl!templates/controls/infograph/toolbar.html
@@ -134,6 +124,7 @@ cilantro/ui/charts/dist.js
 cilantro/ui/charts/axis.js
 cilantro/ui/charts/editable.js
 cilantro/ui/charts.js
+cilantro/ui/config.js
 cilantro/ui/field/stats.js
 cilantro/ui/field/controls.js
 cilantro/ui/field/form.js
@@ -147,8 +138,7 @@ cilantro/ui/concept/columns/layout.js
 cilantro/ui/concept/columns/dialog.js
 cilantro/ui/concept/columns.js
 cilantro/ui/concept.js
-cilantro/ui/context/item.js
-cilantro/ui/context/tree.js
+cilantro/ui/context/filters.js
 cilantro/ui/context/info.js
 cilantro/ui/context/actions.js
 cilantro/ui/context/panel.js

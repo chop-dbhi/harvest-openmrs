@@ -1,0 +1,2 @@
+define(["underscore","marionette","../core"],function(t,e,o){var r=e.ItemView.extend({template:"context/info",ui:{query:"[data-route=query]",results:"[data-route=results]"},initialize:function(){t.bindAll(this,"toggleButton"),o.router.on("route",this.toggleButton)},toggleButton:function(){this.ui.query.toggle(o.router.isCurrent("results")),this.ui.results.toggle(o.router.isCurrent("query"))},onRender:function(){this.toggleButton()}});return{ContextInfo:r}});
+//# sourceMappingURL=info.js.map

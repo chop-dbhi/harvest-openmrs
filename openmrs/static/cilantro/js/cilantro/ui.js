@@ -1,0 +1,2 @@
+define(["underscore","./ui/core","./ui/base","./ui/button","./ui/concept","./ui/field","./ui/charts","./ui/context","./ui/controls","./ui/exporter","./ui/tables","./ui/query","./ui/workflows","./ui/paginator","./ui/notify"],function(u){var i=[].slice.call(arguments,2);return u.extend.apply(null,[{}].concat(i))});
+//# sourceMappingURL=ui.js.map
