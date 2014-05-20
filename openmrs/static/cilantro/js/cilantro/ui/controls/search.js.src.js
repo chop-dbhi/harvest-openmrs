@@ -146,6 +146,10 @@ define([
 
 	searchPaginator: SearchPaginator,
 
+	events: {
+	    'click [data-action=clear]': 'clearValues'
+	},
+
 	regions: {
 	    search: '.search-region',
 	    paginator: '.paginator-region',
@@ -210,6 +214,10 @@ define([
 	    this.values.show(valuesRegion);
 	},
 
+	clearValues: function() {
+	   this.values.currentView.clear();
+	},
+
 	getField: function() {
 	    if (this.model) return this.model.id;
 	},
@@ -230,6 +238,40 @@ define([
 	    // Do not merge into existing models since the collection contains
 	    // additional state (which would be removed due to the merge).
 	    this.collection.set(value, {merge: false});
+	},
+
+	validate: function(attrs) {
+	    var pending, invalid = [];
+
+	    // If a call is still pending, warn the user that they are too
+	    // fast for their own good and to try again in a bit.
+	    pending = this.collection.any(function(value) {
+		return value.get('pending') === true;
+	    });
+
+	    if (pending) {
+		return 'The values are being checked, please wait a few ' +
+		       'seconds then click &quot;Apply Filter&quot; again.';
+	    }
+
+	    // Get a list of labels for all the elements in the collection that
+	    // were found to be invalid during the last call to the values
+	    // endpoint on the server. If no such elements exist, then this
+	    // control is deemed valid.
+	    this.collection.each(function(value) {
+		if (!value.get('valid')) {
+		    invalid.push(value.get('label'));
+		}
+	    });
+
+	    if (invalid.length) {
+		return 'Remove the following invalid labels then click ' +
+		       '&quot;Apply Filter&quot; again: ' + invalid.join(', ');
+	    }
+
+	    if (attrs && (!attrs.value || !attrs.value.length)) {
+		return 'At least one value must be selected';
+	    }
 	}
 
     });

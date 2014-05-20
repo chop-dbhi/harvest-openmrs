@@ -43,6 +43,14 @@ define([
 	// Convenience option: Credentials for the default session
 	credentials: null,
 
+	/*
+	 * Threshold for showing counts of results as rounded and/or
+	 * prefixed numbers. Set this threshold to be a number and if the
+	 * displayed counts are less than the threshold, there will be no
+	 * rounding and the count will be displayed as is(precise).
+	 */
+	threshold: null,
+
 
 	/*
 	 * Timeouts
@@ -181,8 +189,11 @@ define([
     // Takes N number of option objects with increasing precedence and deep
     // merges them with the default options.
     var Config = function() {
-	var options = [].slice.call(arguments);
+	this.reset.apply(this, arguments);
+    };
 
+    Config.prototype.reset = function() {
+	var options = [].slice.call(arguments);
 	this.options = $.extend.apply(null, [true, {}, defaultOptions].concat(options));
     };
 
@@ -192,6 +203,10 @@ define([
 
     Config.prototype.set = function(key, value) {
 	utils.setDotProp(this.options, key, value);
+    };
+
+    Config.prototype.unset = function(key) {
+	utils.setDotProp(this.options, key, undefined);
     };
 
 

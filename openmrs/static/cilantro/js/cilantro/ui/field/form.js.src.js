@@ -188,7 +188,7 @@ define([
 	},
 
 	renderFilter: function() {
-	    this.ui.apply.prop('disabled', false);
+	    this.ui.apply.prop('disabled', true);
 	    this.ui.update.prop('disabled', true);
 	    this.ui.state.hide();
 
@@ -208,16 +208,24 @@ define([
 		});
 
 		if (this.data.context.hasFilterChanged(this.data.filter, keys)) {
-		    this.ui.update.prop('disabled', false);
+		    if (this.validateFilter({silent: true})) {
+			this.ui.apply.prop('disabled', false);
+			this.ui.update.prop('disabled', false);
+		    }
 		}
 	    }
 	    else {
 		this.ui.apply.show();
 		this.ui.update.hide();
+		if (this.validateFilter({silent: true})) {
+		    this.ui.apply.prop('disabled', false);
+		}
 	    }
 	},
 
-	validateFilter: function() {
+	validateFilter: function(options) {
+	    options = _.extend({}, options);
+
 	    var message,
 		messages = [],
 		attrs = this.data.filter.toJSON();
@@ -232,7 +240,9 @@ define([
 
 	    if (messages.length) {
 		this.validationErrors = messages;
-		this.ui.state.html(messages.join('<br>')).show();
+		if (!options.silent) {
+		    this.ui.state.html(messages.join('<br>')).show();
+		}
 		return false;
 	    }
 
