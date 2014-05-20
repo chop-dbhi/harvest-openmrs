@@ -88,6 +88,9 @@ define(['underscore', 'backbone', '../core', './base'], function(_, Backbone, c,
 
     ViewModel.prototype.jsonToFacets = function(json) {
       var attrs, columns, i, id, models, ordering, sort, _i, _id, _j, _len, _len1, _ref;
+      if (json == null) {
+        json = {};
+      }
       if (_.isArray(json)) {
         this.facets.reset(json);
         return;
