@@ -1,0 +1,2 @@
+define(["underscore","./base"],function(e,t){var n=function(e){if(!e.href)return"Untitled";var t,n=e.href;return t="/"===n.charAt(n.length-1)?n.substr(0,n.length-1).split("/"):n.split("/"),t.length>0?t[t.length-1].toUpperCase():"Untitled "+n},r=t.Model.extend({idAttribute:"type"}),l=t.Collection.extend({model:r,parse:function(t){var r=[];return e.each(t._links,function(t,l){"self"!==l&&(t=e.extend({type:l},t),t.title||(t.title=n(t)),r.push(t))}),r}});return{ExporterModel:r,ExporterCollection:l}});
+//# sourceMappingURL=exporter.js.map
