@@ -1,0 +1,2 @@
+define(["underscore","./core"],function(n,i){var t=function(t,e){var o,r,s=[{}],u=i.config.get(e+".instances."+t.id+".form");n.isFunction(u)?o=u:n.isString(u)?r=u:n.isObject(u)&&s.push(u);var c=i.config.get(e+".types."+t.get("type")+".form");!o&&n.isFunction(c)?o=c:!r&&n.isString(c)?r=c:s.push(c);var f=i.config.get(e+".defaults.form");return!o&&n.isFunction(f)?o=f:!r&&n.isString(f)?r=f:s.push(f),s=n.defaults.apply(null,s),{view:o,module:r,options:s}};return{resolveFormOptions:t}});
+//# sourceMappingURL=config.js.map

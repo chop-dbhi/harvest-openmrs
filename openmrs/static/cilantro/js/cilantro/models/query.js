@@ -1,0 +1,2 @@
+define(["./base"],function(e){var r=e.Model.extend({parse:function(r,s){return r&&!r.shared_users&&(r.shared_users=[]),e.Model.prototype.parse.call(this,r,s)}}),s=e.Collection.extend({model:r});return{Query:r,Queries:s}});
+//# sourceMappingURL=query.js.map

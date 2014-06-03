@@ -1,14 +1,16 @@
 body {
-    padding-top: 60px;
+    padding-top: 40px;
+}
+
+.panel {
+    padding-top: 40px;
 }
 
 #footer {
-    border-top: 1px solid #ddd;
     color: #777;
-    background-color: #eee;
-    text-shadow: 0 1px 2px #fff;
-    padding: 20px;
-    margin-top: 20px;
+    margin: 20px 0;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
     text-align: center;
 }
 

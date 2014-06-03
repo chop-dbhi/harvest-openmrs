@@ -1,0 +1,2 @@
+define(["underscore","./models/base","./models/field","./models/concept","./models/context","./models/filters","./models/view","./models/paginator","./models/results","./models/exporter","./models/query","./models/value"],function(e){var l=[].slice.call(arguments,1);return e.extend.apply(null,[{}].concat(l))});
+//# sourceMappingURL=models.js.map
