@@ -1,0 +1,3 @@
+CREATE USER openmrs WITH SUPERUSER PASSWORD 'openmrs';
+
+CREATE DATABASE openmrs WITH OWNER openmrs;
