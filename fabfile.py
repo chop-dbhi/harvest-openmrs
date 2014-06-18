@@ -107,14 +107,22 @@ def merge_commit(commit):
     "Fetches the latest code and merges up the specified commit."
     with cd(env.path):
         run('git fetch')
+        if '@' in commit:
+            branch, commit = commit.split('@')
+            run('git checkout {0}'.format(branch))
         run('git merge {0}'.format(commit))
 
 
 @host_context
 def syncdb_migrate():
     "Syncs and migrates the database using South."
-    verun('./bin/manage.py syncdb --migrate')
+    verun('./bin/manage.py syncdb')
+    verun('./bin/manage.py migrate --ignore-ghost-migrations')
 
+@host_context
+def rebuild_search_index():
+    "Rebuilds the search index."
+    verun('./bin/manage.py rebuild_index --noinput')
 
 @host_context
 def symlink_nginx():
@@ -164,6 +172,7 @@ def deploy(commit, force=False):
     install_deps(force)
     syncdb_migrate()
     make()
+    rebuild_search_index()
     if env.host != 'production':
         reload_nginx()
     reload_supervisor()
