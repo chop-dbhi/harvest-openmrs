@@ -3,7 +3,8 @@ language: python
 branches:
   only:
     - headless_test
- 
+    - continuous_deployment
+
 python:
   #- 2.6
   - 2.7
@@ -13,12 +14,18 @@ env:
     - "ARTIFACTS_S3_BUCKET=edu.chop.cbmi.tiu.travisci"
     - secure: "eauLZfWhP3bliVwBebwrh99BuO1iqHoEkVwbD/kHsjKPQY5WwaBfsROKXgOhc0sQVMMX4pyQe33jSEgogFe5claLTLNlMnkf2NAMFlRlQ8/ICUfLyiif/N7vWk940Cztbh7wFQiWW69FdbAmI8/xBiTzjgNIdc+80qRfKMMGiK8="
     - secure: "KX6OC+YNmd7QdlttAZi0h6ut++owxegM/cQdX5LsRUm1G9gIMbeusreinZi7twM/MWYry1bbGjEERtyBvKUrelrdSJ8jeaidrLjxWBWQhtYm9tEAhZkSywaXZ62cd5gdyhMJHTMCcwwmkpnYJTSCOzp3k+C9pct+5ZTbyQNFek4="
-    
     - S3_POLICY="ewoJIlZlcnNpb24iOiAiMjAwOC0xMC0xNyIsCgkiSWQiOiAiUG9saWN5MTM4Njg4ODIxMTgyNCIsCgkiU3RhdGVtZW50IjogWwoJCXsKCQkJIlNpZCI6ICJTdG10MTM4Njg4ODE5MjE5MSIsCgkJCSJFZmZlY3QiOiAiQWxsb3ciLAoJCQkiUHJpbmNpcGFsIjogewoJCQkJIkFXUyI6ICIqIgoJCQl9LAoJCQkiQWN0aW9uIjogInMzOioiLAoJCQkiUmVzb3VyY2UiOiAiYXJuOmF3czpzMzo6OmVkdV9jaG9wX2NibWlfdGl1X3RyYXZpc2NpLyoiCgkJfQoJXQp9Cg=="
     - S3_SIGNATURE="DzomQiBA4U8Q3o4INLpJv1Py07U="
-     
     - DJANGO=1.4.5
     - DJANGO=1.5.1
+    - APP_NAME=openmrs
+    - DEVELOPMENT_SERVER_HOST='localhost'
+    - DEVELOPMENT_SERVER_PORT=8004
+    - PHANTOMJS_PORT=8150
+    - PHANTOMJS_HOST='localhost'
+    - LOG_FILE=$APP_NAME_phantomjs.log
+    - APP_ENV='localhost'
+
 
 virtualenv:
   system_site_packages: true
@@ -27,37 +34,37 @@ before_install:
   #- phantomjs --webdriver=8150 &
 
 install:
+  - npm install phantomjs
   - pip install -q coveralls Django==$DJANGO --use-mirrors
   - pip install -r requirements.txt --use-mirrors
   - pip install discover==0.4.0
-  - pip install selenium==2.28.0 
+  - pip install selenium==2.28.0
 services:
   - memcache
 before_script:
   - "python headless_tests/test/start_ghostdriver.py"
   - "sleep 8"
   - "cp headless_tests/settings.py openmrs/conf/local_settings.py"
-  - "./bin/manage.py runserver 0.0.0.0:8004 &"
+  - "./bin/manage.py runserver 0.0.0.0:8000 &"
   - "sleep 10"
   - "rm -rf headless_tests/test/screen_shots/*"
   - "rm -rf headless_tests/test/log/*"
   - "gem install travis-artifacts"
 script:
-  - "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN*.py"
+  - "python -m unittest discover -s headless_tests/test --pattern=Verify*.py"
   #- "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN000243.py"
   - "ls headless_tests/test/screen_shots"
-  #- coverage run --source='.' ./bin/manage.py test openmrs	
+  #- coverage run --source='.' ./bin/manage.py test openmrs
   #- ./bin/manage.py test openmrs
 
 after_script:
   #This should after_test , not sure why it didn't work there
   - "travis-artifacts upload --target-path $TRAVIS_REPO_SLUG/$TRAVIS_BRANCH/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --path headless_tests/test/screen_shots"
-  
+
 after_failure: # this will of course run only on failure
   - "travis-artifacts upload --target-path $TRAVIS_REPO_SLUG/$TRAVIS_BRANCH/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID --path headless_tests/test/log"
 
 after_success:
   - coveralls
-  
-after_test:
 
+after_test:
