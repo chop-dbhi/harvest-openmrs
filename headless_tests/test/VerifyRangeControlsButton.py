@@ -7,7 +7,7 @@ import unittest, time
 
 class VerifyRangeControlsButton(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.PhantomJS()
         self.driver.implicitly_wait(30)
         self.base_url = "http://localhost:8000/"
         self.verificationErrors = []
@@ -29,7 +29,7 @@ class VerifyRangeControlsButton(unittest.TestCase):
         driver.find_element_by_css_selector("input.range-lower").clear()
         driver.find_element_by_css_selector("input.range-lower").send_keys("3")
         driver.find_element_by_css_selector("input.range-lower").clear()
-        driver.find_element_by_xpath("//div[@id='c28f30']/div[5]/button").isEnabled()
+        self.assertEqual(driver.find_element_by_xpath("//div[@id='c28f30']/div[5]/button").is_enabled(), False)
 
     def is_element_present(self, how, what):
         try:

@@ -50,6 +50,7 @@ before_script:
   - "rm -rf headless_tests/test/screen_shots/*"
   - "rm -rf headless_tests/test/log/*"
   - "gem install travis-artifacts"
+  - "./bin/manage.py syncdb --migrate"
 script:
   - "python -m unittest discover -s headless_tests/test --pattern=Verify*.py"
   #- "python -m unittest discover -s headless_tests/test --pattern=VerifyPatientMRN000243.py"
