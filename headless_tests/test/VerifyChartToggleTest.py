@@ -5,7 +5,7 @@ from selenium.common.exceptions import NoSuchElementException, \
 import unittest, time
 
 
-class VerifyDateChooserTest(unittest.TestCase):
+class VerifyChartToggleTest(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.PhantomJS()
         self.driver.implicitly_wait(30)
@@ -13,7 +13,7 @@ class VerifyDateChooserTest(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
 
-    def test_verify_date_chooser(self):
+    def test_verify_chart_toggle(self):
         driver = self.driver
         driver.set_window_size(1440, 900)
         driver.get(self.base_url)
@@ -28,13 +28,24 @@ class VerifyDateChooserTest(unittest.TestCase):
         driver.find_element_by_link_text("Age").click()
         for i in range(60):
             try:
-                if self.is_element_present(By.CSS_SELECTOR, "g.highcharts-series"): break
+                if self.is_element_present(By.CSS_SELECTOR, "div.bar-mask"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_css_selector("input.range-lower").send_keys("06/28/2014")
-        driver.find_element_by_css_selector("input.range-upper").send_keys("06/30/2014")
-        driver.find_element_by_css_selector("button[data-action=\"apply\"]").click()
+        driver.find_element_by_css_selector("div.bar-mask").click()
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "div.selected"))
+        driver.find_element_by_name("exclude").click()
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "div.excluded"))
+        driver.find_element_by_name("exclude").click()
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "div.selected"))
+        driver.find_element_by_xpath("//div[2]/div[5]/button[2]").click()
+        for i in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, "div[data-target=\"description\"]"): break
+            except: pass
+            time.sleep(1)
+        else: self.fail("time out")
+        driver.find_element_by_css_selector("div.context-filter > div > button.btn.btn-mini").click()
         driver.find_element_by_css_selector("span.brand").click()
 
     def is_element_present(self, how, what):
