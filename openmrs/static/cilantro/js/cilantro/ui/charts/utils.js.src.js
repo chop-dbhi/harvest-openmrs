@@ -43,8 +43,6 @@ define(['underscore', 'highcharts'], function(_, Highcharts) {
       chartType = 'scatter';
     } else if (yEnum) {
       chartType = 'scatter';
-    } else if (xType === 'datetime' || yType === 'datetime') {
-      chartType = 'line';
     } else {
       chartType = 'column';
     }

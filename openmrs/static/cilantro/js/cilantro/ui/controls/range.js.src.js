@@ -105,13 +105,13 @@ define([
                 operator = this.operatorSelect.getSelection(),
                 reverse = operator !== 'range';
 
-            if (lower && upper) {
+            if (lower !== '' && upper !== '') {
                 operator = operator;
             }
-            else if (lower) {
+            else if (lower !== '') {
                 operator = reverse ? 'lte' : 'gte';
             }
-            else if (upper) {
+            else if (upper !== '') {
                 operator = reverse ? 'gte' : 'lte';
             }
             else {
@@ -148,20 +148,24 @@ define([
                 lower = this.getLowerBoundValue(),
                 upper = this.getUpperBoundValue();
 
-            if (!_.isUndefined(lower) && !_.isUndefined(upper)) {
+            if (_.exists(lower) && _.exists(upper)) {
                 value = [lower, upper];
             }
-            else if (!_.isUndefined(lower)) {
+            else if (_.exists(lower)) {
                 value = lower;
             }
-            else if (!_.isUndefined(upper)) {
+            else if (_.exists(upper)) {
                 value = upper;
-            }
-            else {
-                value = null;
             }
 
             return value;
+        },
+
+        isFocused: function(element) {
+            // We need to compare the element against the activeElement on the
+            // document because the :focus psuedoselector is buggy in some
+            // browsers.
+            return document.activeElement === element;
         },
 
         setOperator: function(operator) {
@@ -185,7 +189,12 @@ define([
         },
 
         setLowerBoundValue: function(value) {
-            this.ui.lowerBound.val(value);
+            // Since ui.upperBound is techinically just the result of a selector
+            // it is really an array so we use the first element to check for
+            // the focused state.
+            if (!this.isFocused(this.ui.lowerBound[0])) {
+                this.ui.lowerBound.val(value);
+            }
         },
 
         // This method updates the upper bound text box placeholder with the
@@ -199,7 +208,12 @@ define([
         },
 
         setUpperBoundValue: function(value) {
-            this.ui.upperBound.val(value);
+            // Since ui.upperBound is techinically just the result of a selector
+            // it is really an array so we use the first element to check for
+            // the focused state.
+            if (!this.isFocused(this.ui.upperBound[0])) {
+                this.ui.upperBound.val(value);
+            }
         },
 
         // Override set method due to the dependency of the operator
