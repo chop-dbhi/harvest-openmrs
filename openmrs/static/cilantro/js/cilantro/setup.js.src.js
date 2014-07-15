@@ -1,13 +1,14 @@
 /* global define */
 
 define([
+    'underscore',
     'backbone',
     'marionette',
     'jquery',
     'loglevel',
     './core',
     './ui'
-], function(Backbone, Marionette, $, loglevel, c, ui) {
+], function(_, Backbone, Marionette, $, loglevel, c, ui) {
 
     // Set configuration options for corresponding APIs
     c.templates.set(c.config.get('templates', {}));
@@ -30,6 +31,11 @@ define([
             template = defaultCompileTemplate(template);
         }
         return template;
+    };
+
+    // See http://documentcloud.github.io/underscore-contrib/#exists
+    _.exists = function(value) {
+        return !_.isUndefined(value) && !_.isNull(value);
     };
 
     // Initialize notification stream and append it to the body
@@ -62,27 +68,39 @@ define([
     // Relies on the jquery-ajax-queue plugin to supply this method.
     // This ensures data is not silently lost
     $(window).on('beforeunload', function() {
-        if (c.config.get('debug') || !$.hasPendingRequest()) return;
+        if (c.config.get('debug') || !$.hasPendingRequest()) {
+            // Turn off ajax error handling to prevent unwanted notifications displaying
+            $(document).off('ajaxError');
+            return;
+        }
 
         return "Wow, you're quick! Your data is being saved. " +
                "It will only take a moment.";
     });
 
     $(document).ajaxError(function(event, xhr, settings, exception) {
-        // Status of 0 is an aborted request which is usually intentional
-        // by the app or from a page reload.
-        // An empty exception value is an unknown error which usually
-        // means the server is unavailable
-        if (xhr.status === 0 || exception) return;
+        // A statusText value of 'abort' is an aborted request which is
+        // usually intentional by the app or from a page reload.
+        if (xhr.statusText === 'abort') return;
 
+        var message = '';
+
+        if (xhr.status === 0 && exception === '') {
+            // An empty exception value is an unknown error which usually
+            // means the server is unavailable.
+            message = 'The application is no longer responding.';
+        } else {
+            // General purpose error message
+            message = 'There is a communication problem with the server. ' +
+                '<a href="#" onclick="location.reload()">Refreshing</a> ' +
+                'the page may help.';
+        }
         c.notify({
             timeout: null,
             dismissable: false,
             level: 'error',
             header: 'Uh oh.',
-            message: 'There is a communication problem with the server. ' +
-                '<a href="#" onclick="location.reload()">Refreshing</a> ' +
-                'the page may help.'
+            message: message
         });
     });
 

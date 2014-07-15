@@ -11,8 +11,8 @@ psycopg2
 Fabric==1.4.4
 
 # Harvest components
-avocado>=2.3.3,<2.4.0
-serrano>=2.3.4,<2.4.0
+avocado>=2.3.4,<2.4.0
+serrano>=2.3.5,<2.4.0
 
 # Harvest extensions
 django-haystack==2.0.0

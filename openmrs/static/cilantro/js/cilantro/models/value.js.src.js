@@ -45,8 +45,6 @@ define([
     var Values = Backbone.Collection.extend({
         model: Value,
 
-        comparator: 'label',
-
         options: {
             check: true
         },
@@ -56,7 +54,7 @@ define([
 
             // If values must be checked, bind to the add event
             if (options.check) {
-                this.on('add', _.debounce(this.check, constants.INPUT_DELAY));
+                this.on('add reset', _.debounce(this.check, constants.INPUT_DELAY));
             }
         },
 
