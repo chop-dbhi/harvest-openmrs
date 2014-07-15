@@ -1,2 +1,2 @@
-define(["jquery"],function(r){var e=function(r){var e=document.createElement("a");return e.href=r,e},n=function(n,t){if(!t)return n;for(var a=e(n),u={},i=a.search.substr(1).split("&"),o=0;o<i.length;o++){var c=i[o].split("=");c[0]&&(u[c[0]]=window.decodeURIComponent(c[1]))}return r.extend(u,t),a.search="?"+r.param(u),a.href};return{linkParser:e,alterUrlParams:n}});
+define(["jquery"],function(r){var e=function(r){var e=document.createElement("a");return e.href=r,e},n=function(n,t){if(!t)return n;for(var a=e(n),u={},c=a.search.substr(1).split("&"),f=0;f<c.length;f++){var i=c[f].split("=");i[0]&&(u[i[0]]=decodeURIComponent(i[1].replace("+"," ")))}return r.extend(u,t),a.search="?"+r.param(u),a.href};return{linkParser:e,alterUrlParams:n}});
 //# sourceMappingURL=url.js.map

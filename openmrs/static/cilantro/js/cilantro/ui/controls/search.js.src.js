@@ -10,7 +10,7 @@ define([
     '../paginator',
     '../values',
     '../search'
-], function($, _, Marionette, base, models, constants, paginator, values, search) {
+], function($, _, Marionette, controls, models, constants, paginator, values, search) {
 
     // Single page of values
     var SearchPageModel = models.Page.extend({
@@ -36,39 +36,19 @@ define([
 	initialize: function(items, options) {
 	    options = options || {};
 	    this.field = options.field;
+	    this.currentUrl = null;
 	    models.Paginator.prototype.initialize.call(this, items, options);
 	},
 
 	url: function() {
-	    var url = this.field.links.values;
+	    var url = this.currentUrl || this.field.links.values;
+
 	    if (this.urlParams) {
 		url = url + '?' + $.param(this.urlParams);
 	    }
 	    return url;
 	}
     });
-
-
-    // View for querying field values
-    var ValueSearch = search.Search.extend({
-	className: 'field-search search',
-
-	initialize: function() {
-	    search.Search.prototype.initialize.call(this);
-	    this.paginator = this.options.paginator;
-	},
-
-	search: function(query) {
-	    if (query) {
-		this.options.paginator.urlParams = {query: query};
-	    } else {
-		this.paginator.urlParams = null;
-	    }
-
-	    this.paginator.refresh();
-	}
-    });
-
 
     // Single search result item
     var SearchItem = Marionette.ItemView.extend({
@@ -79,7 +59,8 @@ define([
 	ui: {
 	    actions: '.actions',
 	    addButton: '.add-item-button',
-	    removeButton: '.remove-item-button'
+	    removeButton: '.remove-item-button',
+	    label: '.value-label'
 	},
 
 	events: {
@@ -121,6 +102,11 @@ define([
 
 	onRender: function() {
 	    this.setState();
+	    if (this.ui.label.html() === '') {
+		this.ui.label.html('(empty)');
+	    } else if (this.ui.label.html() === 'null') {
+		this.ui.label.html('(null)');
+	    }
 	}
     });
 
@@ -139,7 +125,7 @@ define([
     });
 
 
-    var SearchControl = base.ControlLayout.extend({
+    var SearchControl = controls.ControlLayout.extend({
 	className: 'field-value-search',
 
 	template: 'controls/search/layout',
@@ -158,7 +144,7 @@ define([
 	},
 
 	regionViews: {
-	    search: ValueSearch,
+	    search: search.Search,
 	    paginator: paginator.Paginator,
 	    browse: SearchPageRoll,
 	    values: values.ValueList
@@ -190,9 +176,11 @@ define([
 	onRender: function() {
 	    var searchRegion = new this.regionViews.search({
 		model: this.model,
-		paginator: this.valuesPaginator,
 		placeholder: 'Search ' + this.model.get('plural_name') + '...'
 	    });
+
+	    // Listen to search events
+	    this.listenTo(searchRegion, 'search', this.handleSearch);
 
 	    var browseRegion = new this.regionViews.browse({
 		collection: this.valuesPaginator,
@@ -214,8 +202,13 @@ define([
 	    this.values.show(valuesRegion);
 	},
 
+	handleSearch: function(query) {
+	    this.valuesPaginator.urlParams = query ? {query: query} : null;
+	    this.valuesPaginator.refresh();
+	},
+
 	clearValues: function() {
-	   this.values.currentView.clear();
+	    this.collection.reset();
 	},
 
 	getField: function() {
@@ -241,32 +234,32 @@ define([
 	},
 
 	validate: function(attrs) {
-	    var pending, invalid = [];
-
 	    // If a call is still pending, warn the user that they are too
 	    // fast for their own good and to try again in a bit.
-	    pending = this.collection.any(function(value) {
+	    var pending = this.collection.any(function(value) {
 		return value.get('pending') === true;
 	    });
 
 	    if (pending) {
-		return 'The values are being checked, please wait a few ' +
-		       'seconds then click &quot;Apply Filter&quot; again.';
+		return 'The entered ' + this.model.get('plural_name') +
+		       ' are being validated.';
 	    }
 
 	    // Get a list of labels for all the elements in the collection that
 	    // were found to be invalid during the last call to the values
 	    // endpoint on the server. If no such elements exist, then this
 	    // control is deemed valid.
-	    this.collection.each(function(value) {
-		if (!value.get('valid')) {
-		    invalid.push(value.get('label'));
+	    var invalid = [];
+
+	    this.collection.each(function(model) {
+		if (model.get('valid') === false) {
+		    invalid.push(model.get('label'));
 		}
 	    });
 
 	    if (invalid.length) {
-		return 'Remove the following invalid labels then click ' +
-		       '&quot;Apply Filter&quot; again: ' + invalid.join(', ');
+		return 'The following ' + this.model.get('plural_name') +
+		       ' are invalid: <pre>' + invalid.join('\n') + '</pre>';
 	    }
 
 	    if (attrs && (!attrs.value || !attrs.value.length)) {
@@ -278,7 +271,6 @@ define([
 
     return {
 	SearchControl: SearchControl,
-	ValueSearch: ValueSearch,
 	SearchItem: SearchItem,
 	SearchPage: SearchPage,
 	SearchPageRoll: SearchPageRoll,
