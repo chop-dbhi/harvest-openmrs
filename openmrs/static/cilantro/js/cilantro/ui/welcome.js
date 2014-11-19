@@ -1,2 +1,58 @@
-var __hasProp={}.hasOwnProperty,__extends=function(e,t){function r(){this.constructor=e}for(var o in t)__hasProp.call(t,o)&&(e[o]=t[o]);return r.prototype=t.prototype,e.prototype=new r,e.__super__=t.prototype,e};define(["underscore","marionette"],function(e,t){var r;return r=function(e){function t(){return t.__super__.constructor.apply(this,arguments)}return __extends(t,e),t.prototype.className="welcome",t.prototype.template="welcome",t}(t.ItemView),{Welcome:r}});
-//# sourceMappingURL=welcome.js.map
+/* global define */
+
+define([
+    'underscore',
+    'marionette'
+], function(_, Marionette) {
+
+    var Welcome = Marionette.ItemView.extend({
+	className: 'welcome',
+
+	template: 'welcome',
+
+	ui: {
+	    firstTime: '[data-target=first-time]',
+	    welcomeBack: '[data-target=welcome-back]'
+	},
+
+	initialize: function() {
+	    this.data = {};
+
+	    if (!(this.data.context = this.options.context)) {
+		throw new Error('context model required');
+	    }
+
+	    this.listenTo(this.data.context, 'change', this.renderWelcomeMessage);
+	},
+
+	renderWelcomeMessage: function() {
+	    var isReturningUser = false;
+
+	    // If there is no session then this is not a returning user.
+	    if (this.data.context.get('session') === true) {
+		// Just because the context has been created doesn't mean it
+		// is a returning user. We assume that a returning user will
+		// have at least one filter setup so we check for a created
+		// date and a filter in order to qualify a user as returning.
+		if (this.data.context.get('created') &&
+			!_.isEmpty(this.data.context.get('json'))) {
+		    isReturningUser = true;
+		}
+	    }
+
+	    if (isReturningUser) {
+		this.ui.firstTime.hide();
+		this.ui.welcomeBack.show();
+	    }
+	    else {
+		this.ui.firstTime.show();
+		this.ui.welcomeBack.hide();
+	    }
+	}
+    });
+
+    return {
+	Welcome: Welcome
+    };
+
+});

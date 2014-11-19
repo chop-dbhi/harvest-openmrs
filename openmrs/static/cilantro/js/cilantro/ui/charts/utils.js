@@ -1,2 +1,373 @@
-define(["underscore","highcharts"],function(t,e){var s,r,a,i,n;return r=function(t){var s;return s=e.getOptions().colors,s[t%s.length]},s=/\d{4}-\d{2]-\d{2]/,i=function(t){var e,s,r;return r=parseInt(t.substr(0,4)),s=parseInt(t.substr(5,2))-1,e=parseInt(t.substr(8,2)),Date.UTC(r,s,e)},n=function(t,s,a){var n,o,u,l,h,p,c,m,b,x,d,g,y,f,F,v,A,S,w,I,M,O,_,C,T,k,E,q,z,B,D,L,R,U,W,j,G,H;if(s.length>2)throw new Error("3-dimensional charts are not supported. Specify which field the series applies to.");if(!s)throw new Error("The field instances must be supplied");for(O=[],z=[],M=s[0],q=s[1],_=M.get("name"),I=M.get("enumerable")||"boolean"===M.get("simple_type"),C="date"===M.get("simple_type")?"datetime":"linear",q?(B=q.get("name"),E=q.get("enumerable")||"boolean"===q.get("simple_type"),D="date"===q.get("simple_type")?"datetime":"linear"):(B="Frequency",E=!1,D="linear"),I&&E?(o="scatter",O.push(" "),z.push(" ")):o=!q||I||E?E?"scatter":"column":"scatter",F={},u=t.clustered,G=t.data,p=R=0,W=G.length;W>R;p=++R)y=G[p],S=null!=a?y.values.slice(a,a+1)[0]:"",(f=F[S])?(f.data.push(y),f.stats.min=Math.min(f.stats.min,y.count),f.stats.max=Math.max(f.stats.max,y.count),f.stats.sum+=y.count):(f=F[S]={name:S,stats:{min:y.count,max:y.count,sum:y.count}},f.data=I&&E?[{x:0,y:0,radius:0,sentinel:!0},y]:[y]),w=y.values[0],null===w&&(w="(no data)"),I?(-1===(c=O.indexOf(w.toString()))&&(c=O.push(w.toString())-1),w=c):"datetime"===C&&(w=i(w)),q?(k=y.values[1],null===k&&(k="(no data)"),E?(-1===(c=z.indexOf(k.toString()))&&(c=z.push(k.toString())-1),k=c):"datetime"===D&&(k=i(k))):k=y.count,y.x=w,y.y=k;v=[],I&&E&&(T=O.push(" ")-1,L=z.push(" ")-1),A=0;for(b in F){if(f=F[b],I&&E&&(f.data.push({x:0,y:L,radius:0,sentinel:!0}),f.data.push({x:T,y:L,radius:0,sentinel:!0}),f.data.push({x:T,y:L,radius:0,sentinel:!0})),v.push(f),n=f.stats.avg=f.stats.sum/parseFloat(f.data.length,10),m=f.stats.max,"scatter"===o)for(H=f.data,U=0,j=H.length;j>U;U++)g=H[U],g.sentinel||(x=Math.min(Math.max(parseInt(parseFloat(g.count,10)/n*5)/10,.05),1),l=e.Color(r(A)).setOpacity(x),g.marker={fillColor:l.get()},I&&(g.marker.radius=7));A++}return h="scatter"===o&&I?v[1]?function(){return"<h5>"+this.series.name+"</h5><br /><b>"+_+":</b> "+this.series.xAxis.categories[this.point.x]+"<br /><b>"+B+":</b> "+this.series.yAxis.categories[this.point.y]}:function(){return"<b>"+_+":</b> "+this.series.xAxis.categories[this.point.x]+"<br /><b>"+B+":</b> "+this.series.yAxis.categories[this.point.y]}:"column"===o&&I?v[1]?function(){return"<h5>"+this.series.name+"</h5><br /><b>"+_+":</b> "+this.series.xAxis.categories[this.point.x]+"<br /><b>"+B+":</b> "+e.numberFormat(parseFloat(this.y))}:function(){return"<b>"+_+":</b> "+this.series.xAxis.categories[this.point.x]+"<br /><b>"+B+":</b> "+e.numberFormat(parseFloat(this.y))}:v[1]?function(){return"<h5>"+this.series.name+"</h5><br /><b>"+_+":</b> "+e.numberFormat(parseFloat(this.x))+"<br /><b>"+B+":</b> "+e.numberFormat(parseFloat(this.y))}:function(){return"<b>"+_+":</b> "+e.numberFormat(parseFloat(this.x))+"<br /><b>"+B+":</b> "+e.numberFormat(parseFloat(this.y))},d={clustered:u,chart:{type:o},title:{text:q?""+_+" vs. "+B:""+_+" "+B},series:v,xAxis:{title:{text:_},type:C},yAxis:{title:{text:B},type:D},tooltip:{formatter:h}},O.length&&(d.xAxis.categories=O),z.length&&(d.yAxis.categories=z),v[1]||(d.legend={enabled:!1}),"scatter"===o&&(d.yAxis.gridLineWidth=0,I||(d.chart.zoomType="xy")),d},a=function(e){var s,r,a,i,n;for(a=[],i=0,n=e.length;n>i;i++)s=e[i],r=t.clone(s),r.x=s.values[0],r.y=null!=s.values[1]?s.values[1]:s.count,a.push(r);return{data:t.sortBy(a,"x")}},{processResponse:n,getSeries:a}});
-//# sourceMappingURL=utils.js.map
+/* global define */
+
+define([
+    'underscore',
+    'highcharts'
+], function(_, Highcharts) {
+
+    var getColor = function(idx) {
+	var colors = Highcharts.getOptions().colors;
+	return colors[idx % colors.length];
+    };
+
+    var parseDate = function(str) {
+	var year = parseInt(str.substr(0, 4));
+	var month = parseInt(str.substr(5, 2)) -1;
+	var day = parseInt(str.substr(8, 2));
+
+	return Date.UTC(year, month, day);
+    };
+
+    var processResponse = function(resp, fields, seriesIdx) {
+	if (fields.length > 2) {
+	    throw new Error('3-dimensional charts are not supported.' +
+			    'Specify which field the series applies to.');
+	}
+	else if (!fields) {
+	    throw new Error('The field instances must be supplied');
+	}
+
+	var xLabels = [],
+	    yLabels = [];
+
+	// Check whether the y-axis consists of enumerable data, otherwise
+	// fallback to true for standard counts.
+	var xField = fields[0],
+	    yField = fields[1];
+
+	var xName, xEnum, xType, yName, yEnum, yType, chartType;
+
+	xName = xField.get('name');
+	xEnum = xField.get('enumerable') ||
+	    xField.get('simple_type') === 'boolean';
+
+	if (xField.get('simple_type') === 'date' ||
+		xField.get('simple_type') === 'datetime') {
+	    xType = 'datetime';
+	}
+	else {
+	    xType = 'linear';
+	}
+
+	if (yField) {
+	    yName = yField.get('name');
+	    yEnum = yField.get('enumerable') ||
+		yField.get('simple_type') === 'boolean';
+
+
+	    if (yField.get('simple_type') === 'date' ||
+		    yField.get('simple_type') === 'datetime') {
+		yType = 'datetime';
+	    }
+	    else {
+		yType = 'linear';
+	    }
+	}
+	else {
+	    yName = 'Frequency';
+	    yEnum = false;
+	    yType = 'linear';
+	}
+
+	if (xEnum && yEnum) {
+	    chartType = 'scatter';
+	    xLabels.push(' ');
+	    yLabels.push(' ');
+	}
+	else if (yField && !xEnum && !yEnum) {
+	    chartType = 'scatter';
+	}
+	else if (yEnum) {
+	    chartType = 'scatter';
+	}
+	else {
+	    chartType = 'column';
+	}
+
+	var seriesData = {},
+	    clustered = resp.clustered,
+	    respData = resp.data,
+	    point,
+	    svalue,
+	    series;
+
+	// Perform the group by first prior to building each series.
+	for (var i = 0; i < respData.length; i++) {
+	    point = respData[i];
+
+	    if (seriesIdx) {
+		svalue = point.values.slice(seriesIdx, seriesIdx + 1)[0];
+	    }
+	    else {
+		svalue = '';
+	    }
+
+	    if (!(series = seriesData[svalue])) {
+		series = seriesData[svalue] = {
+		    name: svalue,
+		    stats: {
+			min: point.count,
+			max: point.count,
+			sum: point.count
+		    }
+		};
+
+		if (xEnum && yEnum) {
+		    series.data = [{x: 0, y: 0, radius: 0, sentinel: true}, point];
+		}
+		else {
+		    series.data = [point];
+		}
+	    }
+	    else {
+		// Add it to the corresponding seriesData.
+		series.data.push(point);
+		series.stats.min = Math.min(series.stats.min, point.count);
+		series.stats.max = Math.max(series.stats.max, point.count);
+		series.stats.sum += point.count;
+	    }
+
+	    var x = point.values[0];
+	    if (x === null) {
+		x = '(no data)';
+	    }
+
+	    if (xEnum) {
+		if (xLabels.indexOf(x.toString()) === -1) {
+		    x = xLabels.push(x.toString()) - 1;
+		}
+	    }
+	    else if (xType === 'datetime'){
+		x = parseDate(x);
+	    }
+
+	    var y;
+	    if (yField) {
+		y = point.values[1];
+
+		if (y === null) {
+		    y = '(no data)';
+		}
+
+		if (yEnum) {
+		    if (yLabels.indexOf(y.toString()) === -1) { // jshint ignore:line
+			y = yLabels.push(y.toString()) - 1;
+		    }
+		}
+		else if (yType === 'datetime') {
+			y = parseDate(y);
+		}
+	    }
+	    else {
+		y = point.count;
+	    }
+
+	    point.x = x;
+	    point.y = y;
+	}
+
+	var seriesList = [];
+
+	var xlen, ylen;
+
+	if (xEnum && yEnum) {
+	    xlen = xLabels.push(' ') - 1;
+	    ylen = yLabels.push(' ') - 1;
+	}
+
+	var seriesNo = 0;
+	for (var name in seriesData) {
+	    series = seriesData[name];
+
+	    if (xEnum && yEnum) {
+		series.data.push({
+		    x: 0,
+		    y: ylen,
+		    radius: 0,
+		    sentinel: true
+		});
+
+		series.data.push({
+		    x: xlen,
+		    y: ylen,
+		    radius: 0,
+		    sentinel: true
+		});
+
+		series.data.push({
+		    x: xlen,
+		    y: ylen,
+		    radius: 0,
+		    sentinel: true
+		});
+	    }
+
+	    seriesList.push(series);
+
+	    var avg = series.stats.avg = series.stats.sum /
+		parseFloat(series.data.length, 10);
+
+	    if (chartType === 'scatter') {
+		for (var i = 0; i < series.data.length; i++) { // jshint ignore:line
+		    var p = series.data[i];
+
+		    if (p.sentinel) { // jshint ignore:line
+			continue;
+		    }
+
+		    var norm = Math.min(Math.max(parseInt(
+				    parseFloat(p.count, 10) / avg * 5) / 10, 0.05), 1);
+		    var color = Highcharts.Color(getColor(seriesNo)).setOpacity(norm);
+
+		    p.marker = {
+			fillColor: color.get()
+		    };
+
+		    if (xEnum) { // jshint ignore:line
+			p.marker.radius = 7;
+		    }
+		}
+	    }
+
+	    seriesNo++;
+	}
+
+	// TODO: This is really ugly, clean up the code that creates and
+	// returns the formatter.
+	var formatterFunc;
+	if (chartType === 'scatter' && xEnum) {
+	    // Multiple series
+	    if (seriesList[1]) {
+		formatterFunc = function () {
+		    return '<h5>' + this.series.name + '</h5><br /><b>' + xName +
+			   ':</b>' + this.series.xAxis.categories[this.point.x] +
+			   '<br /><b>' + yName + ':</b>' +
+			   this.series.yAxis.categories[this.point.y];
+		};
+	    }
+	    else {
+		formatterFunc = function() {
+		    return '<b>' + xName + ':</b>' +
+			   this.series.xAxis.categories[this.point.x] + '<br /><b>' +
+			   yName + ':</b>' + this.series.yAxis.categories[this.point.y];
+		};
+	    }
+	}
+	else if (chartType === 'column' && xEnum) {
+	    // Multiple series
+	    if (seriesList[1]) {
+	       formatterFunc = function() {
+		    return '<h5>' + this.series.name + '</h5><br /><b>' + xName +
+			   ':</b>' + this.series.xAxis.categories[this.point.x] +
+			   '<br /><b>' + yName + ':</b>' +
+			   Highcharts.numberFormat(parseFloat(this.y));
+		};
+	    }
+	    else {
+		formatterFunc = function() {
+		    return '<b>' + xName + ':</b>' +
+			   this.series.xAxis.categories[this.point.x] + '<br /><b>' +
+			   yName + ':</b>' + Highcharts.numberFormat(parseFloat(this.y));
+		};
+	    }
+	}
+	else {
+	    // Multiple series
+	    if (seriesList[1]) {
+		formatterFunc = function() {
+		    return '<h5>' + this.series.name + '</h5><br /><b>' + xName +
+			   ':</b>' + Highcharts.numberFormat(parseFloat(this.x)) +
+			   '<br /><b>' + yName + ':</b>' +
+			   Highcharts.numberFormat(parseFloat(this.y));
+		};
+	    }
+	    else {
+		formatterFunc = function() {
+		    return '<b>' + xName + ':</b>' +
+			   Highcharts.numberFormat(parseFloat(this.x)) + '<br /><b>' +
+			   yName + ':</b>' + Highcharts.numberFormat(parseFloat(this.y));
+		};
+	    }
+	}
+
+	var options = {
+	    clustered: clustered,
+	    chart: {
+		type: chartType
+	    },
+	    title: {
+		text: yField ? '' + xName + ' vs. ' + yName : '' + xName + ' ' + yName
+	    },
+	    series: seriesList,
+	    xAxis: {
+		title: {
+		  text: xName
+		},
+		type: xType
+	    },
+	    yAxis: {
+		title: {
+		  text: yName
+		},
+		type: yType
+	    },
+	    tooltip: {
+		formatter: formatterFunc
+	    }
+	};
+
+	if (xLabels.length) {
+	    options.xAxis.categories = xLabels;
+	}
+
+	if (yLabels.length) {
+	    options.yAxis.categories = yLabels;
+	}
+
+	if (!seriesList[1]) {
+	    options.legend = {enabled: false};
+	}
+
+	if (chartType === 'scatter') {
+	    options.yAxis.gridLineWidth = 0;
+
+	    if (!xEnum) {
+		options.chart.zoomType = 'xy';
+	    }
+	}
+
+	return options;
+    };
+
+    // Simple parser to format data for use by Highcharts.
+    var getSeries = function(data) {
+	var points = [],
+	    point,
+	    datum;
+
+	for (var i = 0; i < data.length; i++) {
+	    datum = data[i];
+
+	    point = _.clone(datum);
+	    point.x = datum.values[0];
+
+	    if (datum.values[1] !== null) {
+		point.y = datum.values[1];
+	    }
+	    else {
+		point.y = datum.count;
+	    }
+
+	    points.push(point);
+	}
+
+	return {data: _.sortBy(points, 'x')};
+    };
+
+
+    return {
+	processResponse: processResponse,
+	getSeries: getSeries
+    };
+
+});

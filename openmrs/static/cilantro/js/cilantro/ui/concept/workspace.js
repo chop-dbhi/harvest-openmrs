@@ -1,2 +1,138 @@
-define(["underscore","marionette","loglevel","../core","../base","../welcome","../config","./form"],function(e,t,i,o,r,n,s,c){var a=r.ErrorView.extend({template:"concept/error"}),w=t.Layout.extend({className:"concept-workspace",template:"concept/workspace",itemView:c.ConceptForm,errorView:a,regions:{main:".main-region"},regionViews:{main:n.Welcome},initialize:function(){if(this.data={},!(this.data.concepts=this.options.concepts))throw new Error("concept collection required");if(!(this.data.context=this.options.context))throw new Error("context model required");this.listenTo(o,o.CONCEPT_FOCUS,this.showItem)},_ensureModel:function(e){return e instanceof o.models.Concept||(e=this.data.concepts.get(e)),e},showItem:function(t){var r=this._ensureModel(t);if(!r)return void i.debug("unknown workspace concept: "+(t.id||t));if(o.router.navigate("query",{trigger:!0}),!this.currentView.model||this.currentView.model.id!==r.id){var n={model:r,context:this.data.context},c=s.resolveFormOptions(r,"concepts");if(n=e.extend(n,c.options),c.module){var a=this;require([c.module],function(e){a.createView(e,n)},function(e){a.showErrorView(r),i.debug(e)})}else this.createView(c.view||this.itemView,n)}},createView:function(e,t){try{var i=new e(t);this.setView(i)}catch(r){if(this.showErrorView(t.model),o.config.get("debug"))throw r}},showErrorView:function(e){var t=new this.errorView({model:e});this.setView(t)},setView:function(e){this.currentView=e,this.main.show(e)},onRender:function(){var e=new this.regionViews.main;this.setView(e)}});return{ConceptWorkspace:w}});
-//# sourceMappingURL=workspace.js.map
+/* global define, require */
+
+define([
+    'underscore',
+    'marionette',
+    'loglevel',
+    '../core',
+    '../base',
+    '../welcome',
+    '../config',
+    './form'
+], function(_, Marionette, loglevel, c, base, welcome, config, form) {
+
+    var ConceptError = base.ErrorView.extend({
+	template: 'concept/error'
+    });
+
+
+    // Some of the class properties here are mimicked after CollectionView
+    // since it is managing the concept form views
+    var ConceptWorkspace = Marionette.Layout.extend({
+	className: 'concept-workspace',
+
+	template: 'concept/workspace',
+
+	itemView: form.ConceptForm,
+
+	errorView: ConceptError,
+
+	regions: {
+	    main: '.main-region'
+	},
+
+	regionViews: {
+	    main: welcome.Welcome
+	},
+
+	initialize: function() {
+	    this.data = {};
+
+	    if (!(this.data.concepts = this.options.concepts)) {
+		throw new Error('concept collection required');
+	    }
+
+	    if (!(this.data.context = this.options.context)) {
+		throw new Error('context model required');
+	    }
+
+	    this.listenTo(c, c.CONCEPT_FOCUS, this.showItem);
+	},
+
+	_ensureModel: function(model) {
+	    if (!(model instanceof c.models.Concept)) {
+		model = this.data.concepts.get(model);
+	    }
+	    return model;
+	},
+
+	showItem: function(id) {
+	    var model = this._ensureModel(id);
+
+	    // Unknown or private model
+	    if (!model) {
+		loglevel.debug('unknown workspace concept: ' + (id.id || id));
+		return;
+	    }
+
+	    c.router.navigate('query', {trigger: true});
+
+	    // Already being shown
+	    if (this.currentView.model && this.currentView.model.id === model.id) return;
+
+	    var options = {
+		model: model,
+		context: this.data.context
+	    };
+
+	    var result = config.resolveFormOptions(model, 'concepts');
+
+	    // Extend options
+	    options = _.extend(options, result.options);
+
+	    // Load external module, catch error if it doesn't exist
+	    if (result.module) {
+		var _this = this;
+
+		require([
+		    result.module
+		], function(itemView) {
+		    _this.createView(itemView, options);
+		}, function(err) {
+		    _this.showErrorView(model);
+		    loglevel.debug(err);
+		});
+
+	    }
+	    else {
+		this.createView(result.view || this.itemView, options);
+	    }
+	},
+
+	createView: function(itemViewClass, options) {
+	    try {
+		var view = new itemViewClass(options);
+		this.setView(view);
+	    }
+	    catch (err) {
+		this.showErrorView(options.model);
+
+		// Rethrow error
+		if (c.config.get('debug')) throw(err);
+	    }
+	},
+
+	showErrorView: function(model) {
+	    var view = new this.errorView({
+		model: model
+	    });
+	    this.setView(view);
+	},
+
+	setView: function(view) {
+	    this.currentView = view;
+	    this.main.show(view);
+	},
+
+	onRender: function() {
+	    var main = new this.regionViews.main({context: this.data.context});
+	    this.setView(main);
+	}
+    });
+
+
+    return {
+	ConceptWorkspace: ConceptWorkspace
+    };
+
+});

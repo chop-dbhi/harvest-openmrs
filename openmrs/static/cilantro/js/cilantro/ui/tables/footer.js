@@ -1,2 +1,17 @@
-var __hasProp={}.hasOwnProperty,__extends=function(t,o){function r(){this.constructor=t}for(var e in o)__hasProp.call(o,e)&&(t[e]=o[e]);return r.prototype=o.prototype,t.prototype=new r,t.__super__=o.prototype,t};define(["marionette","./row"],function(t){var o;return o=function(t){function o(){return o.__super__.constructor.apply(this,arguments)}return __extends(o,t),o.prototype.tagName="tfoot",o.prototype.template=function(){},o}(t.ItemView),{Footer:o}});
-//# sourceMappingURL=footer.js.map
+/* global define */
+
+define([
+    'marionette'
+], function(Marionette) {
+
+    var Footer = Marionette.ItemView.extend({
+	tagName: 'tfoot',
+
+	template: function() {}
+    });
+
+    return {
+	Footer: Footer
+    };
+
+});
