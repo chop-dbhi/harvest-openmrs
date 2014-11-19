@@ -1,2 +1,33 @@
-var __bind=function(t,e){return function(){return t.apply(e,arguments)}},__hasProp={}.hasOwnProperty,__extends=function(t,e){function n(){this.constructor=t}for(var o in e)__hasProp.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t};define(["underscore","marionette","../base","./cell"],function(t,e,n,o){var r,i;return i=function(e){function n(){return this.itemViewOptions=__bind(this.itemViewOptions,this),n.__super__.constructor.apply(this,arguments)}return __extends(n,e),n.prototype.tagName="tr",n.prototype.template=function(){},n.prototype.itemView=o.Cell,n.prototype.itemViewOptions=function(e){return t.extend({},this.options,{model:e})},n}(e.CollectionView),r=function(t){function e(){return e.__super__.constructor.apply(this,arguments)}return __extends(e,t),e.prototype.align="left",e.prototype.tagName="tr",e}(n.LoadView),{Row:i,EmptyRow:r}});
-//# sourceMappingURL=row.js.map
+/* global define */
+
+define([
+    'underscore',
+    'marionette',
+    '../base',
+    './cell'
+], function(_, Marionette, base, cell) {
+
+    var Row = Marionette.CollectionView.extend({
+        tagName: 'tr',
+
+        itemView: cell.Cell,
+
+        itemViewOptions: function(model) {
+            return _.extend({}, this.options, {
+                model: model
+            });
+        }
+    });
+
+    var EmptyRow = base.LoadView.extend({
+        align: 'left',
+
+        tagName: 'tr'
+    });
+
+    return {
+        EmptyRow: EmptyRow,
+        Row: Row
+    };
+
+});

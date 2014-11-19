@@ -1,2 +1,126 @@
-var __hasProp={}.hasOwnProperty,__extends=function(t,e){function o(){this.constructor=t}for(var n in e)__hasProp.call(e,n)&&(t[n]=e[n]);return o.prototype=e.prototype,t.prototype=new o,t.__super__=e.prototype,t};define(["underscore","marionette","./row"],function(t,e,o){var n,r,i;return r=function(e){function o(t){if(null==t.view)throw new Error("ViewModel instance required");this.view=t.view,delete t.view,o.__super__.constructor.call(this,t)}return __extends(o,e),o.prototype.tagName="th",o.prototype.onClick=function(){return t.each(this.view.facets.models,function(t){var e;return t.get("concept")===this.model.id?(e=t.get("sort"),null!=e?"asc"===e.toLowerCase()?(t.set("sort","desc"),t.set("sort_index",0)):(t.unset("sort"),t.unset("sort_index")):(t.set("sort","asc"),t.set("sort_index",0))):(t.unset("sort"),t.unset("sort_index"))},this),this.view.save()},o.prototype.initialize=function(){return this.listenTo(this.model,"change:visible",this.toggleVisible)},o.prototype.events={click:"onClick"},o.prototype.getSortIconClass=function(){var e,o;if(o=t.find(this.view.facets.models,function(t){return function(e){return t.model.id===e.get("concept")}}(this)),null!=o)switch(e=(o.get("sort")||"").toLowerCase()){case"asc":return"icon-sort-up";case"desc":return"icon-sort-down";default:return"icon-sort"}},o.prototype.render=function(){var t;return this.toggleVisible(),t=this.getSortIconClass(),this.$el.html("<span>"+this.model.get("name")+" <i class="+t+"></i></span>"),this.$el.attr("title",this.model.get("name")),this},o.prototype.toggleVisible=function(){return this.$el.toggle(this.model.get("visible"))},o}(e.ItemView),i=function(t){function e(){return e.__super__.constructor.apply(this,arguments)}return __extends(e,t),e.prototype.itemView=r,e}(o.Row),n=function(e){function n(){return n.__super__.constructor.apply(this,arguments)}return __extends(n,e),n.prototype.tagName="thead",n.prototype.render=function(){return o=new i(t.extend({},this.options,{collection:this.collection})),this.$el.html(o.el),o.render(),this},n}(e.ItemView),{Header:n}});
-//# sourceMappingURL=header.js.map
+/* global define */
+
+define([
+    'underscore',
+    'marionette',
+    './row'
+], function(_, Marionette, row) {
+
+    var HeaderCell = Marionette.ItemView.extend({
+        tagName: 'th',
+
+        events: {
+            'click': 'onClick'
+        },
+
+        constructor: function(options) {
+            if (!options.view) {
+                throw new Error('ViewModel instance required');
+            }
+
+            this.view = options.view;
+            delete options.view;
+            Marionette.ItemView.prototype.constructor.call(this, options);
+        },
+
+        onClick: function() {
+            _.each(this.view.facets.models, function(f) {
+                var direction;
+
+                if (f.get('concept') === this.model.id) {
+                    direction = f.get('sort');
+
+                    if (direction) {
+                        if (direction.toLowerCase() === "asc") {
+                            f.set('sort', "desc");
+                            f.set('sort_index', 0);
+                        }
+                        else {
+                            f.unset('sort');
+                            f.unset('sort_index');
+                        }
+                    }
+                    else {
+                        f.set('sort', "asc");
+                        f.set('sort_index', 0);
+                    }
+                }
+                else {
+                    f.unset('sort');
+                    f.unset('sort_index');
+                }
+            }, this);
+
+            this.view.save();
+        },
+
+        initialize: function() {
+            this.listenTo(this.model, 'change:visible', this.toggleVisible);
+        },
+
+        // Finds and returns the sort icon html associatied with the sort
+        // direction of the Facet being represented by this header cell.
+        getSortIconClass: function() {
+            var direction, model;
+
+            model = this.view.facets.findWhere({concept: this.model.id});
+
+            // If there are no view facets for the this header cell's model
+            // then the this really shouldn't be displaying anyway so return
+            // the empty string. We really should not ever get into this
+            // situation since the facets should be driving the columns but
+            // this check prevents TypeErrors just in case.
+            if (!model) return;
+
+            direction = (model.get('sort') || '').toLowerCase();
+
+            switch (direction) {
+                case 'asc':
+                    return 'icon-sort-up';
+                case 'desc':
+                    return 'icon-sort-down';
+                default:
+                    return 'icon-sort';
+            }
+        },
+
+        render: function() {
+            this.toggleVisible();
+
+            var iconClass = this.getSortIconClass();
+
+            // TODO: Could we just use a template here instead and then just
+            // modify the class on the icon in the template?
+            this.$el.html('<span>' + (this.model.get('name')) + ' <i class=' +
+                          iconClass + '></i></span>');
+            this.$el.attr('title', this.model.get('name'));
+
+            return this;
+        },
+
+        toggleVisible: function() {
+            this.$el.toggle(this.model.get('visible'));
+        }
+    });
+
+    var HeaderRow = row.Row.extend({
+        itemView: HeaderCell
+    });
+
+    var Header = Marionette.ItemView.extend({
+        tagName: 'thead',
+
+        render: function() {
+            var row = new HeaderRow(this.options);
+
+            this.$el.html(row.el);
+            row.render();
+            return this;
+        }
+    });
+
+    return {
+        Header: Header
+    };
+
+});
