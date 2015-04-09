@@ -7,6 +7,10 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+	("avocado", "0036_initialize_indexable"),
+    )
+
     def forwards(self, orm):
         # Adding model 'Patient'
         db.create_table('patient', (

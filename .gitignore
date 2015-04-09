@@ -13,6 +13,8 @@ sdist
 build
 pip-log.txt
 MANIFEST
+openmrs.db
+openmrs.db-journal
 
 # ETL
 etl/harvestdb.properties
