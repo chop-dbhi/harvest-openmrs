@@ -1,0 +1,37 @@
+# Standard fair
+.DS_Store
+*~
+*.py?
+*.sw?
+*.egg-info
+*.egg
+*.sock
+.fabhosts
+whoosh.index
+dist
+sdist
+build
+pip-log.txt
+MANIFEST
+openmrs.db
+openmrs.db-journal
+
+# ETL
+etl/harvestdb.properties
+etl/harvestdb_postgres.properties
+etl/harvestdb_sqlite.properties
+etl/harvestdb.sqlite
+
+# Ignore local settings file intended for environment-specific settings
+settings
+local_settings.py
+
+# Ignore optimized javascripts
+openmrs/static/scripts/javascript/min
+
+# Collected static files via Django's staticfiles app
+_site/static
+
+# Do not version user uploaded content since these files might be huge.
+# Have another strategy for backing up this content.
+_site/media
