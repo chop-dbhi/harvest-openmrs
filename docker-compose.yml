@@ -1,0 +1,4 @@
+openmrs:
+    build: .
+    ports:
+        - 8000
