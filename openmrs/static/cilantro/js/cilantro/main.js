@@ -31,6 +31,9 @@ require({
 	credentials: c.config.get('credentials')
     };
 
+    // Turn off Serrano version unsupported dialogue.
+    c.config.set('debug', false);
+
     // Open the default session when Cilantro is ready
     c.ready(function() {
 
