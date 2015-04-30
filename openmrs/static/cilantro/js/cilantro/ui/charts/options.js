@@ -2,259 +2,259 @@
 
 define([], function() {
     var defaults = {
-	chart: {
-	    style: {
-		fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
-	    }
-	},
+        chart: {
+            style: {
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+            }
+        },
 
-	title: {
-	    text: '',
-	    align: 'right'
-	},
+        title: {
+            text: '',
+            align: 'right'
+        },
 
-	subtitle: {
-	    align: 'right'
-	},
+        subtitle: {
+            align: 'right'
+        },
 
-	exporting: {
-	    enabled: false
-	},
+        exporting: {
+            enabled: false
+        },
 
-	credits: {
-	    enabled: false
-	},
+        credits: {
+            enabled: false
+        },
 
-	tooltip: {
-	    formatter: function () {
-		if (this.point.values) {
-		    var html = [];
-		    html.push('<strong>' + this.series.xAxis.axisTitle.text +
-			      '</strong>:');
-		    html.push(this.point.values[0] + '<br>');
-		    html.push('<strong>' + this.series.yAxis.axisTitle.text +
-			      '</strong>:');
-		    html.push(this.y);
-		    return html.join('');
-		}
+        tooltip: {
+            formatter: function () {
+                if (this.point.values) {
+                    var html = [];
+                    html.push('<strong>' + this.series.xAxis.axisTitle.text +
+                              '</strong>:');
+                    html.push(this.point.values[0] + '<br>');
+                    html.push('<strong>' + this.series.yAxis.axisTitle.text +
+                              '</strong>:');
+                    html.push(this.y);
+                    return html.join('');
+                }
 
-		return this.key;
-	    },
+                return this.key;
+            },
 
-	    snap: 1,
+            snap: 1,
 
-	    useHTML: true,
+            useHTML: true,
 
-	    borderWidth: 1,
+            borderWidth: 1,
 
-	    borderRadius: 3
-	},
+            borderRadius: 3
+        },
 
-	plotOptions: {
-	    series: {
-		cursor: 'pointer',
+        plotOptions: {
+            series: {
+                cursor: 'pointer',
 
-		shadow: false,
+                shadow: false,
 
-		borderWidth: 0,
+                borderWidth: 0,
 
-		borderColor: '#4b8cf7',
+                borderColor: '#4b8cf7',
 
-		turboThreshold: 0,
+                turboThreshold: 0,
 
-		animation: {
-		    duration: 400
-		},
+                animation: {
+                    duration: 400
+                },
 
-		color: '#777',
+                color: '#777',
 
-		states: {
-		    select: {
-			color: '#0088cc'
-		    },
+                states: {
+                    select: {
+                        color: '#0088cc'
+                    },
 
-		    hover: {
-			enabled: false
-		    }
-		}
-	    },
+                    hover: {
+                        enabled: false
+                    }
+                }
+            },
 
-	    area: {
-		lineWidth: 1,
+            area: {
+                lineWidth: 1,
 
-		shadow: false,
+                shadow: false,
 
-		stacking: 'normal',
+                stacking: 'normal',
 
-		states: {
-		    hover: {
-			lineWidth: 1
-		    }
-		},
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
 
-		marker: {
-		    enabled: false,
+                marker: {
+                    enabled: false,
 
-		    states: {
-			hover: {
-			    enabled: true,
+                    states: {
+                        hover: {
+                            enabled: true,
 
-			    radius: 5
-			}
-		    }
-		},
+                            radius: 5
+                        }
+                    }
+                },
 
-		fillOpacity: 0.1
-	    },
+                fillOpacity: 0.1
+            },
 
-	    areaspline: {
-		lineWidth: 1,
+            areaspline: {
+                lineWidth: 1,
 
-		shadow: false,
+                shadow: false,
 
-		states: {
-		    hover: {
-			lineWidth: 1
-		    }
-		},
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
 
-		marker: {
-		    enabled: false,
+                marker: {
+                    enabled: false,
 
-		    states: {
-			hover: {
-			    enabled: true
-			}
-		    }
-		},
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                },
 
-		fillOpacity: 0.1
-	    },
-	    bar: {
-		borderWidth: 0,
+                fillOpacity: 0.1
+            },
+            bar: {
+                borderWidth: 0,
 
-		minPointLength: 2
-	    },
+                minPointLength: 2
+            },
 
-	    column: {
-		borderWidth: 0,
+            column: {
+                borderWidth: 0,
 
-		minPointLength: 2
-	    },
+                minPointLength: 2
+            },
 
-	    pie: {
-		allowPointSelect: true,
+            pie: {
+                allowPointSelect: true,
 
-		cursor: 'pointer',
+                cursor: 'pointer',
 
-		showInLegend: true
-	    },
+                showInLegend: true
+            },
 
-	    scatter: {
-		marker: {
-		    radius: 5,
+            scatter: {
+                marker: {
+                    radius: 5,
 
-		    states: {
-			hover: {
-			    enabled: false
-			}
-		    }
-		},
+                    states: {
+                        hover: {
+                            enabled: false
+                        }
+                    }
+                },
 
-		states: {
-		    hover: {
-			marker: {
-			    enabled: false
-			}
-		    }
-		}
-	    }
-	}
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                }
+            }
+        }
     };
 
     var sparkline = {
-	chart: {
-	    defaultSeriesType: 'areaspline',
+        chart: {
+            defaultSeriesType: 'areaspline',
 
-	    margin: [0, 0, 0, 0],
+            margin: [0, 0, 0, 0],
 
-	    height: 40
-	},
+            height: 40
+        },
 
-	title: {
-	    text: '',
+        title: {
+            text: '',
 
-	    align: 'left',
+            align: 'left',
 
-	    y: 0,
+            y: 0,
 
-	    x: 0,
+            x: 0,
 
-	    style: {
-		fontSize: '8px',
+            style: {
+                fontSize: '8px',
 
-		color: '#333333'
-	    },
-	},
+                color: '#333333'
+            },
+        },
 
-	credits: {
-	    enabled: false
-	},
+        credits: {
+            enabled: false
+        },
 
-	legend: {
-	    enabled: false
-	},
+        legend: {
+            enabled: false
+        },
 
-	tooltip: {
-	    enabled: false
-	},
+        tooltip: {
+            enabled: false
+        },
 
-	xAxis: {
-	    startOnTick: true,
+        xAxis: {
+            startOnTick: true,
 
-	    labels: {
-		enabled: false
-	    }
-	},
+            labels: {
+                enabled: false
+            }
+        },
 
-	yAxis: {
-	    endOnTick: true,
+        yAxis: {
+            endOnTick: true,
 
-	    labels: {
-		enabled: false
-	    }
-	},
+            labels: {
+                enabled: false
+            }
+        },
 
-	plotOptions: {
-	    series: {
-		lineWidth: 1,
+        plotOptions: {
+            series: {
+                lineWidth: 1,
 
-		shadow: false,
+                shadow: false,
 
-		states: {
-		    hover: {
-			enabled: false
-		    }
-		},
+                states: {
+                    hover: {
+                        enabled: false
+                    }
+                },
 
-		marker: {
-		    enabled: false
-		}
-	    },
+                marker: {
+                    enabled: false
+                }
+            },
 
-	    areaspline: {
-		fillOpacity: 0.1
-	    },
+            areaspline: {
+                fillOpacity: 0.1
+            },
 
-	    area: {
-		fillOpacity: 0.1
-	    }
-	}
+            area: {
+                fillOpacity: 0.1
+            }
+        }
     };
 
     return {
-	defaults: defaults,
-	sparkline: sparkline
+        defaults: defaults,
+        sparkline: sparkline
     };
 
 });

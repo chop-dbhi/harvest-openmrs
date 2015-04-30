@@ -8,9 +8,9 @@ define(['jquery'], function($) {
      *      https://developer.mozilla.org/en-US/docs/Web/API/window.location
      */
     var linkParser = function(href) {
-	var a = document.createElement('a');
-	a.href = href;
-	return a;
+        var a = document.createElement('a');
+        a.href = href;
+        return a;
     };
 
     /*
@@ -18,36 +18,36 @@ define(['jquery'], function($) {
      * of URL params.
      */
     var alterUrlParams = function(href, data) {
-	if (!data) return href;
+        if (!data) return href;
 
-	// Parse the href into a temporary anchor element
-	var a = linkParser(href);
+        // Parse the href into a temporary anchor element
+        var a = linkParser(href);
 
-	// Parse existing params on URL
-	var params = {},
-	    search = a.search.substr(1).split('&');
+        // Parse existing params on URL
+        var params = {},
+            search = a.search.substr(1).split('&');
 
-	// De-parametize URL
-	for (var i = 0; i< search.length; i++) {
-	    var param = search[i].split('=');
+        // De-parametize URL
+        for (var i = 0; i< search.length; i++) {
+            var param = search[i].split('=');
 
-	    if (param[0]) {
-		// Reverse what jQuery parametize logic
-		params[param[0]] = decodeURIComponent(param[1].replace('+', ' '));
-	    }
-	}
+            if (param[0]) {
+                // Reverse what jQuery parametize logic
+                params[param[0]] = decodeURIComponent(param[1].replace('+', ' '));
+            }
+        }
 
-	// Update params hash with passed params
-	$.extend(params, data);
+        // Update params hash with passed params
+        $.extend(params, data);
 
-	// Reset parameters on the href
-	a.search = '?' + $.param(params);
+        // Reset parameters on the href
+        a.search = '?' + $.param(params);
 
-	return a.href;
+        return a.href;
     };
 
     return {
-	linkParser: linkParser,
-	alterUrlParams: alterUrlParams
+        linkParser: linkParser,
+        alterUrlParams: alterUrlParams
     };
 });

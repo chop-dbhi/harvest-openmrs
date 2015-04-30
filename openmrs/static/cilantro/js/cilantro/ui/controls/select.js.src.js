@@ -17,7 +17,7 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
 
     SelectionListItem.prototype.modelEvents = function() {
       return {
-	'change:selected': 'render'
+        'change:selected': 'render'
       };
     };
 
@@ -25,11 +25,11 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
       var label;
       label = this.model.get('label');
       if (label === '') {
-	this.$el.text('(empty)');
+        this.$el.text('(empty)');
       } else if (label === 'null') {
-	this.$el.text('(null)');
+        this.$el.text('(null)');
       } else {
-	this.$el.text(label);
+        this.$el.text(label);
       }
       this.$el.attr('value', this.model.get('value'));
       return this.$el.attr('selected', this.model.get('selected'));
@@ -51,7 +51,7 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
 
     SingleSelectionList.prototype.itemViewOptions = function(model, index) {
       return {
-	model: model
+        model: model
       };
     };
 
@@ -75,23 +75,23 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
       var limit;
       this.wait();
       if (!this.collection) {
-	this.collection = new Backbone.Collection;
-	if (c.isSupported('2.3.1')) {
-	  limit = 0;
-	} else {
-	  limit = 1000;
-	}
-	this.model.values({
-	  limit: limit
-	}).done((function(_this) {
-	  return function(resp) {
-	    _this.collection.reset(resp.values);
-	    return _this.ready();
-	  };
-	})(this));
+        this.collection = new Backbone.Collection;
+        if (c.isSupported('2.3.1')) {
+          limit = 0;
+        } else {
+          limit = 1000;
+        }
+        this.model.values({
+          limit: limit
+        }).done((function(_this) {
+          return function(resp) {
+            _this.collection.reset(resp.values);
+            return _this.ready();
+          };
+        })(this));
       }
       return this.on('ready', function() {
-	return this.change();
+        return this.change();
       });
     };
 
@@ -121,7 +121,7 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
 
     SingleSelectionList.prototype.validate = function(attrs) {
       if (_.isNull(attrs.value) || _.isUndefined(attrs.value)) {
-	return 'An option must be selected';
+        return 'An option must be selected';
       }
     };
 
@@ -141,9 +141,9 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
 
     MultiSelectionList.prototype.onSelectionChange = function(event) {
       this.ui.items.children().each((function(_this) {
-	return function(i, el) {
-	  return _this.collection.models[i].set('selected', el.selected);
-	};
+        return function(i, el) {
+          return _this.collection.models[i].set('selected', el.selected);
+        };
       })(this));
       return this.change();
     };
@@ -158,25 +158,25 @@ define(['underscore', 'backbone', 'marionette', '../../core', './base'], functio
 
     MultiSelectionList.prototype.getValue = function() {
       return _.map(this.collection.where({
-	selected: true
+        selected: true
       }), function(model) {
-	return model.get('value');
+        return model.get('value');
       });
     };
 
     MultiSelectionList.prototype.setValue = function(values) {
       if (values == null) {
-	values = [];
+        values = [];
       }
       return this.collection.each(function(model) {
-	var _ref;
-	return model.set('selected', (_ref = model.get('value'), __indexOf.call(values, _ref) >= 0));
+        var _ref;
+        return model.set('selected', (_ref = model.get('value'), __indexOf.call(values, _ref) >= 0));
       });
     };
 
     MultiSelectionList.prototype.validate = function(attrs) {
       if (!attrs.value || !attrs.value.length) {
-	return 'At least one option must be selected';
+        return 'At least one option must be selected';
       }
     };
 

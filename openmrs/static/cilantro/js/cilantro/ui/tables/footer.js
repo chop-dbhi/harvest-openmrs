@@ -5,13 +5,13 @@ define([
 ], function(Marionette) {
 
     var Footer = Marionette.ItemView.extend({
-	tagName: 'tfoot',
+        tagName: 'tfoot',
 
-	template: function() {}
+        template: function() {}
     });
 
     return {
-	Footer: Footer
+        Footer: Footer
     };
 
 });

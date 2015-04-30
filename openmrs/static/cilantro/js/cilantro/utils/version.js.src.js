@@ -9,35 +9,35 @@ define([], function() {
      * version contains three points including major, minor and micro.
      */
     var cleanVersionString = function(version) {
-	if (!version) version = '';
+        if (!version) version = '';
 
-	var stripped = version.replace(/[abrf].*$/g, '');
-	var fields = stripped.split('.');
+        var stripped = version.replace(/[abrf].*$/g, '');
+        var fields = stripped.split('.');
 
-	// zfill the right side, e.g. [2] => [2, 0, 0]. Empty strings are
-	// replaced with zeros, thus '2.' is a valid version string.
-	for (var i = 0; i < 3; i++) {
-	    fields[i] = fields[i] || 0;
-	}
+        // zfill the right side, e.g. [2] => [2, 0, 0]. Empty strings are
+        // replaced with zeros, thus '2.' is a valid version string.
+        for (var i = 0; i < 3; i++) {
+            fields[i] = fields[i] || 0;
+        }
 
-	// Ensure each point is a valid number and has exactly three points.
-	var cleaned;
-	if (!validVersionRe.test(cleaned = fields.join('.'))) {
-	    throw new Error('Bad version string: ' + version);
-	}
+        // Ensure each point is a valid number and has exactly three points.
+        var cleaned;
+        if (!validVersionRe.test(cleaned = fields.join('.'))) {
+            throw new Error('Bad version string: ' + version);
+        }
 
-	return cleaned;
+        return cleaned;
     };
 
     // Converts a cleaned version string into an object of integers
     var parseVersionString = function(version) {
-	var fields = cleanVersionString(version).split('.');
+        var fields = cleanVersionString(version).split('.');
 
-	return {
-	    major: parseInt(fields[0], 10),
-	    minor: parseInt(fields[1], 10),
-	    micro: parseInt(fields[2], 10)
-	};
+        return {
+            major: parseInt(fields[0], 10),
+            minor: parseInt(fields[1], 10),
+            micro: parseInt(fields[2], 10)
+        };
     };
 
     /*
@@ -46,66 +46,66 @@ define([], function() {
      * returned.
      */
     var compareVersions = function(v1, v2) {
-	v1 = parseVersionString(v1);
-	v2 = parseVersionString(v2);
+        v1 = parseVersionString(v1);
+        v2 = parseVersionString(v2);
 
-	switch (true) {
-	    case (v1.major > v2.major):
-		return 1;
-	    case (v1.major < v2.major):
-		return -1;
-	}
+        switch (true) {
+            case (v1.major > v2.major):
+                return 1;
+            case (v1.major < v2.major):
+                return -1;
+        }
 
-	switch (true) {
-	    case (v1.minor > v2.minor):
-		return 1;
-	    case (v1.minor < v2.minor):
-		return -1;
-	}
+        switch (true) {
+            case (v1.minor > v2.minor):
+                return 1;
+            case (v1.minor < v2.minor):
+                return -1;
+        }
 
-	switch (true) {
-	    case (v1.micro > v2.micro):
-		return 1;
-	    case (v1.micro < v2.micro):
-		return -1;
-	}
+        switch (true) {
+            case (v1.micro > v2.micro):
+                return 1;
+            case (v1.micro < v2.micro):
+                return -1;
+        }
 
-	return 0;
+        return 0;
     };
 
     var versionIsEqual = function(v1, v2) {
-	return compareVersions(v1, v2) === 0;
+        return compareVersions(v1, v2) === 0;
     };
 
     var versionIsGt = function(v1, v2) {
-	return compareVersions(v1, v2) === 1;
+        return compareVersions(v1, v2) === 1;
     };
 
     var versionIsGte = function(v1, v2) {
-	return compareVersions(v1, v2) > -1;
+        return compareVersions(v1, v2) > -1;
     };
 
     var versionIsLt = function(v1, v2) {
-	return compareVersions(v1, v2) === -1;
+        return compareVersions(v1, v2) === -1;
     };
 
     var versionIsLte = function(v1, v2) {
-	return compareVersions(v1, v2) < 1;
+        return compareVersions(v1, v2) < 1;
     };
 
     var versionInRange = function(v1, v2, v3) {
-	return versionIsGte(v1, v2) && versionIsLte(v1, v3);
+        return versionIsGte(v1, v2) && versionIsLte(v1, v3);
     };
 
     return {
-	cleanVersionString: cleanVersionString,
-	parseVersionString: parseVersionString,
-	compareVersions: compareVersions,
-	versionIsEqual: versionIsEqual,
-	versionIsGt: versionIsGt,
-	versionIsGte: versionIsGte,
-	versionIsLt: versionIsLt,
-	versionIsLte: versionIsLte,
-	versionInRange: versionInRange
+        cleanVersionString: cleanVersionString,
+        parseVersionString: parseVersionString,
+        compareVersions: compareVersions,
+        versionIsEqual: versionIsEqual,
+        versionIsGt: versionIsGt,
+        versionIsGte: versionIsGte,
+        versionIsLt: versionIsLt,
+        versionIsLte: versionIsLte,
+        versionInRange: versionInRange
     };
 });

@@ -20,7 +20,7 @@ define(['underscore', 'marionette', '../base', './cell'], function(_, Marionette
 
     Row.prototype.itemViewOptions = function(model, index) {
       return _.extend({}, this.options, {
-	model: model
+        model: model
       });
     };
 

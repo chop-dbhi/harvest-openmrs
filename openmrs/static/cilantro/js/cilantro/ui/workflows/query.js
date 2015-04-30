@@ -18,53 +18,53 @@ define([
     - context: the session/active context model
     */
     var QueryWorkflow = Marionette.Layout.extend({
-	className: 'query-workflow',
+        className: 'query-workflow',
 
-	template: 'workflows/query',
+        template: 'workflows/query',
 
-	regions: {
-	    workspace: '.concept-workspace-region'
-	},
+        regions: {
+            workspace: '.concept-workspace-region'
+        },
 
-	regionViews: {
-	    workspace: concept.ConceptWorkspace
-	},
+        regionViews: {
+            workspace: concept.ConceptWorkspace
+        },
 
-	initialize: function() {
-	    this.data = {};
+        initialize: function() {
+            this.data = {};
 
-	    if (!(this.data.context = this.options.context)) {
-		throw new Error('context model required');
-	    }
+            if (!(this.data.context = this.options.context)) {
+                throw new Error('context model required');
+            }
 
-	    if (!(this.data.concepts = this.options.concepts)) {
-		throw new Error('concept collection required');
-	    }
+            if (!(this.data.concepts = this.options.concepts)) {
+                throw new Error('concept collection required');
+            }
 
-	    // Ensure the necessary panels are toggled
-	    this.on('router:load', function() {
-		c.panels.concept.openPanel();
-		c.panels.context.openPanel();
-	    });
+            // Ensure the necessary panels are toggled
+            this.on('router:load', function() {
+                c.panels.concept.openPanel();
+                c.panels.context.openPanel();
+            });
 
-	    this.on('router:unload', function() {
-		c.panels.concept.closePanel();
-	    });
-	},
+            this.on('router:unload', function() {
+                c.panels.concept.closePanel();
+            });
+        },
 
-	onRender: function() {
-	    var workspace = new this.regionViews.workspace({
-		context: this.data.context,
-		concepts: this.data.concepts
-	    });
+        onRender: function() {
+            var workspace = new this.regionViews.workspace({
+                context: this.data.context,
+                concepts: this.data.concepts
+            });
 
-	    this.workspace.show(workspace);
-	}
+            this.workspace.show(workspace);
+        }
     });
 
 
     return {
-	QueryWorkflow: QueryWorkflow
+        QueryWorkflow: QueryWorkflow
     };
 
 });

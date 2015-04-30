@@ -11,24 +11,24 @@ define([
 ], function($, _, Backbone, models, utils, router, c) {
 
     var events = {
-	SESSION_OPENING: 'session:opening',
-	SESSION_ERROR: 'session:error',
-	SESSION_UNAUTHORIZED: 'session:unauthorized',
-	SESSION_OPENED: 'session:opened',
-	SESSION_CLOSED: 'session:closed'
+        SESSION_OPENING: 'session:opening',
+        SESSION_ERROR: 'session:error',
+        SESSION_UNAUTHORIZED: 'session:unauthorized',
+        SESSION_OPENED: 'session:opened',
+        SESSION_CLOSED: 'session:closed'
     };
 
 
     // Mapping of Serrano resource links to corresponding collections or models.
     var collectionLinkMap = {
-	concepts: models.Concepts,
-	fields: models.FieldCollection,
-	contexts: models.ContextCollection,
-	views: models.ViewCollection,
-	preview: models.Results,
-	exporter: models.ExporterCollection,
-	queries: models.Queries,
-	public_queries: models.Queries  // jshint ignore:line
+        concepts: models.Concepts,
+        fields: models.FieldCollection,
+        contexts: models.ContextCollection,
+        views: models.ViewCollection,
+        preview: models.Results,
+        exporter: models.ExporterCollection,
+        queries: models.Queries,
+        public_queries: models.Queries  // jshint ignore:line
     };
 
 
@@ -38,269 +38,269 @@ define([
     views, router and other state that is specific to a particular endpoint
     is stored here. The lifecycle of a session involves:
 
-	- validating the options
-	- requesting the root endpoint of API (with optional authentication)
-	- initializing the collections supported by the API
-	- fetching the collection data in the background
-	- initializing a router and registering top-level routes and views
+        - validating the options
+        - requesting the root endpoint of API (with optional authentication)
+        - initializing the collections supported by the API
+        - fetching the collection data in the background
+        - initializing a router and registering top-level routes and views
     */
     var Session = models.Model.extend({
-	idAttribute: 'url',
+        idAttribute: 'url',
 
-	options: function() {
-	    return c.config.get('session.defaults');
-	},
+        options: function() {
+            return c.config.get('session.defaults');
+        },
 
-	initialize: function(attrs, options) {
-	    this.options = _.extend({}, _.result(this, 'options'), options);
+        initialize: function(attrs, options) {
+            this.options = _.extend({}, _.result(this, 'options'), options);
 
-	    this.opened = false;
-	    this.started = false;
-	    this.opening = false;
+            this.opened = false;
+            this.started = false;
+            this.opening = false;
 
-	    this.state = {};
+            this.state = {};
 
-	    _.bindAll(this, 'ping', 'startPing', 'stopPing');
-	},
+            _.bindAll(this, 'ping', 'startPing', 'stopPing');
+        },
 
-	// Ensure a url is defined when the session is initialized
-	// or updated (using set). See http://backbonejs.org///Model-validate
-	// for details.
-	validate: function(attrs) {
-	    if (!attrs || !attrs.url) return 'url is required';
-	},
+        // Ensure a url is defined when the session is initialized
+        // or updated (using set). See http://backbonejs.org///Model-validate
+        // for details.
+        validate: function(attrs) {
+            if (!attrs || !attrs.url) return 'url is required';
+        },
 
-	startPing: function() {
-	    // Only if the ping endpoint is available and has a non-falsy ping interval
-	    if (this.links.ping && this.options.ping && !this._ping) {
-		this.ping();
-		this._ping = setInterval(this.ping, this.options.ping);
-	    }
-	},
+        startPing: function() {
+            // Only if the ping endpoint is available and has a non-falsy ping interval
+            if (this.links.ping && this.options.ping && !this._ping) {
+                this.ping();
+                this._ping = setInterval(this.ping, this.options.ping);
+            }
+        },
 
-	stopPing: function() {
-	    clearTimeout(this._ping);
-	    delete this._ping;
-	},
+        stopPing: function() {
+            clearTimeout(this._ping);
+            delete this._ping;
+        },
 
-	ping: function() {
-	    var _this = this;
+        ping: function() {
+            var _this = this;
 
-	    Backbone.ajax({
-		type: 'GET',
-		url: this.links.ping,
-		dataType: 'json',
-		success: function(resp) {
-		    if (resp.status === 'timeout') {
-			_this.stopPing();
-			_this.timeout(resp.location);
-		    }
-		},
+            Backbone.ajax({
+                type: 'GET',
+                url: this.links.ping,
+                dataType: 'json',
+                success: function(resp) {
+                    if (resp.status === 'timeout') {
+                        _this.stopPing();
+                        _this.timeout(resp.location);
+                    }
+                },
 
-		error: function(xhr, status, error) {
-		    _this.stopPing();
+                error: function(xhr, status, error) {
+                    _this.stopPing();
 
-		    // Handle redirect
-		    if (error === 'FOUND') {
-			this.timeout(xhr.getResponseHeader('Location'));
-		    }
-		}
-	    });
-	},
+                    // Handle redirect
+                    if (error === 'FOUND') {
+                        this.timeout(xhr.getResponseHeader('Location'));
+                    }
+                }
+            });
+        },
 
-	timeout: function(loc) {
-	    var message;
+        timeout: function(loc) {
+            var message;
 
-	    if (loc) {
-		message = 'Your session timed out. Please ' +
-			  '<a href="' + loc + '">refresh the page</a>.';
-	    } else {
-		message = 'Your session timed out. Please refresh the page.';
-	    }
+            if (loc) {
+                message = 'Your session timed out. Please ' +
+                          '<a href="' + loc + '">refresh the page</a>.';
+            } else {
+                message = 'Your session timed out. Please refresh the page.';
+            }
 
-	    c.notify({
-		header: 'Session Timeout',
-		message: message,
-		dismissable: false,
-		timeout: false,
-		level: 'warning'
-	    });
+            c.notify({
+                header: 'Session Timeout',
+                message: message,
+                dismissable: false,
+                timeout: false,
+                level: 'warning'
+            });
 
-	    // Auto-refresh after some time
-	    setTimeout(function() {
-		if (loc) {
-		    window.location = location;
-		}
-		else {
-		    // `true` argument forces a fetch from the server rather
-		    // than using local cache.
-		    window.location.reload(true);
-		}
-	    }, 5000);
-	},
+            // Auto-refresh after some time
+            setTimeout(function() {
+                if (loc) {
+                    window.location = location;
+                }
+                else {
+                    // `true` argument forces a fetch from the server rather
+                    // than using local cache.
+                    window.location.reload(true);
+                }
+            }, 5000);
+        },
 
-	parse: function(attrs) {
-	    attrs = attrs || {};
+        parse: function(attrs) {
+            attrs = attrs || {};
 
-	    // Title of the API
-	    this.title = attrs.title;
+            // Title of the API
+            this.title = attrs.title;
 
-	    // Version of the API
-	    this.version = attrs.version;
+            // Version of the API
+            this.version = attrs.version;
 
-	    // Iterate over the available resource links and initialize
-	    // the corresponding collection with the URL
-	    this.data = {};
+            // Iterate over the available resource links and initialize
+            // the corresponding collection with the URL
+            this.data = {};
 
-	    var Collection;
+            var Collection;
 
-	    _.each(attrs._links, function(link, name) {
-		if ((Collection = collectionLinkMap[name])) {
-		    this.data[name] = new Collection();
-		    this.data[name].url = link.href;
-		    this.data[name].fetch({reset: true});
-		}
-	    }, this);
+            _.each(attrs._links, function(link, name) {
+                if ((Collection = collectionLinkMap[name])) {
+                    this.data[name] = new Collection();
+                    this.data[name].url = link.href;
+                    this.data[name].fetch({reset: true});
+                }
+            }, this);
 
-	    // Define router with the main element and app root based on
-	    // the global configuration
-	    this.router = new router.Router({
-		main: c.config.get('main'),
-		root: c.config.get('root')
-	    });
+            // Define router with the main element and app root based on
+            // the global configuration
+            this.router = new router.Router({
+                main: c.config.get('main'),
+                root: c.config.get('root')
+            });
 
-	    // Register pre-defined routes
-	    var routes = this.get('routes');
+            // Register pre-defined routes
+            var routes = this.get('routes');
 
-	    if (routes) {
-		// String indicates external module, load and register
-		if (typeof routes === 'string') {
-		    var _this = this;
+            if (routes) {
+                // String indicates external module, load and register
+                if (typeof routes === 'string') {
+                    var _this = this;
 
-		    require([routes], function(routes) {
-			_this.router.register(routes);
-		    });
-		} else {
-		    if (typeof routes === 'function') {
-			routes = routes();
-		    }
+                    require([routes], function(routes) {
+                        _this.router.register(routes);
+                    });
+                } else {
+                    if (typeof routes === 'function') {
+                        routes = routes();
+                    }
 
-		    this.router.register(routes);
-		}
-	    }
+                    this.router.register(routes);
+                }
+            }
 
-	    return attrs;
-	},
+            return attrs;
+        },
 
-	// Opens a session. This sends a request to the target URL which is
-	// assumed to be the root resource of a Serrano-compatible API. If
-	// credentials are supplied, the request will be a POST with the
-	// credentials supplied as JSON. A successful response will _ready_
-	// the session for use.
-	open: function() {
-	    // Session already opened or opening, return a promise
-	    if (this.opened || this.opening) return this._opening.promise();
+        // Opens a session. This sends a request to the target URL which is
+        // assumed to be the root resource of a Serrano-compatible API. If
+        // credentials are supplied, the request will be a POST with the
+        // credentials supplied as JSON. A successful response will _ready_
+        // the session for use.
+        open: function() {
+            // Session already opened or opening, return a promise
+            if (this.opened || this.opening) return this._opening.promise();
 
-	    // Ensure the session is valid before opening
-	    if (!this.isValid()) throw new Error(this.validationError);
+            // Ensure the session is valid before opening
+            if (!this.isValid()) throw new Error(this.validationError);
 
-	    // Set state and create deferred that will be used for creating
-	    // promises while the session is opening and after it is opened
-	    // to maintain a consistent interface.
-	    this.opening = true;
-	    this._opening = $.Deferred();
+            // Set state and create deferred that will be used for creating
+            // promises while the session is opening and after it is opened
+            // to maintain a consistent interface.
+            this.opening = true;
+            this._opening = $.Deferred();
 
-	    var options = {
-		url: this.get('url'),
-		type: 'GET',
-		dataType: 'json'
-	    };
+            var options = {
+                url: this.get('url'),
+                type: 'GET',
+                dataType: 'json'
+            };
 
-	    // If credentials switch to POST and add the credentials
-	    var credentials = this.get('credentials');
+            // If credentials switch to POST and add the credentials
+            var credentials = this.get('credentials');
 
-	    if (credentials) {
-		$.extend(options, {
-		    type: 'POST',
-		    contentType: 'application/json',
-		    data: JSON.stringify(credentials)
-		});
-	    }
+            if (credentials) {
+                $.extend(options, {
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(credentials)
+                });
+            }
 
-	    var _this = this;
+            var _this = this;
 
-	    this.fetch(options)
-		.always(function() {
-		    _this.opening = false;
-		})
-		.done(function(resp, status, xhr) {
-		    _this.opened = true;
-		    _this._opening.resolveWith(_this, [_this, resp, status, xhr]);
-		})
-		.fail(function(xhr, status, error) {
-		    _this.error = error;
-		    _this._opening.rejectWith(_this, [this, xhr, status, error]);
-		});
+            this.fetch(options)
+                .always(function() {
+                    _this.opening = false;
+                })
+                .done(function(resp, status, xhr) {
+                    _this.opened = true;
+                    _this._opening.resolveWith(_this, [_this, resp, status, xhr]);
+                })
+                .fail(function(xhr, status, error) {
+                    _this.error = error;
+                    _this._opening.rejectWith(_this, [this, xhr, status, error]);
+                });
 
-	    return this._opening.promise();
-	},
+            return this._opening.promise();
+        },
 
-	// Closing a session will remove the cached data and require it to be
-	// opened again.
-	close: function() {
-	    this.end();
-	    this.opening = this.opened = false;
+        // Closing a session will remove the cached data and require it to be
+        // opened again.
+        close: function() {
+            this.end();
+            this.opening = this.opened = false;
 
-	    // Reset all collections to deference models
-	    _.each(this.data, function(collection) {
-		collection.reset();
-		delete collection.url;
-	    });
+            // Reset all collections to deference models
+            _.each(this.data, function(collection) {
+                collection.reset();
+                delete collection.url;
+            });
 
-	    delete this._opening;
-	    delete this.data;
-	},
+            delete this._opening;
+            delete this.data;
+        },
 
-	// Starts/enables the session.
-	start: function(routes, options) {
-	    // Already started, return false denoting the start was not successful
-	    if (this.started) return false;
+        // Starts/enables the session.
+        start: function(routes, options) {
+            // Already started, return false denoting the start was not successful
+            if (this.started) return false;
 
-	    if (!this.opened) throw new Error('Session must be opened before loaded');
+            if (!this.opened) throw new Error('Session must be opened before loaded');
 
-	    this.started = true;
+            this.started = true;
 
-	    if (routes) this.router.register(routes);
+            if (routes) this.router.register(routes);
 
-	    // Start the router history
-	    this.router.start(options);
-	    this.startPing();
+            // Start the router history
+            this.router.start(options);
+            this.startPing();
 
-	    // When the page loses focus, stop pinging, resume when visibility is regained
-	    this.listenTo(c, {
-		visible: this.startPing,
-		hidden: this.stopPing
-	    });
+            // When the page loses focus, stop pinging, resume when visibility is regained
+            this.listenTo(c, {
+                visible: this.startPing,
+                hidden: this.stopPing
+            });
 
-	    if (!c.isSupported(c.getSerranoVersion())) {
-		c.notify({
-		    header: 'Serrano Version Unsupported',
-		    level: 'warning',
-		    timeout: false,
-		    message: 'You are connecting to an unsupported version of ' +
-			     'Serrano. Some functionality may be broken or missing ' +
-			     'due to compatibility issues.'
-		});
-	    }
-	},
+            if (!c.isSupported(c.getSerranoVersion())) {
+                c.notify({
+                    header: 'Serrano Version Unsupported',
+                    level: 'warning',
+                    timeout: false,
+                    message: 'You are connecting to an unsupported version of ' +
+                             'Serrano. Some functionality may be broken or missing ' +
+                             'due to compatibility issues.'
+                });
+            }
+        },
 
-	// Ends/disables the session.
-	end: function() {
-	    this.started = false;
-	    this.stopPing();
-	    this.stopListening(c, 'visible hidden');
-	    this.router.unregister();
-	}
+        // Ends/disables the session.
+        end: function() {
+            this.started = false;
+            this.stopPing();
+            this.stopListening(c, 'visible hidden');
+            this.router.unregister();
+        }
     });
 
 
@@ -309,96 +309,96 @@ define([
     // made the active once finished. The `active` property references the
     // currently active session if one exists.
     var SessionManager = Backbone.Collection.extend({
-	_switch: function(session) {
-	    if (this.active === session) return;
-	    delete this.pending;
+        _switch: function(session) {
+            if (this.active === session) return;
+            delete this.pending;
 
-	    // End the current active session
-	    this.close();
+            // End the current active session
+            this.close();
 
-	    // Set session as active and start it
-	    this.active = session;
-	    this.trigger(events.SESSION_OPENED, session);
-	},
+            // Set session as active and start it
+            this.active = session;
+            this.trigger(events.SESSION_OPENED, session);
+        },
 
-	// Opens a session. Takes an object of options that are passed into
-	// the session constructor. The url can be passed by itself as the
-	// first argument as a shorthand method for opening sessions.
-	open: function(url, options) {
-	    if (typeof url === 'object') {
-		options = url;
-	    } else {
-		options = options || {};
-		options.url = url;
-	    }
+        // Opens a session. Takes an object of options that are passed into
+        // the session constructor. The url can be passed by itself as the
+        // first argument as a shorthand method for opening sessions.
+        open: function(url, options) {
+            if (typeof url === 'object') {
+                options = url;
+            } else {
+                options = options || {};
+                options.url = url;
+            }
 
-	    // Get or create the session
-	    var session = this.get(options.url);
+            // Get or create the session
+            var session = this.get(options.url);
 
-	    if (!session) {
-		session = new Session(options);
-		this.add(session);
-	    }
+            if (!session) {
+                session = new Session(options);
+                this.add(session);
+            }
 
-	    // Ensure redundant calls are not being made
-	    if (session !== this.active && session !== this.pending) {
-		this.pending = session;
-		this.trigger(events.SESSION_OPENING, session);
-	    }
+            // Ensure redundant calls are not being made
+            if (session !== this.active && session !== this.pending) {
+                this.pending = session;
+                this.trigger(events.SESSION_OPENING, session);
+            }
 
-	    // Open returns a deferred object. If the opened session is *still*
-	    // the pending session, activate it. This could not be true if the
-	    // client quickly switches between available sessions and the first
-	    // session has not yet responded.
-	    var _this = this;
+            // Open returns a deferred object. If the opened session is *still*
+            // the pending session, activate it. This could not be true if the
+            // client quickly switches between available sessions and the first
+            // session has not yet responded.
+            var _this = this;
 
-	    return session.open()
-		.done(function() {
-		    if (_this.pending !== session) return;
-		    _this._switch(session);
-		})
-		.fail(function(_session, xhr, status, error) {
-		    if (_this.pending !== session) return;
+            return session.open()
+                .done(function() {
+                    if (_this.pending !== session) return;
+                    _this._switch(session);
+                })
+                .fail(function(_session, xhr, status, error) {
+                    if (_this.pending !== session) return;
 
-		    _this.pending = null;
+                    _this.pending = null;
 
-		    // Select to the appropriate channel to publish on depending
-		    // if it's a forbidden, unauthorized, or general error
-		    var event;
+                    // Select to the appropriate channel to publish on depending
+                    // if it's a forbidden, unauthorized, or general error
+                    var event;
 
-		    if (xhr.statusCode === 401 || xhr.statusCode === 403) {
-			event = events.SESSION_UNAUTHORIZED;
-		    } else {
-			event = events.SESSION_ERROR;
-		    }
+                    if (xhr.statusCode === 401 || xhr.statusCode === 403) {
+                        event = events.SESSION_UNAUTHORIZED;
+                    } else {
+                        event = events.SESSION_ERROR;
+                    }
 
-		    _this.trigger(event, session, error);
-		});
-	},
+                    _this.trigger(event, session, error);
+                });
+        },
 
-	// Closes the current sessions and publishes a message
-	close: function() {
-	    if (this.active) {
-		var session = this.active;
-		delete this.active;
-		this.remove(session);
-		session.close();
-		this.trigger(events.SESSION_CLOSED, session);
-	    }
-	},
+        // Closes the current sessions and publishes a message
+        close: function() {
+            if (this.active) {
+                var session = this.active;
+                delete this.active;
+                this.remove(session);
+                session.close();
+                this.trigger(events.SESSION_CLOSED, session);
+            }
+        },
 
-	// Closes the current session and clears all sessions
-	clear: function() {
-	    this.close();
-	    this.reset();
-	}
+        // Closes the current session and clears all sessions
+        clear: function() {
+            this.close();
+            this.reset();
+        }
     });
 
 
     return _.extend({
-	SessionManager: SessionManager,
-	Session: Session,
-	events: events
+        SessionManager: SessionManager,
+        Session: Session,
+        events: events
     });
 
 

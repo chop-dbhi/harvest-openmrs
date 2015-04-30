@@ -6,14 +6,14 @@ define([
 ], function(_, Marionette) {
 
     var FieldInfo = Marionette.ItemView.extend({
-	className: 'field-info',
+        className: 'field-info',
 
-	template: 'field/info'
+        template: 'field/info'
     });
 
 
     return {
-	FieldInfo: FieldInfo
+        FieldInfo: FieldInfo
     };
 
 });

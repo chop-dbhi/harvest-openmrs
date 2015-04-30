@@ -96,8 +96,8 @@
       if (!eventsApi(this, 'once', name, [callback, context]) || !callback) return this;
       var self = this;
       var once = _.once(function() {
-	self.off(name, once);
-	callback.apply(this, arguments);
+        self.off(name, once);
+        callback.apply(this, arguments);
       });
       once._callback = callback;
       return this.on(name, once, context);
@@ -111,25 +111,25 @@
       var retain, ev, events, names, i, l, j, k;
       if (!this._events || !eventsApi(this, 'off', name, [callback, context])) return this;
       if (!name && !callback && !context) {
-	this._events = void 0;
-	return this;
+        this._events = void 0;
+        return this;
       }
       names = name ? [name] : _.keys(this._events);
       for (i = 0, l = names.length; i < l; i++) {
-	name = names[i];
-	if (events = this._events[name]) {
-	  this._events[name] = retain = [];
-	  if (callback || context) {
-	    for (j = 0, k = events.length; j < k; j++) {
-	      ev = events[j];
-	      if ((callback && callback !== ev.callback && callback !== ev.callback._callback) ||
-		  (context && context !== ev.context)) {
-		retain.push(ev);
-	      }
-	    }
-	  }
-	  if (!retain.length) delete this._events[name];
-	}
+        name = names[i];
+        if (events = this._events[name]) {
+          this._events[name] = retain = [];
+          if (callback || context) {
+            for (j = 0, k = events.length; j < k; j++) {
+              ev = events[j];
+              if ((callback && callback !== ev.callback && callback !== ev.callback._callback) ||
+                  (context && context !== ev.context)) {
+                retain.push(ev);
+              }
+            }
+          }
+          if (!retain.length) delete this._events[name];
+        }
       }
 
       return this;
@@ -159,9 +159,9 @@
       if (!callback && typeof name === 'object') callback = this;
       if (obj) (listeningTo = {})[obj._listenId] = obj;
       for (var id in listeningTo) {
-	obj = listeningTo[id];
-	obj.off(name, callback, this);
-	if (remove || _.isEmpty(obj._events)) delete this._listeningTo[id];
+        obj = listeningTo[id];
+        obj.off(name, callback, this);
+        if (remove || _.isEmpty(obj._events)) delete this._listeningTo[id];
       }
       return this;
     }
@@ -180,7 +180,7 @@
     // Handle event maps.
     if (typeof name === 'object') {
       for (var key in name) {
-	obj[action].apply(obj, [key, name[key]].concat(rest));
+        obj[action].apply(obj, [key, name[key]].concat(rest));
       }
       return false;
     }
@@ -189,7 +189,7 @@
     if (eventSplitter.test(name)) {
       var names = name.split(eventSplitter);
       for (var i = 0, l = names.length; i < l; i++) {
-	obj[action].apply(obj, [names[i]].concat(rest));
+        obj[action].apply(obj, [names[i]].concat(rest));
       }
       return false;
     }
@@ -311,10 +311,10 @@
 
       // Handle both `"key", value` and `{key: value}` -style arguments.
       if (typeof key === 'object') {
-	attrs = key;
-	options = val;
+        attrs = key;
+        options = val;
       } else {
-	(attrs = {})[key] = val;
+        (attrs = {})[key] = val;
       }
 
       options || (options = {});
@@ -330,8 +330,8 @@
       this._changing  = true;
 
       if (!changing) {
-	this._previousAttributes = _.clone(this.attributes);
-	this.changed = {};
+        this._previousAttributes = _.clone(this.attributes);
+        this.changed = {};
       }
       current = this.attributes, prev = this._previousAttributes;
 
@@ -340,33 +340,33 @@
 
       // For each `set` attribute, update or delete the current value.
       for (attr in attrs) {
-	val = attrs[attr];
-	if (!_.isEqual(current[attr], val)) changes.push(attr);
-	if (!_.isEqual(prev[attr], val)) {
-	  this.changed[attr] = val;
-	} else {
-	  delete this.changed[attr];
-	}
-	unset ? delete current[attr] : current[attr] = val;
+        val = attrs[attr];
+        if (!_.isEqual(current[attr], val)) changes.push(attr);
+        if (!_.isEqual(prev[attr], val)) {
+          this.changed[attr] = val;
+        } else {
+          delete this.changed[attr];
+        }
+        unset ? delete current[attr] : current[attr] = val;
       }
 
       // Trigger all relevant attribute changes.
       if (!silent) {
-	if (changes.length) this._pending = options;
-	for (var i = 0, l = changes.length; i < l; i++) {
-	  this.trigger('change:' + changes[i], this, current[changes[i]], options);
-	}
+        if (changes.length) this._pending = options;
+        for (var i = 0, l = changes.length; i < l; i++) {
+          this.trigger('change:' + changes[i], this, current[changes[i]], options);
+        }
       }
 
       // You might be wondering why there's a `while` loop here. Changes can
       // be recursively nested within `"change"` events.
       if (changing) return this;
       if (!silent) {
-	while (this._pending) {
-	  options = this._pending;
-	  this._pending = false;
-	  this.trigger('change', this, options);
-	}
+        while (this._pending) {
+          options = this._pending;
+          this._pending = false;
+          this.trigger('change', this, options);
+        }
       }
       this._pending = false;
       this._changing = false;
@@ -404,8 +404,8 @@
       var val, changed = false;
       var old = this._changing ? this._previousAttributes : this.attributes;
       for (var attr in diff) {
-	if (_.isEqual(old[attr], (val = diff[attr]))) continue;
-	(changed || (changed = {}))[attr] = val;
+        if (_.isEqual(old[attr], (val = diff[attr]))) continue;
+        (changed || (changed = {}))[attr] = val;
       }
       return changed;
     },
@@ -432,9 +432,9 @@
       var model = this;
       var success = options.success;
       options.success = function(resp) {
-	if (!model.set(model.parse(resp, options), options)) return false;
-	if (success) success(model, resp, options);
-	model.trigger('sync', model, resp, options);
+        if (!model.set(model.parse(resp, options), options)) return false;
+        if (success) success(model, resp, options);
+        model.trigger('sync', model, resp, options);
       };
       wrapError(this, options);
       return this.sync('read', this, options);
@@ -448,10 +448,10 @@
 
       // Handle both `"key", value` and `{key: value}` -style arguments.
       if (key == null || typeof key === 'object') {
-	attrs = key;
-	options = val;
+        attrs = key;
+        options = val;
       } else {
-	(attrs = {})[key] = val;
+        (attrs = {})[key] = val;
       }
 
       options = _.extend({validate: true}, options);
@@ -460,14 +460,14 @@
       // `set(attr).save(null, opts)` with validation. Otherwise, check if
       // the model will be valid when the attributes, if any, are set.
       if (attrs && !options.wait) {
-	if (!this.set(attrs, options)) return false;
+        if (!this.set(attrs, options)) return false;
       } else {
-	if (!this._validate(attrs, options)) return false;
+        if (!this._validate(attrs, options)) return false;
       }
 
       // Set temporary attributes if `{wait: true}`.
       if (attrs && options.wait) {
-	this.attributes = _.extend({}, attributes, attrs);
+        this.attributes = _.extend({}, attributes, attrs);
       }
 
       // After a successful server-side save, the client is (optionally)
@@ -476,15 +476,15 @@
       var model = this;
       var success = options.success;
       options.success = function(resp) {
-	// Ensure attributes are restored during synchronous saves.
-	model.attributes = attributes;
-	var serverAttrs = model.parse(resp, options);
-	if (options.wait) serverAttrs = _.extend(attrs || {}, serverAttrs);
-	if (_.isObject(serverAttrs) && !model.set(serverAttrs, options)) {
-	  return false;
-	}
-	if (success) success(model, resp, options);
-	model.trigger('sync', model, resp, options);
+        // Ensure attributes are restored during synchronous saves.
+        model.attributes = attributes;
+        var serverAttrs = model.parse(resp, options);
+        if (options.wait) serverAttrs = _.extend(attrs || {}, serverAttrs);
+        if (_.isObject(serverAttrs) && !model.set(serverAttrs, options)) {
+          return false;
+        }
+        if (success) success(model, resp, options);
+        model.trigger('sync', model, resp, options);
       };
       wrapError(this, options);
 
@@ -507,18 +507,18 @@
       var success = options.success;
 
       var destroy = function() {
-	model.trigger('destroy', model, model.collection, options);
+        model.trigger('destroy', model, model.collection, options);
       };
 
       options.success = function(resp) {
-	if (options.wait || model.isNew()) destroy();
-	if (success) success(model, resp, options);
-	if (!model.isNew()) model.trigger('sync', model, resp, options);
+        if (options.wait || model.isNew()) destroy();
+        if (success) success(model, resp, options);
+        if (!model.isNew()) model.trigger('sync', model, resp, options);
       };
 
       if (this.isNew()) {
-	options.success();
-	return false;
+        options.success();
+        return false;
       }
       wrapError(this, options);
 
@@ -532,9 +532,9 @@
     // that will be called.
     url: function() {
       var base =
-	_.result(this, 'urlRoot') ||
-	_.result(this.collection, 'url') ||
-	urlError();
+        _.result(this, 'urlRoot') ||
+        _.result(this.collection, 'url') ||
+        urlError();
       if (this.isNew()) return base;
       return base.replace(/([^\/])$/, '$1/') + encodeURIComponent(this.id);
     },
@@ -645,18 +645,18 @@
       options || (options = {});
       var i, l, index, model;
       for (i = 0, l = models.length; i < l; i++) {
-	model = models[i] = this.get(models[i]);
-	if (!model) continue;
-	delete this._byId[model.id];
-	delete this._byId[model.cid];
-	index = this.indexOf(model);
-	this.models.splice(index, 1);
-	this.length--;
-	if (!options.silent) {
-	  options.index = index;
-	  model.trigger('remove', model, this, options);
-	}
-	this._removeReference(model, options);
+        model = models[i] = this.get(models[i]);
+        if (!model) continue;
+        delete this._byId[model.id];
+        delete this._byId[model.cid];
+        index = this.indexOf(model);
+        this.models.splice(index, 1);
+        this.length--;
+        if (!options.silent) {
+          options.index = index;
+          model.trigger('remove', model, this, options);
+        }
+        this._removeReference(model, options);
       }
       return singular ? models[0] : models;
     },
@@ -682,62 +682,62 @@
       // Turn bare objects into model references, and prevent invalid models
       // from being added.
       for (i = 0, l = models.length; i < l; i++) {
-	attrs = models[i] || {};
-	if (attrs instanceof Model) {
-	  id = model = attrs;
-	} else {
-	  id = attrs[targetModel.prototype.idAttribute || 'id'];
-	}
+        attrs = models[i] || {};
+        if (attrs instanceof Model) {
+          id = model = attrs;
+        } else {
+          id = attrs[targetModel.prototype.idAttribute || 'id'];
+        }
 
-	// If a duplicate is found, prevent it from being added and
-	// optionally merge it into the existing model.
-	if (existing = this.get(id)) {
-	  if (remove) modelMap[existing.cid] = true;
-	  if (merge) {
-	    attrs = attrs === model ? model.attributes : attrs;
-	    if (options.parse) attrs = existing.parse(attrs, options);
-	    existing.set(attrs, options);
-	    if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
-	  }
-	  models[i] = existing;
+        // If a duplicate is found, prevent it from being added and
+        // optionally merge it into the existing model.
+        if (existing = this.get(id)) {
+          if (remove) modelMap[existing.cid] = true;
+          if (merge) {
+            attrs = attrs === model ? model.attributes : attrs;
+            if (options.parse) attrs = existing.parse(attrs, options);
+            existing.set(attrs, options);
+            if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
+          }
+          models[i] = existing;
 
-	// If this is a new, valid model, push it to the `toAdd` list.
-	} else if (add) {
-	  model = models[i] = this._prepareModel(attrs, options);
-	  if (!model) continue;
-	  toAdd.push(model);
-	  this._addReference(model, options);
-	}
+        // If this is a new, valid model, push it to the `toAdd` list.
+        } else if (add) {
+          model = models[i] = this._prepareModel(attrs, options);
+          if (!model) continue;
+          toAdd.push(model);
+          this._addReference(model, options);
+        }
 
-	// Do not add multiple models with the same `id`.
-	model = existing || model;
-	if (order && (model.isNew() || !modelMap[model.id])) order.push(model);
-	modelMap[model.id] = true;
+        // Do not add multiple models with the same `id`.
+        model = existing || model;
+        if (order && (model.isNew() || !modelMap[model.id])) order.push(model);
+        modelMap[model.id] = true;
       }
 
       // Remove nonexistent models if appropriate.
       if (remove) {
-	for (i = 0, l = this.length; i < l; ++i) {
-	  if (!modelMap[(model = this.models[i]).cid]) toRemove.push(model);
-	}
-	if (toRemove.length) this.remove(toRemove, options);
+        for (i = 0, l = this.length; i < l; ++i) {
+          if (!modelMap[(model = this.models[i]).cid]) toRemove.push(model);
+        }
+        if (toRemove.length) this.remove(toRemove, options);
       }
 
       // See if sorting is needed, update `length` and splice in new models.
       if (toAdd.length || (order && order.length)) {
-	if (sortable) sort = true;
-	this.length += toAdd.length;
-	if (at != null) {
-	  for (i = 0, l = toAdd.length; i < l; i++) {
-	    this.models.splice(at + i, 0, toAdd[i]);
-	  }
-	} else {
-	  if (order) this.models.length = 0;
-	  var orderedModels = order || toAdd;
-	  for (i = 0, l = orderedModels.length; i < l; i++) {
-	    this.models.push(orderedModels[i]);
-	  }
-	}
+        if (sortable) sort = true;
+        this.length += toAdd.length;
+        if (at != null) {
+          for (i = 0, l = toAdd.length; i < l; i++) {
+            this.models.splice(at + i, 0, toAdd[i]);
+          }
+        } else {
+          if (order) this.models.length = 0;
+          var orderedModels = order || toAdd;
+          for (i = 0, l = orderedModels.length; i < l; i++) {
+            this.models.push(orderedModels[i]);
+          }
+        }
       }
 
       // Silently sort the collection if appropriate.
@@ -745,10 +745,10 @@
 
       // Unless silenced, it's time to fire all appropriate add/sort events.
       if (!options.silent) {
-	for (i = 0, l = toAdd.length; i < l; i++) {
-	  (model = toAdd[i]).trigger('add', model, this, options);
-	}
-	if (sort || (order && order.length)) this.trigger('sort', this, options);
+        for (i = 0, l = toAdd.length; i < l; i++) {
+          (model = toAdd[i]).trigger('add', model, this, options);
+        }
+        if (sort || (order && order.length)) this.trigger('sort', this, options);
       }
 
       // Return the added (or merged) model (or models).
@@ -762,7 +762,7 @@
     reset: function(models, options) {
       options || (options = {});
       for (var i = 0, l = this.models.length; i < l; i++) {
-	this._removeReference(this.models[i], options);
+        this._removeReference(this.models[i], options);
       }
       options.previousModels = this.models;
       this._reset();
@@ -816,10 +816,10 @@
     where: function(attrs, first) {
       if (_.isEmpty(attrs)) return first ? void 0 : [];
       return this[first ? 'find' : 'filter'](function(model) {
-	for (var key in attrs) {
-	  if (attrs[key] !== model.get(key)) return false;
-	}
-	return true;
+        for (var key in attrs) {
+          if (attrs[key] !== model.get(key)) return false;
+        }
+        return true;
       });
     },
 
@@ -838,9 +838,9 @@
 
       // Run sort based on type of `comparator`.
       if (_.isString(this.comparator) || this.comparator.length === 1) {
-	this.models = this.sortBy(this.comparator, this);
+        this.models = this.sortBy(this.comparator, this);
       } else {
-	this.models.sort(_.bind(this.comparator, this));
+        this.models.sort(_.bind(this.comparator, this));
       }
 
       if (!options.silent) this.trigger('sort', this, options);
@@ -861,10 +861,10 @@
       var success = options.success;
       var collection = this;
       options.success = function(resp) {
-	var method = options.reset ? 'reset' : 'set';
-	collection[method](resp, options);
-	if (success) success(collection, resp, options);
-	collection.trigger('sync', collection, resp, options);
+        var method = options.reset ? 'reset' : 'set';
+        collection[method](resp, options);
+        if (success) success(collection, resp, options);
+        collection.trigger('sync', collection, resp, options);
       };
       wrapError(this, options);
       return this.sync('read', this, options);
@@ -880,8 +880,8 @@
       var collection = this;
       var success = options.success;
       options.success = function(model, resp) {
-	if (options.wait) collection.add(model, options);
-	if (success) success(model, resp, options);
+        if (options.wait) collection.add(model, options);
+        if (success) success(model, resp, options);
       };
       model.save(null, options);
       return model;
@@ -940,8 +940,8 @@
       if ((event === 'add' || event === 'remove') && collection !== this) return;
       if (event === 'destroy') this.remove(model, options);
       if (model && event === 'change:' + model.idAttribute) {
-	delete this._byId[model.previous(model.idAttribute)];
-	if (model.id != null) this._byId[model.id] = model;
+        delete this._byId[model.previous(model.idAttribute)];
+        if (model.id != null) this._byId[model.id] = model;
       }
       this.trigger.apply(this, arguments);
     }
@@ -974,7 +974,7 @@
   _.each(attributeMethods, function(method) {
     Collection.prototype[method] = function(value, context) {
       var iterator = _.isFunction(value) ? value : function(model) {
-	return model.get(value);
+        return model.get(value);
       };
       return _[method](this.models, iterator, context);
     };
@@ -1068,19 +1068,19 @@
       if (!(events || (events = _.result(this, 'events')))) return this;
       this.undelegateEvents();
       for (var key in events) {
-	var method = events[key];
-	if (!_.isFunction(method)) method = this[events[key]];
-	if (!method) continue;
+        var method = events[key];
+        if (!_.isFunction(method)) method = this[events[key]];
+        if (!method) continue;
 
-	var match = key.match(delegateEventSplitter);
-	var eventName = match[1], selector = match[2];
-	method = _.bind(method, this);
-	eventName += '.delegateEvents' + this.cid;
-	if (selector === '') {
-	  this.$el.on(eventName, method);
-	} else {
-	  this.$el.on(eventName, selector, method);
-	}
+        var match = key.match(delegateEventSplitter);
+        var eventName = match[1], selector = match[2];
+        method = _.bind(method, this);
+        eventName += '.delegateEvents' + this.cid;
+        if (selector === '') {
+          this.$el.on(eventName, method);
+        } else {
+          this.$el.on(eventName, selector, method);
+        }
       }
       return this;
     },
@@ -1099,13 +1099,13 @@
     // an element from the `id`, `className` and `tagName` properties.
     _ensureElement: function() {
       if (!this.el) {
-	var attrs = _.extend({}, _.result(this, 'attributes'));
-	if (this.id) attrs.id = _.result(this, 'id');
-	if (this.className) attrs['class'] = _.result(this, 'className');
-	var $el = Backbone.$('<' + _.result(this, 'tagName') + '>').attr(attrs);
-	this.setElement($el, false);
+        var attrs = _.extend({}, _.result(this, 'attributes'));
+        if (this.id) attrs.id = _.result(this, 'id');
+        if (this.className) attrs['class'] = _.result(this, 'className');
+        var $el = Backbone.$('<' + _.result(this, 'tagName') + '>').attr(attrs);
+        this.setElement($el, false);
       } else {
-	this.setElement(_.result(this, 'el'), false);
+        this.setElement(_.result(this, 'el'), false);
       }
     }
 
@@ -1165,8 +1165,8 @@
       if (options.emulateJSON) params.data._method = type;
       var beforeSend = options.beforeSend;
       options.beforeSend = function(xhr) {
-	xhr.setRequestHeader('X-HTTP-Method-Override', type);
-	if (beforeSend) return beforeSend.apply(this, arguments);
+        xhr.setRequestHeader('X-HTTP-Method-Override', type);
+        if (beforeSend) return beforeSend.apply(this, arguments);
       };
     }
 
@@ -1180,7 +1180,7 @@
     // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
     if (params.type === 'PATCH' && noXhrPatch) {
       params.xhr = function() {
-	return new ActiveXObject("Microsoft.XMLHTTP");
+        return new ActiveXObject("Microsoft.XMLHTTP");
       };
     }
 
@@ -1244,17 +1244,17 @@
     route: function(route, name, callback) {
       if (!_.isRegExp(route)) route = this._routeToRegExp(route);
       if (_.isFunction(name)) {
-	callback = name;
-	name = '';
+        callback = name;
+        name = '';
       }
       if (!callback) callback = this[name];
       var router = this;
       Backbone.history.route(route, function(fragment) {
-	var args = router._extractParameters(route, fragment);
-	router.execute(callback, args);
-	router.trigger.apply(router, ['route:' + name].concat(args));
-	router.trigger('route', name, args);
-	Backbone.history.trigger('route', router, name, args);
+        var args = router._extractParameters(route, fragment);
+        router.execute(callback, args);
+        router.trigger.apply(router, ['route:' + name].concat(args));
+        router.trigger('route', name, args);
+        Backbone.history.trigger('route', router, name, args);
       });
       return this;
     },
@@ -1279,7 +1279,7 @@
       this.routes = _.result(this, 'routes');
       var route, routes = _.keys(this.routes);
       while ((route = routes.pop()) != null) {
-	this.route(route, this.routes[route]);
+        this.route(route, this.routes[route]);
       }
     },
 
@@ -1287,11 +1287,11 @@
     // against the current location hash.
     _routeToRegExp: function(route) {
       route = route.replace(escapeRegExp, '\\$&')
-		   .replace(optionalParam, '(?:$1)?')
-		   .replace(namedParam, function(match, optional) {
-		     return optional ? match : '([^/?]+)';
-		   })
-		   .replace(splatParam, '([^?]*?)');
+                   .replace(optionalParam, '(?:$1)?')
+                   .replace(namedParam, function(match, optional) {
+                     return optional ? match : '([^/?]+)';
+                   })
+                   .replace(splatParam, '([^?]*?)');
       return new RegExp('^' + route + '(?:\\?([\\s\\S]*))?$');
     },
 
@@ -1301,9 +1301,9 @@
     _extractParameters: function(route, fragment) {
       var params = route.exec(fragment).slice(1);
       return _.map(params, function(param, i) {
-	// Don't decode the search params.
-	if (i === params.length - 1) return param || null;
-	return param ? decodeURIComponent(param) : null;
+        // Don't decode the search params.
+        if (i === params.length - 1) return param || null;
+        return param ? decodeURIComponent(param) : null;
       });
     }
 
@@ -1369,13 +1369,13 @@
     // the hash, or the override.
     getFragment: function(fragment, forcePushState) {
       if (fragment == null) {
-	if (this._hasPushState || !this._wantsHashChange || forcePushState) {
-	  fragment = decodeURI(this.location.pathname + this.location.search);
-	  var root = this.root.replace(trailingSlash, '');
-	  if (!fragment.indexOf(root)) fragment = fragment.slice(root.length);
-	} else {
-	  fragment = this.getHash();
-	}
+        if (this._hasPushState || !this._wantsHashChange || forcePushState) {
+          fragment = decodeURI(this.location.pathname + this.location.search);
+          var root = this.root.replace(trailingSlash, '');
+          if (!fragment.indexOf(root)) fragment = fragment.slice(root.length);
+        } else {
+          fragment = this.getHash();
+        }
       }
       return fragment.replace(routeStripper, '');
     },
@@ -1401,19 +1401,19 @@
       this.root = ('/' + this.root + '/').replace(rootStripper, '/');
 
       if (oldIE && this._wantsHashChange) {
-	var frame = Backbone.$('<iframe src="javascript:0" tabindex="-1">');
-	this.iframe = frame.hide().appendTo('body')[0].contentWindow;
-	this.navigate(fragment);
+        var frame = Backbone.$('<iframe src="javascript:0" tabindex="-1">');
+        this.iframe = frame.hide().appendTo('body')[0].contentWindow;
+        this.navigate(fragment);
       }
 
       // Depending on whether we're using pushState or hashes, and whether
       // 'onhashchange' is supported, determine how we check the URL state.
       if (this._hasPushState) {
-	Backbone.$(window).on('popstate', this.checkUrl);
+        Backbone.$(window).on('popstate', this.checkUrl);
       } else if (this._wantsHashChange && ('onhashchange' in window) && !oldIE) {
-	Backbone.$(window).on('hashchange', this.checkUrl);
+        Backbone.$(window).on('hashchange', this.checkUrl);
       } else if (this._wantsHashChange) {
-	this._checkUrlInterval = setInterval(this.checkUrl, this.interval);
+        this._checkUrlInterval = setInterval(this.checkUrl, this.interval);
       }
 
       // Determine if we need to change the base url, for a pushState link
@@ -1425,20 +1425,20 @@
       // requested.
       if (this._wantsHashChange && this._wantsPushState) {
 
-	// If we've started off with a route from a `pushState`-enabled
-	// browser, but we're currently in a browser that doesn't support it...
-	if (!this._hasPushState && !this.atRoot()) {
-	  this.fragment = this.getFragment(null, true);
-	  this.location.replace(this.root + '#' + this.fragment);
-	  // Return immediately as browser will do redirect to new url
-	  return true;
+        // If we've started off with a route from a `pushState`-enabled
+        // browser, but we're currently in a browser that doesn't support it...
+        if (!this._hasPushState && !this.atRoot()) {
+          this.fragment = this.getFragment(null, true);
+          this.location.replace(this.root + '#' + this.fragment);
+          // Return immediately as browser will do redirect to new url
+          return true;
 
-	// Or if we've started out with a hash-based route, but we're currently
-	// in a browser where it could be `pushState`-based instead...
-	} else if (this._hasPushState && this.atRoot() && loc.hash) {
-	  this.fragment = this.getHash().replace(routeStripper, '');
-	  this.history.replaceState({}, document.title, this.root + this.fragment);
-	}
+        // Or if we've started out with a hash-based route, but we're currently
+        // in a browser where it could be `pushState`-based instead...
+        } else if (this._hasPushState && this.atRoot() && loc.hash) {
+          this.fragment = this.getHash().replace(routeStripper, '');
+          this.history.replaceState({}, document.title, this.root + this.fragment);
+        }
 
       }
 
@@ -1464,7 +1464,7 @@
     checkUrl: function(e) {
       var current = this.getFragment();
       if (current === this.fragment && this.iframe) {
-	current = this.getFragment(this.getHash(this.iframe));
+        current = this.getFragment(this.getHash(this.iframe));
       }
       if (current === this.fragment) return false;
       if (this.iframe) this.navigate(current);
@@ -1477,10 +1477,10 @@
     loadUrl: function(fragment) {
       fragment = this.fragment = this.getFragment(fragment);
       return _.any(this.handlers, function(handler) {
-	if (handler.route.test(fragment)) {
-	  handler.callback(fragment);
-	  return true;
-	}
+        if (handler.route.test(fragment)) {
+          handler.callback(fragment);
+          return true;
+        }
       });
     },
 
@@ -1508,24 +1508,24 @@
 
       // If pushState is available, we use it to set the fragment as a real URL.
       if (this._hasPushState) {
-	this.history[options.replace ? 'replaceState' : 'pushState']({}, document.title, url);
+        this.history[options.replace ? 'replaceState' : 'pushState']({}, document.title, url);
 
       // If hash changes haven't been explicitly disabled, update the hash
       // fragment to store history.
       } else if (this._wantsHashChange) {
-	this._updateHash(this.location, fragment, options.replace);
-	if (this.iframe && (fragment !== this.getFragment(this.getHash(this.iframe)))) {
-	  // Opening and closing the iframe tricks IE7 and earlier to push a
-	  // history entry on hash-tag change.  When replace is true, we don't
-	  // want this.
-	  if(!options.replace) this.iframe.document.open().close();
-	  this._updateHash(this.iframe.location, fragment, options.replace);
-	}
+        this._updateHash(this.location, fragment, options.replace);
+        if (this.iframe && (fragment !== this.getFragment(this.getHash(this.iframe)))) {
+          // Opening and closing the iframe tricks IE7 and earlier to push a
+          // history entry on hash-tag change.  When replace is true, we don't
+          // want this.
+          if(!options.replace) this.iframe.document.open().close();
+          this._updateHash(this.iframe.location, fragment, options.replace);
+        }
 
       // If you've told us that you explicitly don't want fallback hashchange-
       // based history, then `navigate` becomes a page refresh.
       } else {
-	return this.location.assign(url);
+        return this.location.assign(url);
       }
       if (options.trigger) return this.loadUrl(fragment);
     },
@@ -1534,11 +1534,11 @@
     // a new one to the browser history.
     _updateHash: function(location, fragment, replace) {
       if (replace) {
-	var href = location.href.replace(/(javascript:|#).*$/, '');
-	location.replace(href + '#' + fragment);
+        var href = location.href.replace(/(javascript:|#).*$/, '');
+        location.replace(href + '#' + fragment);
       } else {
-	// Some browsers require that `hash` contains a leading #.
-	location.hash = '#' + fragment;
+        // Some browsers require that `hash` contains a leading #.
+        location.hash = '#' + fragment;
       }
     }
 

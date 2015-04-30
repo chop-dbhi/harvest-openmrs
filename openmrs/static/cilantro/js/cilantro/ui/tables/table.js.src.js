@@ -18,7 +18,7 @@ define(['underscore', 'marionette', './body', './header', './footer'], function(
 
     Table.prototype.itemViewOptions = function(item, index) {
       return _.defaults({
-	collection: item.series
+        collection: item.series
       }, this.options);
     };
 
@@ -28,28 +28,28 @@ define(['underscore', 'marionette', './body', './header', './footer'], function(
 
     Table.prototype.initialize = function() {
       this.header = new header.Header(_.defaults({
-	collection: this.collection.indexes
+        collection: this.collection.indexes
       }, this.options));
       this.footer = new footer.Footer(_.defaults({
-	collection: this.collection.indexes
+        collection: this.collection.indexes
       }, this.options));
       this.header.render();
       this.footer.render();
       this.$el.append(this.header.el, this.footer.el);
       return this.collection.on('reset', (function(_this) {
-	return function() {
-	  if (_this.collection.objectCount === 0) {
-	    return _this.$el.hide();
-	  } else {
-	    return _this.$el.show();
-	  }
-	};
+        return function() {
+          if (_this.collection.objectCount === 0) {
+            return _this.$el.hide();
+          } else {
+            return _this.$el.show();
+          }
+        };
       })(this));
     };
 
     Table.prototype.showCurrentPage = function(model, num, options) {
       return this.children.each(function(view) {
-	return view.$el.toggle(view.model.id === num);
+        return view.$el.toggle(view.model.id === num);
       });
     };
 

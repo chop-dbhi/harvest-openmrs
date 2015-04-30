@@ -7,24 +7,24 @@ define(function() {
     // The primary use case for this is when child elements are being
     // inserted non-sequentially, but need to ordered in the DOM.
     var insertAt = function(parent, index, element) {
-	var children = parent.children(),
-	    lastIndex = children.size();
+        var children = parent.children(),
+            lastIndex = children.size();
 
-	if (index < 0) {
-	    index = Math.max(0, lastIndex + 1 + index);
-	}
+        if (index < 0) {
+            index = Math.max(0, lastIndex + 1 + index);
+        }
 
-	parent.append(element);
+        parent.append(element);
 
-	if (index < lastIndex) {
-	    children.eq(index).before(children.last());
-	}
+        if (index < lastIndex) {
+            children.eq(index).before(children.last());
+        }
 
-	return parent;
+        return parent;
     };
 
     return {
-	insertAt: insertAt
+        insertAt: insertAt
     };
 
 });

@@ -52,68 +52,68 @@ define(['underscore', 'highcharts'], function(_, Highcharts) {
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       point = _ref[i];
       if (seriesIdx != null) {
-	svalue = point.values.slice(seriesIdx, seriesIdx + 1)[0];
+        svalue = point.values.slice(seriesIdx, seriesIdx + 1)[0];
       } else {
-	svalue = '';
+        svalue = '';
       }
       if (!(series = seriesData[svalue])) {
-	series = seriesData[svalue] = {
-	  name: svalue,
-	  stats: {
-	    min: point.count,
-	    max: point.count,
-	    sum: point.count
-	  }
-	};
-	if (xEnum && yEnum) {
-	  series.data = [
-	    {
-	      x: 0,
-	      y: 0,
-	      radius: 0,
-	      sentinel: true
-	    }, point
-	  ];
-	} else {
-	  series.data = [point];
-	}
+        series = seriesData[svalue] = {
+          name: svalue,
+          stats: {
+            min: point.count,
+            max: point.count,
+            sum: point.count
+          }
+        };
+        if (xEnum && yEnum) {
+          series.data = [
+            {
+              x: 0,
+              y: 0,
+              radius: 0,
+              sentinel: true
+            }, point
+          ];
+        } else {
+          series.data = [point];
+        }
       } else {
-	series.data.push(point);
-	series.stats.min = Math.min(series.stats.min, point.count);
-	series.stats.max = Math.max(series.stats.max, point.count);
-	series.stats.sum += point.count;
+        series.data.push(point);
+        series.stats.min = Math.min(series.stats.min, point.count);
+        series.stats.max = Math.max(series.stats.max, point.count);
+        series.stats.sum += point.count;
       }
       x = point.values[0];
       if (x === null) {
-	x = '(no data)';
+        x = '(no data)';
       }
       if (xEnum) {
-	if ((idx = xLabels.indexOf(x.toString())) === -1) {
-	  idx = xLabels.push(x.toString()) - 1;
-	}
-	x = idx;
+        if ((idx = xLabels.indexOf(x.toString())) === -1) {
+          idx = xLabels.push(x.toString()) - 1;
+        }
+        x = idx;
       } else {
-	if (xType === 'datetime') {
-	  x = parseDate(x);
-	}
+        if (xType === 'datetime') {
+          x = parseDate(x);
+        }
       }
       if (yField) {
-	y = point.values[1];
-	if (y === null) {
-	  y = '(no data)';
-	}
-	if (yEnum) {
-	  if ((idx = yLabels.indexOf(y.toString())) === -1) {
-	    idx = yLabels.push(y.toString()) - 1;
-	  }
-	  y = idx;
-	} else {
-	  if (yType === 'datetime') {
-	    y = parseDate(y);
-	  }
-	}
+        y = point.values[1];
+        if (y === null) {
+          y = '(no data)';
+        }
+        if (yEnum) {
+          if ((idx = yLabels.indexOf(y.toString())) === -1) {
+            idx = yLabels.push(y.toString()) - 1;
+          }
+          y = idx;
+        } else {
+          if (yType === 'datetime') {
+            y = parseDate(y);
+          }
+        }
       } else {
-	y = point.count;
+        y = point.count;
       }
       point.x = x;
       point.y = y;
@@ -127,101 +127,101 @@ define(['underscore', 'highcharts'], function(_, Highcharts) {
     for (name in seriesData) {
       series = seriesData[name];
       if (xEnum && yEnum) {
-	series.data.push({
-	  x: 0,
-	  y: ylen,
-	  radius: 0,
-	  sentinel: true
-	});
-	series.data.push({
-	  x: xlen,
-	  y: ylen,
-	  radius: 0,
-	  sentinel: true
-	});
-	series.data.push({
-	  x: xlen,
-	  y: ylen,
-	  radius: 0,
-	  sentinel: true
-	});
+        series.data.push({
+          x: 0,
+          y: ylen,
+          radius: 0,
+          sentinel: true
+        });
+        series.data.push({
+          x: xlen,
+          y: ylen,
+          radius: 0,
+          sentinel: true
+        });
+        series.data.push({
+          x: xlen,
+          y: ylen,
+          radius: 0,
+          sentinel: true
+        });
       }
       seriesList.push(series);
       avg = series.stats.avg = series.stats.sum / parseFloat(series.data.length, 10);
       max = series.stats.max;
       if (chartType === 'scatter') {
-	_ref1 = series.data;
-	for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-	  p = _ref1[_j];
-	  if (p.sentinel) {
-	    continue;
-	  }
-	  norm = Math.min(Math.max(parseInt(parseFloat(p.count, 10) / avg * 5) / 10, 0.05), 1);
-	  color = Highcharts.Color(getColor(seriesNo)).setOpacity(norm);
-	  p.marker = {
-	    fillColor: color.get()
-	  };
-	  if (xEnum) {
-	    p.marker.radius = 7;
-	  }
-	}
+        _ref1 = series.data;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          p = _ref1[_j];
+          if (p.sentinel) {
+            continue;
+          }
+          norm = Math.min(Math.max(parseInt(parseFloat(p.count, 10) / avg * 5) / 10, 0.05), 1);
+          color = Highcharts.Color(getColor(seriesNo)).setOpacity(norm);
+          p.marker = {
+            fillColor: color.get()
+          };
+          if (xEnum) {
+            p.marker.radius = 7;
+          }
+        }
       }
       seriesNo++;
     }
     if (chartType === 'scatter' && xEnum) {
       if (seriesList[1]) {
-	formatterFunc = function() {
-	  return "<h5>" + this.series.name + "</h5><br /><b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + this.series.yAxis.categories[this.point.y];
-	};
+        formatterFunc = function() {
+          return "<h5>" + this.series.name + "</h5><br /><b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + this.series.yAxis.categories[this.point.y];
+        };
       } else {
-	formatterFunc = function() {
-	  return "<b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + this.series.yAxis.categories[this.point.y];
-	};
+        formatterFunc = function() {
+          return "<b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + this.series.yAxis.categories[this.point.y];
+        };
       }
     } else if (chartType === 'column' && xEnum) {
       if (seriesList[1]) {
-	formatterFunc = function() {
-	  return "<h5>" + this.series.name + "</h5><br /><b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
-	};
+        formatterFunc = function() {
+          return "<h5>" + this.series.name + "</h5><br /><b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
+        };
       } else {
-	formatterFunc = function() {
-	  return "<b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
-	};
+        formatterFunc = function() {
+          return "<b>" + xName + ":</b> " + this.series.xAxis.categories[this.point.x] + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
+        };
       }
     } else {
       if (seriesList[1]) {
-	formatterFunc = function() {
-	  return "<h5>" + this.series.name + "</h5><br /><b>" + xName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.x))) + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
-	};
+        formatterFunc = function() {
+          return "<h5>" + this.series.name + "</h5><br /><b>" + xName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.x))) + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
+        };
       } else {
-	formatterFunc = function() {
-	  return "<b>" + xName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.x))) + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
-	};
+        formatterFunc = function() {
+          return "<b>" + xName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.x))) + "<br /><b>" + yName + ":</b> " + (Highcharts.numberFormat(parseFloat(this.y)));
+        };
       }
     }
     options = {
       clustered: clustered,
       chart: {
-	type: chartType
+        type: chartType
       },
       title: {
-	text: yField ? "" + xName + " vs. " + yName : "" + xName + " " + yName
+        text: yField ? "" + xName + " vs. " + yName : "" + xName + " " + yName
       },
       series: seriesList,
       xAxis: {
-	title: {
-	  text: xName
-	},
-	type: xType
+        title: {
+          text: xName
+        },
+        type: xType
       },
       yAxis: {
-	title: {
-	  text: yName
-	},
-	type: yType
+        title: {
+          text: yName
+        },
+        type: yType
       },
       tooltip: {
-	formatter: formatterFunc
+        formatter: formatterFunc
       }
     };
     if (xLabels.length) {
@@ -232,13 +232,13 @@ define(['underscore', 'highcharts'], function(_, Highcharts) {
     }
     if (!seriesList[1]) {
       options.legend = {
-	enabled: false
+        enabled: false
       };
     }
     if (chartType === 'scatter') {
       options.yAxis.gridLineWidth = 0;
       if (!xEnum) {
-	options.chart.zoomType = 'xy';
+        options.chart.zoomType = 'xy';
       }
     }
     return options;
@@ -251,9 +251,9 @@ define(['underscore', 'highcharts'], function(_, Highcharts) {
       point = _.clone(datum);
       point.x = datum.values[0];
       if (datum.values[1] != null) {
-	point.y = datum.values[1];
+        point.y = datum.values[1];
       } else {
-	point.y = datum.count;
+        point.y = datum.count;
       }
       points.push(point);
     }

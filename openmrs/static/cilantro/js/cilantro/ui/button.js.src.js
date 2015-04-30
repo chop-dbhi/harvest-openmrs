@@ -26,7 +26,7 @@ define(['underscore', 'backbone', 'marionette'], function(_, Backbone, Marionett
 
     ButtonSelectEmptyOption.prototype.serializeData = function() {
       return {
-	label: 'No options are available'
+        label: 'No options are available'
       };
     };
 
@@ -50,13 +50,13 @@ define(['underscore', 'backbone', 'marionette'], function(_, Backbone, Marionett
 
     ButtonSelectOption.prototype.serializeData = function() {
       return {
-	label: this.model.get('label') || this.model.get('value')
+        label: this.model.get('label') || this.model.get('value')
       };
     };
 
     ButtonSelectOption.prototype.select = function(event) {
       if (event != null) {
-	event.preventDefault();
+        event.preventDefault();
       }
       return this.model.set('selected', true);
     };
@@ -94,24 +94,24 @@ define(['underscore', 'backbone', 'marionette'], function(_, Backbone, Marionett
     function ButtonSelect(options) {
       var choices, value;
       if (options == null) {
-	options = {};
+        options = {};
       }
       if (!(options.collection instanceof Backbone.Collection)) {
-	if (((choices = options.collection) != null) && typeof choices[0] !== 'object') {
-	  choices = (function() {
-	    var _i, _len, _results;
-	    _results = [];
-	    for (_i = 0, _len = choices.length; _i < _len; _i++) {
-	      value = choices[_i];
-	      _results.push({
-		value: value,
-		label: value
-	      });
-	    }
-	    return _results;
-	  })();
-	}
-	options.collection = new Backbone.Collection(choices);
+        if (((choices = options.collection) != null) && typeof choices[0] !== 'object') {
+          choices = (function() {
+            var _i, _len, _results;
+            _results = [];
+            for (_i = 0, _len = choices.length; _i < _len; _i++) {
+              value = choices[_i];
+              _results.push({
+                value: value,
+                label: value
+              });
+            }
+            return _results;
+          })();
+        }
+        options.collection = new Backbone.Collection(choices);
       }
       ButtonSelect.__super__.constructor.call(this, options);
     }
@@ -119,33 +119,33 @@ define(['underscore', 'backbone', 'marionette'], function(_, Backbone, Marionett
     ButtonSelect.prototype.setSelection = function(value) {
       var model;
       if ((model = this.collection.findWhere({
-	value: value
+        value: value
       }))) {
-	return model.set('selected', true);
+        return model.set('selected', true);
       }
     };
 
     ButtonSelect.prototype.getSelection = function(value) {
       var model;
       if ((model = this.collection.findWhere({
-	selected: true
+        selected: true
       }))) {
-	return model.get('value');
+        return model.get('value');
       }
     };
 
     ButtonSelect.prototype.updateSelection = function(model, selected, options) {
       var value;
       if (!selected) {
-	return;
+        return;
       }
       value = model.get('value');
       this.collection.each(function(_model) {
-	if (_model !== model) {
-	  return _model.set('selected', false, {
-	    silent: true
-	  });
-	}
+        if (_model !== model) {
+          return _model.set('selected', false, {
+            silent: true
+          });
+        }
       });
       this.ui.selection.html(model.get('label') || value);
       this.$el.trigger('change', value);
@@ -155,15 +155,15 @@ define(['underscore', 'backbone', 'marionette'], function(_, Backbone, Marionett
     ButtonSelect.prototype.onRender = function() {
       var model;
       if (/^(small|large|mini)$/.test(this.options.size)) {
-	this.ui.toggle.addClass("btn-" + this.options.size);
+        this.ui.toggle.addClass("btn-" + this.options.size);
       }
       this.ui.toggle.dropdown();
       if ((model = this.collection.findWhere({
-	selected: true
+        selected: true
       }))) {
-	return this.updateSelection(model, true);
+        return this.updateSelection(model, true);
       } else {
-	return this.ui.selection.html(this.options.placeholder);
+        return this.ui.selection.html(this.options.placeholder);
       }
     };
 

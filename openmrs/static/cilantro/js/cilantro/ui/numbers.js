@@ -8,19 +8,19 @@ define([
     // and set the (delimited) raw number as the title for a popover. If the
     // count is null, 'n/a' will be displayed.
     var renderCount = function($el, count, fallback) {
-	if (!fallback) fallback = '<em>n/a</em>';
+        if (!fallback) fallback = '<em>n/a</em>';
 
-	if (!count) {
-	    $el.html(fallback);
-	}
-	else {
-	    $el.html(c.utils.prettyNumber(count, c.config.get('threshold')))
-	       .attr('title', c.utils.toDelimitedNumber(count));
-	}
+        if (!count) {
+            $el.html(fallback);
+        }
+        else {
+            $el.html(c.utils.prettyNumber(count, c.config.get('threshold')))
+               .attr('title', c.utils.toDelimitedNumber(count));
+        }
     };
 
     return {
-	renderCount: renderCount
+        renderCount: renderCount
     };
 
 });

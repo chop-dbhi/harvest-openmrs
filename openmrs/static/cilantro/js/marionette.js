@@ -63,12 +63,12 @@ Backbone.ChildViewContainer = (function(Backbone, _){
 
       // index it by model
       if (view.model){
-	this._indexByModel[view.model.cid] = viewCid;
+        this._indexByModel[view.model.cid] = viewCid;
       }
 
       // index by custom
       if (customIndex){
-	this._indexByCustom[customIndex] = viewCid;
+        this._indexByCustom[customIndex] = viewCid;
       }
 
       this._updateLength();
@@ -112,15 +112,15 @@ Backbone.ChildViewContainer = (function(Backbone, _){
 
       // delete model index
       if (view.model){
-	delete this._indexByModel[view.model.cid];
+        delete this._indexByModel[view.model.cid];
       }
 
       // delete custom index
       _.any(this._indexByCustom, function(cid, key) {
-	if (cid === viewCid) {
-	  delete this._indexByCustom[key];
-	  return true;
-	}
+        if (cid === viewCid) {
+          delete this._indexByCustom[key];
+          return true;
+        }
       }, this);
 
       // remove the view from the container
@@ -143,9 +143,9 @@ Backbone.ChildViewContainer = (function(Backbone, _){
     // time, like `function.apply`.
     apply: function(method, args){
       _.each(this._views, function(view){
-	if (_.isFunction(view[method])){
-	  view[method].apply(view, args || []);
-	}
+        if (_.isFunction(view[method])){
+          view[method].apply(view, args || []);
+        }
       });
     },
 
@@ -220,14 +220,14 @@ Wreqr.Handlers = (function(Backbone, _){
     // Add multiple handlers using an object literal configuration
     setHandlers: function(handlers){
       _.each(handlers, function(handler, name){
-	var context = null;
+        var context = null;
 
-	if (_.isObject(handler) && !_.isFunction(handler)){
-	  context = handler.context;
-	  handler = handler.callback;
-	}
+        if (_.isObject(handler) && !_.isFunction(handler)){
+          context = handler.context;
+          handler = handler.callback;
+        }
 
-	this.setHandler(name, handler, context);
+        this.setHandler(name, handler, context);
       }, this);
     },
 
@@ -235,8 +235,8 @@ Wreqr.Handlers = (function(Backbone, _){
     // optional context to run the handler within
     setHandler: function(name, handler, context){
       var config = {
-	callback: handler,
-	context: context
+        callback: handler,
+        context: context
       };
 
       this._wreqrHandlers[name] = config;
@@ -256,12 +256,12 @@ Wreqr.Handlers = (function(Backbone, _){
       var config = this._wreqrHandlers[name];
 
       if (!config){
-	throw new Error("Handler not found for '" + name + "'");
+        throw new Error("Handler not found for '" + name + "'");
       }
 
       return function(){
-	var args = Array.prototype.slice.apply(arguments);
-	return config.callback.apply(config.context, args);
+        var args = Array.prototype.slice.apply(arguments);
+        return config.callback.apply(config.context, args);
       };
     },
 
@@ -308,14 +308,14 @@ Wreqr.CommandStorage = (function(){
       // we don't have it, so add it
       if (!commands){
 
-	// build the configuration
-	commands = {
-	  command: commandName,
-	  instances: []
-	};
+        // build the configuration
+        commands = {
+          command: commandName,
+          instances: []
+        };
 
-	// store it
-	this._commands[commandName] = commands;
+        // store it
+        this._commands[commandName] = commands;
       }
 
       return commands;
@@ -366,9 +366,9 @@ Wreqr.Commands = (function(Wreqr){
       args = Array.prototype.slice.call(arguments, 1);
 
       if (this.hasHandler(name)){
-	this.getHandler(name).apply(this, args);
+        this.getHandler(name).apply(this, args);
       } else {
-	this.storage.addCommand(name, args);
+        this.storage.addCommand(name, args);
       }
 
     },
@@ -379,7 +379,7 @@ Wreqr.Commands = (function(Wreqr){
 
       // loop through and execute all the stored command instances
       _.each(command.instances, function(args){
-	handler.apply(context, args);
+        handler.apply(context, args);
       });
 
       this.storage.clearCommands(name);
@@ -392,9 +392,9 @@ Wreqr.Commands = (function(Wreqr){
 
       var StorageType = options.storageType || this.storageType;
       if (_.isFunction(StorageType)){
-	storage = new StorageType();
+        storage = new StorageType();
       } else {
-	storage = StorageType;
+        storage = StorageType;
       }
 
       this.storage = storage;
@@ -523,7 +523,7 @@ Marionette.normalizeUIKeys = function(hash, ui) {
     var pattern = /@ui.[a-zA-Z_$0-9]*/g;
     if (v.match(pattern)) {
       hash[v.replace(pattern, function(r) {
-	return ui[r.slice(4)];
+        return ui[r.slice(4)];
       })] = hash[v];
       delete hash[v];
     }
@@ -596,7 +596,7 @@ Marionette.MonitorDOMRefresh = (function(documentElement){
   function triggerDOMRefresh(view){
     if (view._isShown && view._isRendered && isInDOM(view)){
       if (_.isFunction(view.triggerMethod)){
-	view.triggerMethod("dom:refresh");
+        view.triggerMethod("dom:refresh");
       }
     }
   }
@@ -646,7 +646,7 @@ Marionette.MonitorDOMRefresh = (function(documentElement){
 
       var method = target[methodName];
       if(!method) {
-	throwError("Method '"+ methodName +"' was configured as an event handler, but does not exist.");
+        throwError("Method '"+ methodName +"' was configured as an event handler, but does not exist.");
       }
 
       target.listenTo(entity, evt, method);
@@ -690,9 +690,9 @@ Marionette.MonitorDOMRefresh = (function(documentElement){
       // allow for a function as the handler,
       // or a list of event names as a string
       if (_.isFunction(methods)){
-	functionCallback(target, entity, evt, methods);
+        functionCallback(target, entity, evt, methods);
       } else {
-	stringCallback(target, entity, evt, methods);
+        stringCallback(target, entity, evt, methods);
       }
 
     });
@@ -881,11 +881,11 @@ _.extend(Marionette.Region, {
     // guaranteed to be in the DOM already, and will cause problems
     if (regionConfig.parentEl){
       region.getEl = function(selector) {
-	var parentEl = regionConfig.parentEl;
-	if (_.isFunction(parentEl)){
-	  parentEl = parentEl();
-	}
-	return parentEl.find(selector);
+        var parentEl = regionConfig.parentEl;
+        if (_.isFunction(parentEl)){
+          parentEl = parentEl();
+        }
+        return parentEl.find(selector);
       };
     }
 
@@ -1001,16 +1001,16 @@ Marionette.RegionManager = (function(Marionette){
       var regions = {};
 
       _.each(regionDefinitions, function(definition, name){
-	if (_.isString(definition)){
-	  definition = { selector: definition };
-	}
+        if (_.isString(definition)){
+          definition = { selector: definition };
+        }
 
-	if (definition.selector){
-	  definition = _.defaults({}, definition, defaults);
-	}
+        if (definition.selector){
+          definition = _.defaults({}, definition, defaults);
+        }
 
-	var region = this.addRegion(name, definition);
-	regions[name] = region;
+        var region = this.addRegion(name, definition);
+        regions[name] = region;
       }, this);
 
       return regions;
@@ -1026,11 +1026,11 @@ Marionette.RegionManager = (function(Marionette){
       var hasSelector = !!definition.selector;
 
       if (isString || (isObject && hasSelector)){
-	region = Marionette.Region.buildRegion(definition, Marionette.Region);
+        region = Marionette.Region.buildRegion(definition, Marionette.Region);
       } else if (_.isFunction(definition)){
-	region = Marionette.Region.buildRegion(definition, Marionette.Region);
+        region = Marionette.Region.buildRegion(definition, Marionette.Region);
       } else {
-	region = definition;
+        region = definition;
       }
 
       this._store(name, region);
@@ -1053,7 +1053,7 @@ Marionette.RegionManager = (function(Marionette){
     // remove them
     removeRegions: function(){
       _.each(this._regions, function(region, name){
-	this._remove(name, region);
+        this._remove(name, region);
       }, this);
     },
 
@@ -1061,7 +1061,7 @@ Marionette.RegionManager = (function(Marionette){
     // leave them attached
     closeRegions: function(){
       _.each(this._regions, function(region, name){
-	region.close();
+        region.close();
       }, this);
     },
 
@@ -1158,7 +1158,7 @@ _.extend(Marionette.TemplateCache, {
 
     if (length > 0){
       for(i=0; i<length; i++){
-	delete this.templateCaches[args[i]];
+        delete this.templateCaches[args[i]];
       }
     } else {
       this.templateCaches = {};
@@ -1323,27 +1323,27 @@ Marionette.View = Backbone.View.extend({
       // build the event handler function for the DOM event
       triggerEvents[key] = function(e){
 
-	// stop the event in its tracks
-	if (e) {
-	  var prevent = e.preventDefault;
-	  var stop = e.stopPropagation;
+        // stop the event in its tracks
+        if (e) {
+          var prevent = e.preventDefault;
+          var stop = e.stopPropagation;
 
-	  var shouldPrevent = hasOptions ? value.preventDefault : prevent;
-	  var shouldStop = hasOptions ? value.stopPropagation : stop;
+          var shouldPrevent = hasOptions ? value.preventDefault : prevent;
+          var shouldStop = hasOptions ? value.stopPropagation : stop;
 
-	  if (shouldPrevent && prevent) { prevent.apply(e); }
-	  if (shouldStop && stop) { stop.apply(e); }
-	}
+          if (shouldPrevent && prevent) { prevent.apply(e); }
+          if (shouldStop && stop) { stop.apply(e); }
+        }
 
-	// build the args for the event
-	var args = {
-	  view: this,
-	  model: this.model,
-	  collection: this.collection
-	};
+        // build the args for the event
+        var args = {
+          view: this,
+          model: this.model,
+          collection: this.collection
+        };
 
-	// trigger the event
-	this.triggerMethod(eventName, args);
+        // trigger the event
+        this.triggerMethod(eventName, args);
       };
 
     }, this);
@@ -1572,7 +1572,7 @@ Marionette.CollectionView = Marionette.View.extend({
   _triggerShowBufferedChildren: function () {
     if (this._isShown) {
       _.each(this._bufferedChildren, function (child) {
-	Marionette.triggerMethod.call(child, "show");
+        Marionette.triggerMethod.call(child, "show");
       });
       this._bufferedChildren = [];
     }
@@ -1752,7 +1752,7 @@ Marionette.CollectionView = Marionette.View.extend({
 
       // call collectionView itemEvent if defined
       if (typeof itemEvents !== "undefined" && _.isFunction(itemEvents[rootEvent])) {
-	itemEvents[rootEvent].apply(this, args);
+        itemEvents[rootEvent].apply(this, args);
       }
 
       Marionette.triggerMethod.apply(this, args);
@@ -1893,9 +1893,9 @@ Marionette.CompositeView = Marionette.CollectionView.extend({
     // to nonexistent itemViewContainer
     this.once('render', function () {
       if (this.collection){
-	this.listenTo(this.collection, "add", this.addChildView);
-	this.listenTo(this.collection, "remove", this.removeItemView);
-	this.listenTo(this.collection, "reset", this._renderChildren);
+        this.listenTo(this.collection, "add", this.addChildView);
+        this.listenTo(this.collection, "remove", this.removeItemView);
+        this.listenTo(this.collection, "reset", this._renderChildren);
       }
     });
 
@@ -2011,7 +2011,7 @@ Marionette.CompositeView = Marionette.CollectionView.extend({
       var selector = _.isFunction(itemViewContainer) ? itemViewContainer.call(this) : itemViewContainer;
       container = containerView.$(selector);
       if (container.length <= 0) {
-	throwError("The specified `itemViewContainer` was not found: " + containerView.itemViewContainer, "ItemViewContainerMissingError");
+        throwError("The specified `itemViewContainer` was not found: " + containerView.itemViewContainer, "ItemViewContainerMissingError");
       }
 
     } else {
@@ -2206,7 +2206,7 @@ Marionette.Behaviors = (function(Marionette, _) {
 
       // proxy behavior $el to the view's $el
       _.each(behaviors, function(b) {
-	b.$el = this.$el;
+        b.$el = this.$el;
       }, this);
     },
 
@@ -2214,11 +2214,11 @@ Marionette.Behaviors = (function(Marionette, _) {
       var args = _.tail(arguments, 2);
 
       _.each(behaviors, function(b) {
-	Marionette.triggerMethod.apply(b, ["show"].concat(args));
+        Marionette.triggerMethod.apply(b, ["show"].concat(args));
       });
 
       if (_.isFunction(onShow)) {
-	onShow.apply(this, args);
+        onShow.apply(this, args);
       }
     },
 
@@ -2226,11 +2226,11 @@ Marionette.Behaviors = (function(Marionette, _) {
       var args = _.tail(arguments, 2);
 
       _.each(behaviors, function(b) {
-	Marionette.triggerMethod.apply(b, ["close"].concat(args));
+        Marionette.triggerMethod.apply(b, ["close"].concat(args));
       });
 
       if (_.isFunction(onClose)) {
-	onClose.apply(this, args);
+        onClose.apply(this, args);
       }
     },
 
@@ -2249,7 +2249,7 @@ Marionette.Behaviors = (function(Marionette, _) {
       triggerMethod.apply(this, args);
 
       _.each(behaviors, function(b) {
-	triggerMethod.apply(b, args);
+        triggerMethod.apply(b, args);
       });
     },
 
@@ -2258,8 +2258,8 @@ Marionette.Behaviors = (function(Marionette, _) {
       delegateEvents.apply(this, args);
 
       _.each(behaviors, function(b){
-	Marionette.bindEntityEvents(this, this.model, Marionette.getOption(b, "modelEvents"));
-	Marionette.bindEntityEvents(this, this.collection, Marionette.getOption(b, "collectionEvents"));
+        Marionette.bindEntityEvents(this, this.model, Marionette.getOption(b, "modelEvents"));
+        Marionette.bindEntityEvents(this, this.collection, Marionette.getOption(b, "collectionEvents"));
       }, this);
     },
 
@@ -2268,8 +2268,8 @@ Marionette.Behaviors = (function(Marionette, _) {
       undelegateEvents.apply(this, args);
 
       _.each(behaviors, function(b) {
-	Marionette.unbindEntityEvents(this, this.model, Marionette.getOption(b, "modelEvents"));
-	Marionette.unbindEntityEvents(this, this.collection, Marionette.getOption(b, "collectionEvents"));
+        Marionette.unbindEntityEvents(this, this.model, Marionette.getOption(b, "modelEvents"));
+        Marionette.unbindEntityEvents(this, this.collection, Marionette.getOption(b, "collectionEvents"));
       }, this);
     },
 
@@ -2278,24 +2278,24 @@ Marionette.Behaviors = (function(Marionette, _) {
       var viewUI = _.result(this, 'ui');
 
       _.each(behaviors, function(b, i) {
-	var _events = {};
-	var behaviorEvents = _.result(b, 'events') || {};
-	var behaviorUI = _.result(b, 'ui');
-	var ui = _.extend({}, viewUI, behaviorUI);
+        var _events = {};
+        var behaviorEvents = _.result(b, 'events') || {};
+        var behaviorUI = _.result(b, 'ui');
+        var ui = _.extend({}, viewUI, behaviorUI);
 
-	behaviorEvents = Marionette.normalizeUIKeys(behaviorEvents, ui);
+        behaviorEvents = Marionette.normalizeUIKeys(behaviorEvents, ui);
 
-	_.each(_.keys(behaviorEvents), function(key) {
-	  // append white-space at the end of each key to prevent behavior key collisions
-	  // this is relying on the fact backbone events considers "click .foo" the same  "click .foo "
-	  var whitespace = (new Array(i+1)).join(" ");
-	  var eventKey   = key + whitespace;
-	  var handler    = _.isFunction(behaviorEvents[key]) ? behaviorEvents[key] : b[behaviorEvents[key]];
+        _.each(_.keys(behaviorEvents), function(key) {
+          // append white-space at the end of each key to prevent behavior key collisions
+          // this is relying on the fact backbone events considers "click .foo" the same  "click .foo "
+          var whitespace = (new Array(i+1)).join(" ");
+          var eventKey   = key + whitespace;
+          var handler    = _.isFunction(behaviorEvents[key]) ? behaviorEvents[key] : b[behaviorEvents[key]];
 
-	  _events[eventKey] = _.bind(handler, b);
-	});
+          _events[eventKey] = _.bind(handler, b);
+        });
 
-	_behaviorsEvents = _.extend(_behaviorsEvents, _events);
+        _behaviorsEvents = _.extend(_behaviorsEvents, _events);
       });
 
       return _behaviorsEvents;
@@ -2317,7 +2317,7 @@ Marionette.Behaviors = (function(Marionette, _) {
 
     getBehaviorClass: function(options, key) {
       if (options.behaviorClass) {
-	return options.behaviorClass;
+        return options.behaviorClass;
       }
 
       // Get behavior class can be either a flat object or a method
@@ -2326,8 +2326,8 @@ Marionette.Behaviors = (function(Marionette, _) {
 
     parseBehaviors: function(view, behaviors){
       return _.map(behaviors, function(options, key){
-	var BehaviorClass = Behaviors.getBehaviorClass(options, key);
-	return new BehaviorClass(options, view);
+        var BehaviorClass = Behaviors.getBehaviorClass(options, key);
+        return new BehaviorClass(options, view);
       });
     },
 
@@ -2338,7 +2338,7 @@ Marionette.Behaviors = (function(Marionette, _) {
     // view.delegateEvents = _.partial(methods.delegateEvents, view.delegateEvents, behaviors);
     wrap: function(view, behaviors, methodNames) {
       _.each(methodNames, function(methodName) {
-	view[methodName] = _.partial(methods[methodName], view[methodName], behaviors);
+        view[methodName] = _.partial(methods[methodName], view[methodName], behaviors);
       });
     }
   });
@@ -2579,7 +2579,7 @@ _.extend(Marionette.Module.prototype, Backbone.Events, {
     _.each(this.submodules, function(mod){
       // check to see if we should start the sub-module with this parent
       if (mod.startWithParent){
-	mod.start(options);
+        mod.start(options);
       }
     });
 
@@ -2749,9 +2749,9 @@ _.extend(Marionette.Module, {
 
       // add the module initializer config
       parentModule.addInitializer(function(options){
-	if (module.startWithParent){
-	  module.start(options);
-	}
+        if (module.startWithParent){
+          module.start(options);
+        }
       });
 
     }

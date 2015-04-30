@@ -79,12 +79,12 @@
       obj.forEach(iterator, context);
     } else if (obj.length === +obj.length) {
       for (var i = 0, length = obj.length; i < length; i++) {
-	if (iterator.call(context, obj[i], i, obj) === breaker) return;
+        if (iterator.call(context, obj[i], i, obj) === breaker) return;
       }
     } else {
       var keys = _.keys(obj);
       for (var i = 0, length = keys.length; i < length; i++) {
-	if (iterator.call(context, obj[keys[i]], keys[i], obj) === breaker) return;
+        if (iterator.call(context, obj[keys[i]], keys[i], obj) === breaker) return;
       }
     }
     return obj;
@@ -115,10 +115,10 @@
     }
     each(obj, function(value, index, list) {
       if (!initial) {
-	memo = value;
-	initial = true;
+        memo = value;
+        initial = true;
       } else {
-	memo = iterator.call(context, memo, value, index, list);
+        memo = iterator.call(context, memo, value, index, list);
       }
     });
     if (!initial) throw new TypeError(reduceError);
@@ -142,10 +142,10 @@
     each(obj, function(value, index, list) {
       index = keys ? keys[--length] : --length;
       if (!initial) {
-	memo = obj[index];
-	initial = true;
+        memo = obj[index];
+        initial = true;
       } else {
-	memo = iterator.call(context, memo, obj[index], index, list);
+        memo = iterator.call(context, memo, obj[index], index, list);
       }
     });
     if (!initial) throw new TypeError(reduceError);
@@ -157,8 +157,8 @@
     var result;
     any(obj, function(value, index, list) {
       if (predicate.call(context, value, index, list)) {
-	result = value;
-	return true;
+        result = value;
+        return true;
       }
     });
     return result;
@@ -259,8 +259,8 @@
     each(obj, function(value, index, list) {
       var computed = iterator ? iterator.call(context, value, index, list) : value;
       if (computed > lastComputed) {
-	result = value;
-	lastComputed = computed;
+        result = value;
+        lastComputed = computed;
       }
     });
     return result;
@@ -275,8 +275,8 @@
     each(obj, function(value, index, list) {
       var computed = iterator ? iterator.call(context, value, index, list) : value;
       if (computed < lastComputed) {
-	result = value;
-	lastComputed = computed;
+        result = value;
+        lastComputed = computed;
       }
     });
     return result;
@@ -319,16 +319,16 @@
     iterator = lookupIterator(iterator);
     return _.pluck(_.map(obj, function(value, index, list) {
       return {
-	value: value,
-	index: index,
-	criteria: iterator.call(context, value, index, list)
+        value: value,
+        index: index,
+        criteria: iterator.call(context, value, index, list)
       };
     }).sort(function(left, right) {
       var a = left.criteria;
       var b = right.criteria;
       if (a !== b) {
-	if (a > b || a === void 0) return 1;
-	if (a < b || b === void 0) return -1;
+        if (a > b || a === void 0) return 1;
+        if (a < b || b === void 0) return -1;
       }
       return left.index - right.index;
     }), 'value');
@@ -340,8 +340,8 @@
       var result = {};
       iterator = lookupIterator(iterator);
       each(obj, function(value, index) {
-	var key = iterator.call(context, value, index, obj);
-	behavior(result, key, value);
+        var key = iterator.call(context, value, index, obj);
+        behavior(result, key, value);
       });
       return result;
     };
@@ -442,9 +442,9 @@
     }
     each(input, function(value) {
       if (_.isArray(value) || _.isArguments(value)) {
-	shallow ? push.apply(output, value) : flatten(value, shallow, output);
+        shallow ? push.apply(output, value) : flatten(value, shallow, output);
       } else {
-	output.push(value);
+        output.push(value);
       }
     });
     return output;
@@ -485,8 +485,8 @@
     var seen = [];
     each(initial, function(value, index) {
       if (isSorted ? (!index || seen[seen.length - 1] !== value) : !_.contains(seen, value)) {
-	seen.push(value);
-	results.push(array[index]);
+        seen.push(value);
+        results.push(array[index]);
       }
     });
     return results;
@@ -504,7 +504,7 @@
     var rest = slice.call(arguments, 1);
     return _.filter(_.uniq(array), function(item) {
       return _.every(rest, function(other) {
-	return _.contains(other, item);
+        return _.contains(other, item);
       });
     });
   };
@@ -535,9 +535,9 @@
     var result = {};
     for (var i = 0, length = list.length; i < length; i++) {
       if (values) {
-	result[list[i]] = values[i];
+        result[list[i]] = values[i];
       } else {
-	result[list[i][0]] = list[i][1];
+        result[list[i][0]] = list[i][1];
       }
     }
     return result;
@@ -554,10 +554,10 @@
     var i = 0, length = array.length;
     if (isSorted) {
       if (typeof isSorted == 'number') {
-	i = (isSorted < 0 ? Math.max(0, length + isSorted) : isSorted);
+        i = (isSorted < 0 ? Math.max(0, length + isSorted) : isSorted);
       } else {
-	i = _.sortedIndex(array, item);
-	return array[i] === item ? i : -1;
+        i = _.sortedIndex(array, item);
+        return array[i] === item ? i : -1;
       }
     }
     if (nativeIndexOf && array.indexOf === nativeIndexOf) return array.indexOf(item, isSorted);
@@ -633,7 +633,7 @@
       var position = 0;
       var args = boundArgs.slice();
       for (var i = 0, length = args.length; i < length; i++) {
-	if (args[i] === _) args[i] = arguments[position++];
+        if (args[i] === _) args[i] = arguments[position++];
       }
       while (position < arguments.length) args.push(arguments[position++]);
       return func.apply(this, args);
@@ -696,13 +696,13 @@
       context = this;
       args = arguments;
       if (remaining <= 0) {
-	clearTimeout(timeout);
-	timeout = null;
-	previous = now;
-	result = func.apply(context, args);
-	context = args = null;
+        clearTimeout(timeout);
+        timeout = null;
+        previous = now;
+        result = func.apply(context, args);
+        context = args = null;
       } else if (!timeout && options.trailing !== false) {
-	timeout = setTimeout(later, remaining);
+        timeout = setTimeout(later, remaining);
       }
       return result;
     };
@@ -718,13 +718,13 @@
     var later = function() {
       var last = _.now() - timestamp;
       if (last < wait) {
-	timeout = setTimeout(later, wait - last);
+        timeout = setTimeout(later, wait - last);
       } else {
-	timeout = null;
-	if (!immediate) {
-	  result = func.apply(context, args);
-	  context = args = null;
-	}
+        timeout = null;
+        if (!immediate) {
+          result = func.apply(context, args);
+          context = args = null;
+        }
       }
     };
 
@@ -734,11 +734,11 @@
       timestamp = _.now();
       var callNow = immediate && !timeout;
       if (!timeout) {
-	timeout = setTimeout(later, wait);
+        timeout = setTimeout(later, wait);
       }
       if (callNow) {
-	result = func.apply(context, args);
-	context = args = null;
+        result = func.apply(context, args);
+        context = args = null;
       }
 
       return result;
@@ -772,7 +772,7 @@
     return function() {
       var args = arguments;
       for (var i = funcs.length - 1; i >= 0; i--) {
-	args = [funcs[i].apply(this, args)];
+        args = [funcs[i].apply(this, args)];
       }
       return args[0];
     };
@@ -782,7 +782,7 @@
   _.after = function(times, func) {
     return function() {
       if (--times < 1) {
-	return func.apply(this, arguments);
+        return func.apply(this, arguments);
       }
     };
   };
@@ -846,9 +846,9 @@
   _.extend = function(obj) {
     each(slice.call(arguments, 1), function(source) {
       if (source) {
-	for (var prop in source) {
-	  obj[prop] = source[prop];
-	}
+        for (var prop in source) {
+          obj[prop] = source[prop];
+        }
       }
     });
     return obj;
@@ -878,9 +878,9 @@
   _.defaults = function(obj) {
     each(slice.call(arguments, 1), function(source) {
       if (source) {
-	for (var prop in source) {
-	  if (obj[prop] === void 0) obj[prop] = source[prop];
-	}
+        for (var prop in source) {
+          if (obj[prop] === void 0) obj[prop] = source[prop];
+        }
       }
     });
     return obj;
@@ -916,25 +916,25 @@
     switch (className) {
       // Strings, numbers, dates, and booleans are compared by value.
       case '[object String]':
-	// Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
-	// equivalent to `new String("5")`.
-	return a == String(b);
+        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
+        // equivalent to `new String("5")`.
+        return a == String(b);
       case '[object Number]':
-	// `NaN`s are equivalent, but non-reflexive. An `egal` comparison is performed for
-	// other numeric values.
-	return a != +a ? b != +b : (a == 0 ? 1 / a == 1 / b : a == +b);
+        // `NaN`s are equivalent, but non-reflexive. An `egal` comparison is performed for
+        // other numeric values.
+        return a != +a ? b != +b : (a == 0 ? 1 / a == 1 / b : a == +b);
       case '[object Date]':
       case '[object Boolean]':
-	// Coerce dates and booleans to numeric primitive values. Dates are compared by their
-	// millisecond representations. Note that invalid dates with millisecond representations
-	// of `NaN` are not equivalent.
-	return +a == +b;
+        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
+        // millisecond representations. Note that invalid dates with millisecond representations
+        // of `NaN` are not equivalent.
+        return +a == +b;
       // RegExps are compared by their source patterns and flags.
       case '[object RegExp]':
-	return a.source == b.source &&
-	       a.global == b.global &&
-	       a.multiline == b.multiline &&
-	       a.ignoreCase == b.ignoreCase;
+        return a.source == b.source &&
+               a.global == b.global &&
+               a.multiline == b.multiline &&
+               a.ignoreCase == b.ignoreCase;
     }
     if (typeof a != 'object' || typeof b != 'object') return false;
     // Assume equality for cyclic structures. The algorithm for detecting cyclic
@@ -949,8 +949,8 @@
     // from different frames are.
     var aCtor = a.constructor, bCtor = b.constructor;
     if (aCtor !== bCtor && !(_.isFunction(aCtor) && (aCtor instanceof aCtor) &&
-			     _.isFunction(bCtor) && (bCtor instanceof bCtor))
-			&& ('constructor' in a && 'constructor' in b)) {
+                             _.isFunction(bCtor) && (bCtor instanceof bCtor))
+                        && ('constructor' in a && 'constructor' in b)) {
       return false;
     }
     // Add the first object to the stack of traversed objects.
@@ -963,27 +963,27 @@
       size = a.length;
       result = size == b.length;
       if (result) {
-	// Deep compare the contents, ignoring non-numeric properties.
-	while (size--) {
-	  if (!(result = eq(a[size], b[size], aStack, bStack))) break;
-	}
+        // Deep compare the contents, ignoring non-numeric properties.
+        while (size--) {
+          if (!(result = eq(a[size], b[size], aStack, bStack))) break;
+        }
       }
     } else {
       // Deep compare objects.
       for (var key in a) {
-	if (_.has(a, key)) {
-	  // Count the expected number of properties.
-	  size++;
-	  // Deep compare each member.
-	  if (!(result = _.has(b, key) && eq(a[key], b[key], aStack, bStack))) break;
-	}
+        if (_.has(a, key)) {
+          // Count the expected number of properties.
+          size++;
+          // Deep compare each member.
+          if (!(result = _.has(b, key) && eq(a[key], b[key], aStack, bStack))) break;
+        }
       }
       // Ensure that both objects contain the same number of properties.
       if (result) {
-	for (key in b) {
-	  if (_.has(b, key) && !(size--)) break;
-	}
-	result = !size;
+        for (key in b) {
+          if (_.has(b, key) && !(size--)) break;
+        }
+        result = !size;
       }
     }
     // Remove the first object from the stack of traversed objects.
@@ -1107,8 +1107,8 @@
     return function(obj) {
       if (obj === attrs) return true; //avoid comparing an object to itself.
       for (var key in attrs) {
-	if (attrs[key] !== obj[key])
-	  return false;
+        if (attrs[key] !== obj[key])
+          return false;
       }
       return true;
     }
@@ -1156,7 +1156,7 @@
     _[method] = function(string) {
       if (string == null) return '';
       return ('' + string).replace(entityRegexes[method], function(match) {
-	return entityMap[method][match];
+        return entityMap[method][match];
       });
     };
   });
@@ -1174,9 +1174,9 @@
     each(_.functions(obj), function(name) {
       var func = _[name] = obj[name];
       _.prototype[name] = function() {
-	var args = [this._wrapped];
-	push.apply(args, arguments);
-	return result.call(this, func.apply(_, args));
+        var args = [this._wrapped];
+        push.apply(args, arguments);
+        return result.call(this, func.apply(_, args));
       };
     });
   };
@@ -1235,16 +1235,16 @@
     var source = "__p+='";
     text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
       source += text.slice(index, offset)
-	.replace(escaper, function(match) { return '\\' + escapes[match]; });
+        .replace(escaper, function(match) { return '\\' + escapes[match]; });
 
       if (escape) {
-	source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
+        source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
       }
       if (interpolate) {
-	source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
+        source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
       }
       if (evaluate) {
-	source += "';\n" + evaluate + "\n__p+='";
+        source += "';\n" + evaluate + "\n__p+='";
       }
       index = offset + match.length;
       return match;

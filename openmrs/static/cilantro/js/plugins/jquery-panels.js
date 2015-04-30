@@ -26,7 +26,7 @@ HTML markup:
   <div class="panel panel-left closed">
       <div class="panel-toggle"></div>
       <div class="panel-content">
-	  ...
+          ...
       </div>
   </div>
 */
@@ -34,144 +34,144 @@ HTML markup:
 define(['jquery'], function($) {
 
     var getSlideWidth = function(element, options) {
-	options = options || {};
+        options = options || {};
 
-	// Total width of panel
-	var slideWidth = element.outerWidth(),
-	    toggle = element.children('.panel-toggle');
+        // Total width of panel
+        var slideWidth = element.outerWidth(),
+            toggle = element.children('.panel-toggle');
 
-	// If a .panel-toggle exists within the panel, substract the width
-	// to it is still visible for use
-	if (options.full !== false && toggle[0]) {
-	    return slideWidth - toggle.outerWidth();
-	}
+        // If a .panel-toggle exists within the panel, substract the width
+        // to it is still visible for use
+        if (options.full !== false && toggle[0]) {
+            return slideWidth - toggle.outerWidth();
+        }
 
-	return slideWidth;
+        return slideWidth;
     };
 
 
     var Panel = function(element, options) {
-	this.element = $(element);
+        this.element = $(element);
 
-	this.options = $.extend({
-	    side: 'left',
-	    closed: false
-	}, options);
+        this.options = $.extend({
+            side: 'left',
+            closed: false
+        }, options);
 
-	this.opened = true;
+        this.opened = true;
 
-	if (this.options.side === 'right' || this.element.hasClass('panel-right')) {
-	    this.side = 'right';
-	} else {
-	    this.side = 'left';
-	}
+        if (this.options.side === 'right' || this.element.hasClass('panel-right')) {
+            this.side = 'right';
+        } else {
+            this.side = 'left';
+        }
 
-	this.element.addClass('panel-' + this.side);
+        this.element.addClass('panel-' + this.side);
 
-	// Hide without animation
-	if (this.options.closed === true || this.element.hasClass('closed')) {
-	    this.opened = false;
-	    this.element.addClass('closed').hide();
-	}
+        // Hide without animation
+        if (this.options.closed === true || this.element.hasClass('closed')) {
+            this.opened = false;
+            this.element.addClass('closed').hide();
+        }
 
-	var _this = this;
+        var _this = this;
 
-	this.element.on('click', '.panel-toggle', function() {
-	    _this.toggle();
-	});
+        this.element.on('click', '.panel-toggle', function() {
+            _this.toggle();
+        });
 
-	return this;
+        return this;
     };
 
 
     Panel.prototype = {
-	constructor: Panel,
+        constructor: Panel,
 
-	open: function(options) {
-	    if (this.opened) return;
+        open: function(options) {
+            if (this.opened) return;
 
-	    options = options || {};
+            options = options || {};
 
-	    this.opened = true;
+            this.opened = true;
 
-	    var css = {},
-		attrs = {};
+            var css = {},
+                attrs = {};
 
-	    // Ensure the position is off screen to start. This
-	    // is to handle the case when the element was hidden
-	    css[this.side] = -getSlideWidth(this.element, options);
-	    attrs[this.side] = 0;
+            // Ensure the position is off screen to start. This
+            // is to handle the case when the element was hidden
+            css[this.side] = -getSlideWidth(this.element, options);
+            attrs[this.side] = 0;
 
-	    this.element.css(css).show().stop();
+            this.element.css(css).show().stop();
 
-	    if (options.animate !== false) {
-		this.element.animate(attrs, 300);
-	    } else {
-		this.element.css(attrs);
-	    }
+            if (options.animate !== false) {
+                this.element.animate(attrs, 300);
+            } else {
+                this.element.css(attrs);
+            }
 
-	    this.element.removeClass('closed');
-	},
+            this.element.removeClass('closed');
+        },
 
-	close: function(options) {
-	    if (!this.opened) return;
+        close: function(options) {
+            if (!this.opened) return;
 
-	    options = options || {};
+            options = options || {};
 
-	    this.opened = false;
+            this.opened = false;
 
-	    var attrs = {},
-		slideWidth = getSlideWidth(this.element, options);
+            var attrs = {},
+                slideWidth = getSlideWidth(this.element, options);
 
-	    attrs[this.side] = -slideWidth;
+            attrs[this.side] = -slideWidth;
 
-	    this.element.stop();
+            this.element.stop();
 
-	    if (options.animate !== false) {
-		this.element.animate(attrs, 300);
-	    } else {
-		this.element.css(attrs);
-	    }
+            if (options.animate !== false) {
+                this.element.animate(attrs, 300);
+            } else {
+                this.element.css(attrs);
+            }
 
-	    this.element.addClass('closed');
-	},
+            this.element.addClass('closed');
+        },
 
-	toggle: function() {
-	    if (this.opened) {
-		this.close();
-	    } else {
-		this.open();
-	    }
-	},
+        toggle: function() {
+            if (this.opened) {
+                this.close();
+            } else {
+                this.open();
+            }
+        },
 
-	isOpen: function() {
-	    return this.opened;
-	},
+        isOpen: function() {
+            return this.opened;
+        },
 
-	isClosed: function() {
-	    return !this.opened;
-	}
+        isClosed: function() {
+            return !this.opened;
+        }
     };
 
 
     $.fn.panel = function(option, options) {
-	if (typeof option === 'object') options = option;
+        if (typeof option === 'object') options = option;
 
-	this.each(function() {
-	    var element = $(this),
-		data = element.data('panel');
+        this.each(function() {
+            var element = $(this),
+                data = element.data('panel');
 
-	    // Initialize data
-	    if (!data) {
-		data = new Panel(this, options);
-		element.data('panel', data);
-	    }
+            // Initialize data
+            if (!data) {
+                data = new Panel(this, options);
+                element.data('panel', data);
+            }
 
-	    // Method call
-	    if (typeof option === 'string') {
-		data[option](options);
-	    }
-	});
+            // Method call
+            if (typeof option === 'string') {
+                data[option](options);
+            }
+        });
     };
 
 
@@ -179,26 +179,26 @@ define(['jquery'], function($) {
 
 
     $(function() {
-	// Bootstrap pre-rendered DOM elements
-	$('.panel').panel();
+        // Bootstrap pre-rendered DOM elements
+        $('.panel').panel();
 
-	$('[data-toggle*=panel]').each(function() {
-	    var toggle = $(this);
+        $('[data-toggle*=panel]').each(function() {
+            var toggle = $(this);
 
-	    toggle.on('click', function() {
-		var panel;
+            toggle.on('click', function() {
+                var panel;
 
-		// If this data-toggle specifies a target, use that, otherwise assume
-		// it is a .panel-toggle within the panel itself.
-		if (toggle.data('target')) {
-		    panel = $(toggle.data('target'));
-		} else {
-		    panel = toggle.parent();
-		}
+                // If this data-toggle specifies a target, use that, otherwise assume
+                // it is a .panel-toggle within the panel itself.
+                if (toggle.data('target')) {
+                    panel = $(toggle.data('target'));
+                } else {
+                    panel = toggle.parent();
+                }
 
-		panel.panel('toggle');
-	    });
-	});
+                panel.panel('toggle');
+            });
+        });
     });
 
 });

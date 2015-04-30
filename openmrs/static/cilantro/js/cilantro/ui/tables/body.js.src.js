@@ -20,7 +20,7 @@ define(['underscore', 'marionette', './row'], function(_, Marionette, row) {
 
     Body.prototype.itemViewOptions = function(model, index) {
       return _.defaults({
-	collection: model.data
+        collection: model.data
       }, this.options);
     };
 

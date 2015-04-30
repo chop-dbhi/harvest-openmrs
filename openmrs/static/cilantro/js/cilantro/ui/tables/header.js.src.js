@@ -10,7 +10,7 @@ define(['underscore', 'marionette', './row'], function(_, Marionette, row) {
 
     function HeaderCell(options) {
       if (options.view == null) {
-	throw new Error('ViewModel instance required');
+        throw new Error('ViewModel instance required');
       }
       this.view = options.view;
       delete options.view;
@@ -19,25 +19,25 @@ define(['underscore', 'marionette', './row'], function(_, Marionette, row) {
 
     HeaderCell.prototype.onClick = function() {
       _.each(this.view.facets.models, function(f) {
-	var direction;
-	if (f.get('concept') === this.model.id) {
-	  direction = f.get('sort');
-	  if (direction != null) {
-	    if (direction.toLowerCase() === "asc") {
-	      f.set('sort', "desc");
-	      return f.set('sort_index', 0);
-	    } else {
-	      f.unset('sort');
-	      return f.unset('sort_index');
-	    }
-	  } else {
-	    f.set('sort', "asc");
-	    return f.set('sort_index', 0);
-	  }
-	} else {
-	  f.unset('sort');
-	  return f.unset('sort_index');
-	}
+        var direction;
+        if (f.get('concept') === this.model.id) {
+          direction = f.get('sort');
+          if (direction != null) {
+            if (direction.toLowerCase() === "asc") {
+              f.set('sort', "desc");
+              return f.set('sort_index', 0);
+            } else {
+              f.unset('sort');
+              return f.unset('sort_index');
+            }
+          } else {
+            f.set('sort', "asc");
+            return f.set('sort_index', 0);
+          }
+        } else {
+          f.unset('sort');
+          return f.unset('sort_index');
+        }
       }, this);
       return this.view.save();
     };
@@ -53,21 +53,21 @@ define(['underscore', 'marionette', './row'], function(_, Marionette, row) {
     HeaderCell.prototype.getSortIconClass = function() {
       var direction, model;
       model = _.find(this.view.facets.models, (function(_this) {
-	return function(m) {
-	  return _this.model.id === m.get('concept');
-	};
+        return function(m) {
+          return _this.model.id === m.get('concept');
+        };
       })(this));
       if (model == null) {
-	return;
+        return;
       }
       direction = (model.get('sort') || '').toLowerCase();
       switch (direction) {
-	case 'asc':
-	  return 'icon-sort-up';
-	case 'desc':
-	  return 'icon-sort-down';
-	default:
-	  return 'icon-sort';
+        case 'asc':
+          return 'icon-sort-up';
+        case 'desc':
+          return 'icon-sort-down';
+        default:
+          return 'icon-sort';
       }
     };
 
@@ -110,7 +110,7 @@ define(['underscore', 'marionette', './row'], function(_, Marionette, row) {
 
     Header.prototype.render = function() {
       row = new HeaderRow(_.extend({}, this.options, {
-	collection: this.collection
+        collection: this.collection
       }));
       this.$el.html(row.el);
       row.render();

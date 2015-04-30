@@ -3,7 +3,7 @@ define([],function() {
   defaults = {
     chart: {
       style: {
-	fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
       }
     },
     title: {
@@ -21,16 +21,16 @@ define([],function() {
     },
     tooltip: {
       formatter: function() {
-	var html;
-	if (this.point.values) {
-	  html = [];
-	  html.push('<strong>' + this.series.xAxis.axisTitle.text + '</strong>:');
-	  html.push(this.point.values[0] + '<br>');
-	  html.push('<strong>' + this.series.yAxis.axisTitle.text + '</strong>:');
-	  html.push(this.y);
-	  return html.join('');
-	}
-	return this.key;
+        var html;
+        if (this.point.values) {
+          html = [];
+          html.push('<strong>' + this.series.xAxis.axisTitle.text + '</strong>:');
+          html.push(this.point.values[0] + '<br>');
+          html.push('<strong>' + this.series.yAxis.axisTitle.text + '</strong>:');
+          html.push(this.y);
+          return html.join('');
+        }
+        return this.key;
       },
       snap: 1,
       useHTML: true,
@@ -39,91 +39,91 @@ define([],function() {
     },
     plotOptions: {
       series: {
-	cursor: 'pointer',
-	shadow: false,
-	borderWidth: 0,
-	borderColor: '#4b8cf7',
-	turboThreshold: 0,
-	animation: {
-	  duration: 400
-	},
-	color: '#777',
-	states: {
-	  select: {
-	    color: '#0088cc'
-	  },
-	  hover: {
-	    enabled: false
-	  }
-	}
+        cursor: 'pointer',
+        shadow: false,
+        borderWidth: 0,
+        borderColor: '#4b8cf7',
+        turboThreshold: 0,
+        animation: {
+          duration: 400
+        },
+        color: '#777',
+        states: {
+          select: {
+            color: '#0088cc'
+          },
+          hover: {
+            enabled: false
+          }
+        }
       },
       area: {
-	lineWidth: 1,
-	shadow: false,
-	stacking: 'normal',
-	states: {
-	  hover: {
-	    lineWidth: 1
-	  }
-	},
-	marker: {
-	  enabled: false,
-	  states: {
-	    hover: {
-	      enabled: true,
-	      radius: 5
-	    }
-	  }
-	},
-	fillOpacity: 0.1
+        lineWidth: 1,
+        shadow: false,
+        stacking: 'normal',
+        states: {
+          hover: {
+            lineWidth: 1
+          }
+        },
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              enabled: true,
+              radius: 5
+            }
+          }
+        },
+        fillOpacity: 0.1
       },
       areaspline: {
-	lineWidth: 1,
-	shadow: false,
-	states: {
-	  hover: {
-	    lineWidth: 1
-	  }
-	},
-	marker: {
-	  enabled: false,
-	  states: {
-	    hover: {
-	      enabled: true
-	    }
-	  }
-	},
-	fillOpacity: 0.1
+        lineWidth: 1,
+        shadow: false,
+        states: {
+          hover: {
+            lineWidth: 1
+          }
+        },
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        },
+        fillOpacity: 0.1
       },
       bar: {
-	borderWidth: 0,
-	minPointLength: 2
+        borderWidth: 0,
+        minPointLength: 2
       },
       column: {
-	borderWidth: 0,
-	minPointLength: 2
+        borderWidth: 0,
+        minPointLength: 2
       },
       pie: {
-	allowPointSelect: true,
-	cursor: 'pointer',
-	showInLegend: true
+        allowPointSelect: true,
+        cursor: 'pointer',
+        showInLegend: true
       },
       scatter: {
-	marker: {
-	  radius: 5,
-	  states: {
-	    hover: {
-	      enabled: false
-	    }
-	  }
-	},
-	states: {
-	  hover: {
-	    marker: {
-	      enabled: false
-	    }
-	  }
-	}
+        marker: {
+          radius: 5,
+          states: {
+            hover: {
+              enabled: false
+            }
+          }
+        },
+        states: {
+          hover: {
+            marker: {
+              enabled: false
+            }
+          }
+        }
       }
     }
   };
@@ -139,8 +139,8 @@ define([],function() {
       y: 0,
       x: 0,
       style: {
-	fontSize: '8px',
-	color: '#333333'
+        fontSize: '8px',
+        color: '#333333'
       }
     },
     credits: {
@@ -155,33 +155,33 @@ define([],function() {
     xAxis: {
       startOnTick: true,
       labels: {
-	enabled: false
+        enabled: false
       }
     },
     yAxis: {
       endOnTick: false,
       labels: {
-	enabled: false
+        enabled: false
       }
     },
     plotOptions: {
       series: {
-	lineWidth: 1,
-	shadow: false,
-	states: {
-	  hover: {
-	    enabled: false
-	  }
-	},
-	marker: {
-	  enabled: false
-	}
+        lineWidth: 1,
+        shadow: false,
+        states: {
+          hover: {
+            enabled: false
+          }
+        },
+        marker: {
+          enabled: false
+        }
       },
       areaspline: {
-	fillOpacity: 0.1
+        fillOpacity: 0.1
       },
       area: {
-	fillOpacity: 0.1
+        fillOpacity: 0.1
       }
     }
   };

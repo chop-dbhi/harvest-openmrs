@@ -27,14 +27,14 @@ define(['marionette'], function(Marionette) {
       this.$el.append('<option value=>---</option>');
       _ref = this.collection.models;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-	model = _ref[_i];
-	if (model.get('searchable')) {
-	  continue;
-	}
-	if (this.options.enumerableOnly && !model.get('enumerable')) {
-	  continue;
-	}
-	this.$el.append("<option value=\"" + model.id + "\">" + (model.get('name')) + "</option>");
+        model = _ref[_i];
+        if (model.get('searchable')) {
+          continue;
+        }
+        if (this.options.enumerableOnly && !model.get('enumerable')) {
+          continue;
+        }
+        this.$el.append("<option value=\"" + model.id + "\">" + (model.get('name')) + "</option>");
       }
       return this.$el;
     };

@@ -41,18 +41,18 @@ define(['jquery', 'underscore', 'backbone', 'highcharts', '../base', '../control
       var key, value, _base;
       chartOptions = _.extend({}, options.chart);
       if (chartOptions != null) {
-	for (key in chartOptions) {
-	  value = chartOptions[key];
-	  if (OPTIONS_MAP[key]) {
-	    this.setOption(OPTIONS_MAP[key], value);
-	    delete chartOptions[key];
-	  }
-	}
-	this.chartOptions = $.extend(true, {}, this.chartOptions, chartOptions);
+        for (key in chartOptions) {
+          value = chartOptions[key];
+          if (OPTIONS_MAP[key]) {
+            this.setOption(OPTIONS_MAP[key], value);
+            delete chartOptions[key];
+          }
+        }
+        this.chartOptions = $.extend(true, {}, this.chartOptions, chartOptions);
       }
       Chart.__super__.initialize.call(this, options);
       if ((_base = this.chartOptions).el == null) {
-	_base.el = this.el;
+        _base.el = this.el;
       }
     };
 
@@ -62,11 +62,11 @@ define(['jquery', 'underscore', 'backbone', 'highcharts', '../base', '../control
       toks = key.split('.');
       last = toks.pop();
       for (_i = 0, _len = toks.length; _i < _len; _i++) {
-	tok = toks[_i];
-	if (options[tok] == null) {
-	  options[tok] = {};
-	}
-	options = options[tok];
+        tok = toks[_i];
+        if (options[tok] == null) {
+          options[tok] = {};
+        }
+        options = options[tok];
       }
       return options[last] = value;
     };
@@ -78,7 +78,7 @@ define(['jquery', 'underscore', 'backbone', 'highcharts', '../base', '../control
     Chart.prototype.showEmptyView = function() {
       var view;
       view = new this.emptyView({
-	message: 'No data is available for charting'
+        message: 'No data is available for charting'
       });
       return this.$el.html(view.render().el);
     };
@@ -90,16 +90,16 @@ define(['jquery', 'underscore', 'backbone', 'highcharts', '../base', '../control
     Chart.prototype.renderChart = function(options) {
       var view, _base;
       view = new this.loadView({
-	message: 'Loading chart'
+        message: 'Loading chart'
       });
       this.$el.append(view.render().el);
       options.chart['events'] = {
-	load: this.onChartLoaded
+        load: this.onChartLoaded
       };
       if (this.chart) {
-	if (typeof (_base = this.chart).destroy === "function") {
-	  _base.destroy();
-	}
+        if (typeof (_base = this.chart).destroy === "function") {
+          _base.destroy();
+        }
       }
       return this.chart = new Highcharts.Chart(options);
     };
@@ -118,9 +118,9 @@ define(['jquery', 'underscore', 'backbone', 'highcharts', '../base', '../control
       tok = toks[_i];
       prev = options;
       if (prev[tok] != null) {
-	options = _.clone(prev[tok]);
+        options = _.clone(prev[tok]);
       } else {
-	options = {};
+        options = {};
       }
       prev[tok] = options;
     }

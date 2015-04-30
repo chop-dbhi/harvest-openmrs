@@ -6,7 +6,7 @@ from django.conf.global_settings import *  # noqa
 # Import the project module to calculate directories relative to the module
 # location.
 PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
-			    '../..')
+                            '../..')
 
 # List all Django apps here. Note that standard Python libraries should not
 # be added to this list since Django will not recognize them as apps anyway.
@@ -282,8 +282,8 @@ MODELTREES = {
 #
 HAYSTACK_CONNECTIONS = {
     'default': {
-	'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-	'PATH': os.path.join(PROJECT_PATH, 'whoosh.index'),
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(PROJECT_PATH, 'whoosh.index'),
     }
 }
 

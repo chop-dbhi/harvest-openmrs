@@ -69,12 +69,12 @@ define(['underscore', 'marionette', './base'], function(_, Marionette, base) {
 
     Paginator.prototype.onRender = function() {
       this.ui.buttons.tooltip({
-	animation: false,
-	placement: 'bottom'
+        animation: false,
+        placement: 'bottom'
       });
       if (!this.model.pageIsLoading()) {
-	this.renderPageCount(this.model, this.model.getPageCount());
-	return this.renderCurrentPage.apply(this, [this.model].concat(__slice.call(this.model.getCurrentPageStats())));
+        this.renderPageCount(this.model, this.model.getPageCount());
+        return this.renderCurrentPage.apply(this, [this.model].concat(__slice.call(this.model.getCurrentPageStats())));
       }
     };
 
@@ -89,27 +89,27 @@ define(['underscore', 'marionette', './base'], function(_, Marionette, base) {
       this.ui.next.prop('disabled', !!options.last);
       this.ui.last.prop('disabled', !!options.last);
       if (!!options.first) {
-	this.ui.first.tooltip('hide');
-	this.ui.prev.tooltip('hide');
+        this.ui.first.tooltip('hide');
+        this.ui.prev.tooltip('hide');
       }
       if (!!options.last) {
-	this.ui.next.tooltip('hide');
-	return this.ui.last.tooltip('hide');
+        this.ui.next.tooltip('hide');
+        return this.ui.last.tooltip('hide');
       }
     };
 
     Paginator.prototype.changePage = function(newPage) {
       switch (newPage) {
-	case "first":
-	  return this.model.getFirstPage();
-	case "prev":
-	  return this.model.getPreviousPage();
-	case "next":
-	  return this.model.getNextPage();
-	case "last":
-	  return this.model.getLastPage();
-	default:
-	  throw new Error("Unknown paginator direction: " + newPage);
+        case "first":
+          return this.model.getFirstPage();
+        case "prev":
+          return this.model.getPreviousPage();
+        case "next":
+          return this.model.getNextPage();
+        case "last":
+          return this.model.getLastPage();
+        default:
+          throw new Error("Unknown paginator direction: " + newPage);
       }
     };
 
@@ -143,8 +143,8 @@ define(['underscore', 'marionette', './base'], function(_, Marionette, base) {
 
     ListingPage.prototype.itemViewOptions = function(item, index) {
       return _.defaults({
-	model: item,
-	index: index
+        model: item,
+        index: index
       }, this.options);
     };
 
@@ -170,26 +170,26 @@ define(['underscore', 'marionette', './base'], function(_, Marionette, base) {
 
     PageRoll.prototype.getItemView = function() {
       if (this.options.list) {
-	return this.listView;
+        return this.listView;
       } else {
-	return this.itemView;
+        return this.itemView;
       }
     };
 
     PageRoll.prototype.listViewOptions = function(item, index) {
       return {
-	collection: item.items
+        collection: item.items
       };
     };
 
     PageRoll.prototype.itemViewOptions = function(item, index) {
       var options;
       options = {
-	model: item,
-	index: index
+        model: item,
+        index: index
       };
       if (this.options.list) {
-	_.extend(options, this.listViewOptions(item, index));
+        _.extend(options, this.listViewOptions(item, index));
       }
       return _.defaults(options, this.options);
     };
@@ -200,7 +200,7 @@ define(['underscore', 'marionette', './base'], function(_, Marionette, base) {
 
     PageRoll.prototype.showCurentPage = function(model, num, options) {
       return this.children.each(function(view) {
-	return view.$el.toggle(view.model.id === num);
+        return view.$el.toggle(view.model.id === num);
       });
     };
 

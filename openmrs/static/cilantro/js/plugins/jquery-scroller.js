@@ -35,88 +35,88 @@ Methods:
 define(['jquery', 'underscore'], function($, _) {
 
     var defaultOptions = {
-	container: window,
-	threshold: 0.75,
-	autofill: false,
-	resize: true,
-	trigger: null
+        container: window,
+        threshold: 0.75,
+        autofill: false,
+        resize: true,
+        trigger: null
     };
 
 
     var Scroller = function(element, options) {
-	this.element = $(element);
-	this.options = $.extend({}, defaultOptions, options);
-	this.container = $(options.container);
+        this.element = $(element);
+        this.options = $.extend({}, defaultOptions, options);
+        this.container = $(options.container);
 
-	var _this = this;
+        var _this = this;
 
-	// Reset the dimensions on a window resize
-	if (this.options.resize) {
-	    $(window).on('resize', _.debounce(function() {
-		_this.reset();
-	    }, 100));
-	}
+        // Reset the dimensions on a window resize
+        if (this.options.resize) {
+            $(window).on('resize', _.debounce(function() {
+                _this.reset();
+            }, 100));
+        }
 
-	this.container.on('scroll', _.debounce(function() {
-	    var scrollTop = _this.container.scrollTop();
+        this.container.on('scroll', _.debounce(function() {
+            var scrollTop = _this.container.scrollTop();
 
-	    var threshold = (this.element.height() - this.container.height()) *
-			     this.options.threshold;
+            var threshold = (this.element.height() - this.container.height()) *
+                             this.options.threshold;
 
-	    if (!this.reached && scrollTop >= threshold) {
-		this.reached = true;
-		this.element.trigger('scroller');
-	    }
-	}, 100));
+            if (!this.reached && scrollTop >= threshold) {
+                this.reached = true;
+                this.element.trigger('scroller');
+            }
+        }, 100));
 
-	// Add trigger handler
-	if (this.options.trigger) {
-	    this.element.on('scroller', this.options.trigger);
-	}
+        // Add trigger handler
+        if (this.options.trigger) {
+            this.element.on('scroller', this.options.trigger);
+        }
 
-	return this;
+        return this;
     };
 
 
     Scroller.prototype = {
-	constructor: Scroller,
+        constructor: Scroller,
 
-	reset: function() {
-	    // Reset the flag which denotes when the threshold has been reached
-	    this.reached = false;
+        reset: function() {
+            // Reset the flag which denotes when the threshold has been reached
+            this.reached = false;
 
-	    // If autofill is enabled and the element is too *short* trigger the event
-	    var remaining = this.element.height() - this.container.height();
+            // If autofill is enabled and the element is too *short* trigger the event
+            var remaining = this.element.height() - this.container.height();
 
-	    if (this.options.autofill && remaining < 0) {
-		this.element.trigger('scroller');
-	    }
+            if (this.options.autofill && remaining < 0) {
+                this.element.trigger('scroller');
+            }
 
-	    return this;
-	}
+            return this;
+        }
     };
 
 
     $.fn.scroller = function(option, options) {
-	if (typeof option === 'object') {
-	    options = option;
-	}
+        if (typeof option === 'object') {
+            options = option;
+        }
 
-	this.each(function() {
-	    var element = $(this),
-		data = element.data('scroller');
+        this.each(function() {
+            var element = $(this),
+                data = element.data('scroller');
 
-	    // Initialize data
-	    if (!data) {
-		data = new Scroller(this, options);
-		element.data('scroller', data);
-	    }
+            // Initialize data
+            if (!data) {
+                data = new Scroller(this, options);
+                element.data('scroller', data);
+            }
 
-	    // Method call
-	    if (typeof option === 'string') {
-		data[option](options);
-	    }
-	});
+            // Method call
+            if (typeof option === 'string') {
+                data[option](options);
+            }
+        });
     };
 
 

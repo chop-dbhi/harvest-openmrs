@@ -7,43 +7,43 @@ define([
 
     // Represents a list of possible fields for use with a distrubution chart.
     var FieldAxis = Marionette.ItemView.extend({
-	tagName: 'select',
+        tagName: 'select',
 
-	options: {
-	    enumerableOnly: false
-	},
+        options: {
+            enumerableOnly: false
+        },
 
-	initialize: function() {
-	    _.bindAll(this, 'render');
+        initialize: function() {
+            _.bindAll(this, 'render');
 
-	    this.collection.when(this.render);
-	},
+            this.collection.when(this.render);
+        },
 
-	render: function() {
-	    this.$el.append('<option value=>---</option>');
+        render: function() {
+            this.$el.append('<option value=>---</option>');
 
-	    var model;
-	    for (var i = 0; i < this.collection.models.length; i++) {
-		model = this.collection.models[i];
+            var model;
+            for (var i = 0; i < this.collection.models.length; i++) {
+                model = this.collection.models[i];
 
-		// No good way to represent large string-based data yet.
-		if (model.get('searchable')) continue;
+                // No good way to represent large string-based data yet.
+                if (model.get('searchable')) continue;
 
-		if (this.options.enumerableOnly && !model.get('enumerable')) continue;
+                if (this.options.enumerableOnly && !model.get('enumerable')) continue;
 
-		this.$el.append('<option value="' + model.id + '">' +
-				model.get('name') + '</option>');
-	    }
+                this.$el.append('<option value="' + model.id + '">' +
+                                model.get('name') + '</option>');
+            }
 
-	    return this.$el;
-	},
+            return this.$el;
+        },
 
-	getSelected: function() {
-	    return this.collection.get(parseInt(this.$el.val()));
-	}
+        getSelected: function() {
+            return this.collection.get(parseInt(this.$el.val()));
+        }
     });
 
     return {
-	FieldAxis: FieldAxis
+        FieldAxis: FieldAxis
     };
 });

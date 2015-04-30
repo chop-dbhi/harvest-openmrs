@@ -52,9 +52,9 @@ define(['jquery', 'underscore', '../base', './core', './utils'], function($, _, 
     FieldChart.prototype.interactive = function(options) {
       var type, _ref;
       if ((type = (_ref = options.chart) != null ? _ref.type : void 0) === 'pie') {
-	return true;
+        return true;
       } else if (type === 'column' && (options.xAxis.categories != null)) {
-	return true;
+        return true;
       }
       return false;
     };
@@ -63,12 +63,12 @@ define(['jquery', 'underscore', '../base', './core', './utils'], function($, _, 
       var options;
       options = utils.processResponse(resp, [this.model]);
       if (options.clustered) {
-	this.ui.status.text('Clustered').show();
+        this.ui.status.text('Clustered').show();
       } else {
-	this.ui.status.hide();
+        this.ui.status.hide();
       }
       if (this.interactive(options)) {
-	this.setOption('plotOptions.series.events.click', this.chartClick);
+        this.setOption('plotOptions.series.events.click', this.chartClick);
       }
       $.extend(true, options, this.chartOptions);
       options.chart.renderTo = this.ui.chart[0];
@@ -83,13 +83,13 @@ define(['jquery', 'underscore', '../base', './core', './utils'], function($, _, 
       var point, points;
       points = this.chart.getSelectedPoints();
       return (function() {
-	var _i, _len, _results;
-	_results = [];
-	for (_i = 0, _len = points.length; _i < _len; _i++) {
-	  point = points[_i];
-	  _results.push(point.category);
-	}
-	return _results;
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = points.length; _i < _len; _i++) {
+          point = points[_i];
+          _results.push(point.category);
+        }
+        return _results;
       })();
     };
 
@@ -100,42 +100,42 @@ define(['jquery', 'underscore', '../base', './core', './utils'], function($, _, 
     FieldChart.prototype.removeChart = function(event) {
       FieldChart.__super__.removeChart.apply(this, arguments);
       if (this.node) {
-	return this.node.destroy();
+        return this.node.destroy();
       }
     };
 
     FieldChart.prototype.onRender = function() {
       if (this.options.parentView != null) {
-	this.ui.chart.width(this.options.parentView.$el.width());
+        this.ui.chart.width(this.options.parentView.$el.width());
       }
       this.showLoadView();
       return this.model.distribution((function(_this) {
-	return function(resp) {
-	  var options;
-	  if (_this.isClosed) {
-	    return;
-	  }
-	  options = _this.getChartOptions(resp);
-	  if (resp.size) {
-	    return _this.renderChart(options);
-	  } else {
-	    return _this.showEmptyView(options);
-	  }
-	};
+        return function(resp) {
+          var options;
+          if (_this.isClosed) {
+            return;
+          }
+          options = _this.getChartOptions(resp);
+          if (resp.size) {
+            return _this.renderChart(options);
+          } else {
+            return _this.showEmptyView(options);
+          }
+        };
       })(this));
     };
 
     FieldChart.prototype.setValue = function(value) {
       var point, points, _i, _len, _ref, _ref1;
       if (!_.isArray(value)) {
-	value = [];
+        value = [];
       }
       if (this.chart != null) {
-	points = this.chart.series[0].points;
-	for (_i = 0, _len = points.length; _i < _len; _i++) {
-	  point = points[_i];
-	  point.select((_ref = point.name) != null ? _ref : (_ref1 = point.category, __indexOf.call(value, _ref1) >= 0), true);
-	}
+        points = this.chart.series[0].points;
+        for (_i = 0, _len = points.length; _i < _len; _i++) {
+          point = points[_i];
+          point.select((_ref = point.name) != null ? _ref : (_ref1 = point.category, __indexOf.call(value, _ref1) >= 0), true);
+        }
       }
     };
 

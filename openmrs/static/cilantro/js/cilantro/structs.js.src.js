@@ -17,13 +17,13 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
 
     Index.prototype.show = function() {
       return this.set({
-	visible: true
+        visible: true
       });
     };
 
     Index.prototype.hide = function() {
       return this.set({
-	visible: false
+        visible: false
       });
     };
 
@@ -47,7 +47,7 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
 
     function Datum(attrs, index, options) {
       if (!(index instanceof Index)) {
-	index = new Index(index);
+        index = new Index(index);
       }
       this.index = index;
       Datum.__super__.constructor.call(this, attrs, options);
@@ -77,7 +77,7 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
       var index;
       index = this.indexes.at(_.keys(this._byId).length);
       return new Datum({
-	value: value
+        value: value
       }, index);
     };
 
@@ -90,17 +90,17 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
     function Series(attrs, indexes, options) {
       var data;
       if (options == null) {
-	options = {};
+        options = {};
       }
       if (!(indexes instanceof Indexes)) {
-	indexes = new Indexes(indexes);
+        indexes = new Indexes(indexes);
       }
       this.indexes = indexes;
       if (_.isArray(attrs)) {
-	data = attrs;
-	attrs = null;
+        data = attrs;
+        attrs = null;
       } else {
-	options.parse = true;
+        options.parse = true;
       }
       this.data = new _DatumArray(data, indexes);
       Series.__super__.constructor.call(this, attrs, options);
@@ -122,9 +122,9 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
 
     Series.prototype.size = function() {
       if (this.isColumn()) {
-	return this.data.length;
+        return this.data.length;
       } else {
-	return 1;
+        return 1;
       }
     };
 
@@ -157,17 +157,17 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
     function Frame(attrs, indexes, options) {
       var data;
       if (options == null) {
-	options = {};
+        options = {};
       }
       if (!(indexes instanceof Indexes)) {
-	indexes = new Indexes(indexes);
+        indexes = new Indexes(indexes);
       }
       this.indexes = indexes;
       if (_.isArray(attrs)) {
-	data = attrs;
-	attrs = null;
+        data = attrs;
+        attrs = null;
       } else {
-	options.parse = true;
+        options.parse = true;
       }
       this.series = new _SeriesArray(data, indexes);
       Frame.__super__.constructor.call(this, attrs, options);
@@ -193,7 +193,7 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
     Frame.prototype.column = function(index) {
       var data;
       data = this.series.map(function(series) {
-	return series.data.at(index);
+        return series.data.at(index);
       });
       return new Series(data, this.indexes.at(index));
     };
@@ -209,15 +209,15 @@ define(['underscore', 'backbone', './models/base'], function(_, Backbone, base) 
     function FrameArray(attrs, options) {
       this.indexes = new Indexes;
       this.on('reset', function(collection) {
-	var model;
-	if ((model = collection.models[0])) {
-	  return this.indexes.reset(model.indexes.models);
-	}
+        var model;
+        if ((model = collection.models[0])) {
+          return this.indexes.reset(model.indexes.models);
+        }
       });
       this.on('add', function(model, collection, options) {
-	if (collection.length === 1) {
-	  return this.indexes.reset(model.indexes.models);
-	}
+        if (collection.length === 1) {
+          return this.indexes.reset(model.indexes.models);
+        }
       });
       FrameArray.__super__.constructor.call(this, attrs, options);
     }

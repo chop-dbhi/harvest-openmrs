@@ -30,11 +30,11 @@ define(['module', 'text', 'underscore'], function(module, text, _) {
 				return;
 			}
 			req([ 'text!' + name ], function(content) {
-		var func =  content ?
-		    _.template(content, undefined, settings) :
-		    function() { return ''; };
-		func._moduleName = name;
-		onLoad(func);
+                var func =  content ?
+                    _.template(content, undefined, settings) :
+                    function() { return ''; };
+                func._moduleName = name;
+                onLoad(func);
 			});
 		},
 		/**
@@ -54,8 +54,8 @@ define(['module', 'text', 'underscore'], function(module, text, _) {
 						var template = _.template(eval(contents), undefined, settings);
 						write.asModule(pluginName + "!" + moduleName,
 							"define(function() { var func = " + template.source +
-				"; func._moduleName = '" +
-				moduleName + "'; return func; });");
+                                "; func._moduleName = '" +
+                                moduleName + "'; return func; });");
 					}
 					catch (err) {
 						console.error('~~~~~');

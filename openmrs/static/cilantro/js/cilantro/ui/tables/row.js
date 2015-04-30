@@ -8,26 +8,26 @@ define([
 ], function(_, Marionette, base, cell) {
 
     var Row = Marionette.CollectionView.extend({
-	tagName: 'tr',
+        tagName: 'tr',
 
-	itemView: cell.Cell,
+        itemView: cell.Cell,
 
-	itemViewOptions: function(model) {
-	    return _.extend({}, this.options, {
-		model: model
-	    });
-	}
+        itemViewOptions: function(model) {
+            return _.extend({}, this.options, {
+                model: model
+            });
+        }
     });
 
     var EmptyRow = base.LoadView.extend({
-	align: 'left',
+        align: 'left',
 
-	tagName: 'tr'
+        tagName: 'tr'
     });
 
     return {
-	EmptyRow: EmptyRow,
-	Row: Row
+        EmptyRow: EmptyRow,
+        Row: Row
     };
 
 });
