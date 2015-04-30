@@ -294,7 +294,7 @@ define([
                 blur: this.stopPing
             });
 
-            if (!c.isSupported(c.getSerranoVersion())) {
+            if (c.config.get('debug') && !c.isSupported(c.getSerranoVersion())) {
                 c.notify({
                     header: 'Serrano Version Unsupported',
                     level: 'warning',

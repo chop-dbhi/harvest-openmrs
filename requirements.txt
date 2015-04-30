@@ -8,7 +8,7 @@ psycopg2
 # uWSGI
 
 # Deployment with fabfile.py
-Fabric==1.4.4
+
 
 # Harvest components
 avocado>=2.3.4,<2.4.0
