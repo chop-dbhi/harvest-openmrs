@@ -9,7 +9,7 @@ from openmrs.models import Patient
 class TranslatorTest(TestCase):
 
     def setUp(self):
-        management.call_command('avocado', 'sync', 'openmrs')
+        management.call_command('avocado', 'init', 'openmrs')
 
         self.birthdate = DataField.objects.get_by_natural_key('openmrs', 'patient', 'birthdate')
         self.t = registry.get('Age')
