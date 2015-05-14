@@ -38,7 +38,7 @@ class FormatTest(TestCase):
         fvalues = self.f(self.values, preferred_formats=['html'])
         age = round((date.today() - date(1992,10,3)).total_seconds()/60/60/24/365, 1)
         self.assertEqual(OrderedDict([
-            ('Birthdate', '{0} years old <em>(estimated)</em>'.format(age)),
+            ('Birthdate', "{0} years old <em class='muted'>(estimated)</em>".format(age)),
             ]), fvalues)
 
     def test_year(self):
@@ -54,7 +54,7 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '1.0 year old <em>(estimated)</em>'),
+            ('Birthdate', "1.0 year old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
     def test_months(self):
@@ -70,7 +70,7 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '2.0 months old <em>(estimated)</em>'),
+            ('Birthdate', "2.0 months old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
     def test_month(self):
@@ -86,7 +86,7 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '1.0 month old <em>(estimated)</em>'),
+            ('Birthdate', "1.0 month old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
     def test_half_month(self):
@@ -102,7 +102,7 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '1.5 months old <em>(estimated)</em>'),
+            ('Birthdate', "1.5 months old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
     def test_two_half_year(self):
@@ -118,35 +118,35 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '2.5 years old <em>(estimated)</em>'),
+            ('Birthdate', "2.5 years old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
     def test_empty(self):
         self.values =[None,False]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', 'Age not available'),
+            ('Birthdate', 'Current age not available'),
             ]), fvalues)
 
     def test_empty_est(self):
         self.values =[None,True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', 'Age not available'),
+            ('Birthdate', 'Current age not available'),
             ]), fvalues)
 
     def test_empty_both(self):
         self.values =[None, None]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', 'Age not available'),
+            ('Birthdate', 'Current age not available'),
             ]), fvalues)
 
     def test_empty_est(self):
         self.values =[None, None]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', 'Age not available'),
+            ('Birthdate', 'Current age not available'),
             ]), fvalues)
 
     def test_two_half_year_empty_est(self):
@@ -178,7 +178,7 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '1.0 day old <em>(estimated)</em>'),
+            ('Birthdate', "1.0 day old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
     def test_24_days(self):
@@ -194,6 +194,6 @@ class FormatTest(TestCase):
         self.values = [dob, True]
         fvalues = self.f(self.values, preferred_formats=['html'])
         self.assertEqual(OrderedDict([
-            ('Birthdate', '24.0 days old <em>(estimated)</em>'),
+            ('Birthdate', "24.0 days old <em class='muted'>(estimated)</em>"),
             ]), fvalues)
 
