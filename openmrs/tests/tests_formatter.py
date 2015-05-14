@@ -11,7 +11,7 @@ from avocado.formatters import registry
 class FormatTest(TestCase):
 
     def setUp(self):
-        management.call_command('avocado', 'sync', 'openmrs')
+        management.call_command('avocado','init', 'openmrs')
 
         birthdate_field = DataField.objects.get_by_natural_key('openmrs', 'patient', 'birthdate')
         estimate_field = DataField.objects.get_by_natural_key('openmrs','patient', 'birthdate_estimated')
