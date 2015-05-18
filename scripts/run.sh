@@ -9,5 +9,6 @@ make collect
 
 python /opt/app/bin/manage.py syncdb --noinput
 python /opt/app/bin/manage.py migrate --noinput
+python /opt/app/bin/manage.py loaddata data.json
 
 python /opt/app/bin/manage.py runserver 0.0.0.0:8000
