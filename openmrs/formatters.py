@@ -33,8 +33,8 @@ def process_age(dob, date_end):
 class AgeFormatter(Formatter):
     @process_multiple
     def to_html(self, values, **context):
-        dob = values['birthdate']
-        est = values['birthdate_estimated']
+        dob = values.birthdate
+        est = values.birthdate_estimated
 
         if not dob:
             return "Current age not available"
@@ -47,7 +47,7 @@ class AgeFormatter(Formatter):
 
     @process_multiple
     def to_csv(self, values, **context):
-        dob = values['birthdate']
+        dob = values.birthdate
 
         if not dob:
             return 'N/A'
@@ -64,9 +64,9 @@ class AgeFormatter(Formatter):
 class EncounterAgeFormatter(Formatter):
     @process_multiple
     def to_html(self, values, **context):
-        dob = values['birthdate']
-        est = values['birthdate_estimated']
-        enc = values['encounter_datetime']
+        dob = values.birthdate
+        est = values.birthdate_estimated
+        enc = values.encounter_datetime
 
         if not enc or not enc.date:
             return ''
@@ -99,9 +99,9 @@ class CbcPanelFormatter(Formatter):
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return "<div class='muted'><h5>No Complete Blood Count Panel</h5></div>"
@@ -115,9 +115,9 @@ class Chem7PanelFormatter(Formatter):
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return "<div class='muted'><h5>No Chem7 Panel</h5></div>"
@@ -131,9 +131,9 @@ class MiscPanelFormatter(Formatter):
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
@@ -147,12 +147,12 @@ class SystemsFormatter(Formatter):
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'systemsreview', name)
-                if values[name] == 'ABNORMAL':
-                    html_str += "<tr class=error><td>{0}</td><td class=text-error>{1}</td></tr>".format(data_field, values[name])
+                if getattr(values, name) == 'ABNORMAL':
+                    html_str += "<tr class=error><td>{0}</td><td class=text-error>{1}</td></tr>".format(data_field, getattr(values, name))
                 else:
-                    html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                    html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
@@ -166,9 +166,9 @@ class HIVDetailFormatter(Formatter):
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'hivdetails', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
@@ -181,9 +181,9 @@ class TBDetailFormatter(Formatter):
         test_names = ['treat_adhere','treat_plan','pro_adhere','pro_plan']
         html_str = ""
         for name in test_names:
-            if values[name] != None and values[name] != 'NONE':
+            if getattr(values, name) != None and getattr(values, name) != 'NONE':
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'tbdetails', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
@@ -196,9 +196,9 @@ class PCPDetailFormatter(Formatter):
         test_names = ['plan','pro_adhere']
         html_str = ""
         for name in test_names:
-            if values[name] != None and values[name] != 'NONE':
+            if getattr(values, name) != None and getattr(values, name) != 'NONE':
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'pcpdetails', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
