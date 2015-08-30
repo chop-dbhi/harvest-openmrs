@@ -1,12 +1,13 @@
 /* global define */
 
 define([
+    'jquery',
     'underscore',
     'marionette',
     '../base',
     '../core',
     '../context/filters'
-], function( _, Marionette, base, c, filters) {
+], function($, _, Marionette, base, c, filters) {
 
     var LoadingQueryItem = base.LoadView.extend({
         align: 'left'
@@ -79,12 +80,24 @@ define([
             event.preventDefault();
             event.stopPropagation();
 
-            this.data.view.save('json', this.model.get('view_json'));
-            this.data.context.save('json', this.model.get('context_json'), {
-                reset: true
+            $.when(
+                this.data.view.save('json', this.model.get('view_json')),
+                this.data.context.save('json', this.model.get('context_json'), {
+                    reset: true
+                })
+            ).done(function() {
+                c.router.navigate('results', {trigger: true});
+            }).fail(function() {
+                c.notify({
+                    timeout: null,
+                    dismissable: true,
+                    level: 'error',
+                    header: 'Error Opening Query',
+                    message: 'An error occurred when opening the query. ' +
+                             'Click on the link again to try to open the ' +
+                             'query again.'
+                });
             });
-
-            c.router.navigate('results', {trigger: true});
         },
 
         showEditQueryModal: function() {
@@ -146,7 +159,11 @@ define([
 
                     // Retrieve the columns selected
                     this.model.view.facets.each(function(model) {
-                        var name = c.data.concepts.get(model.get('concept')).get('name'),
+                        var concept = c.data.concepts.get(model.get('concept'));
+
+                        if (concept === undefined) return;
+
+                        var name = concept.get('name'),
                             sort = model.get('sort');
 
                         html.push('<li>' + name);
@@ -173,13 +190,28 @@ define([
         },
 
         onRender: function() {
-            this.renderDetails();
+            // The details requires the concepts to be loaded. This checks
+            // based on existence, otherwise waits until they sync.
+            if (c.data.concepts.length) {
+                this.renderDetails();
+            }
+            else {
+                this.listenTo(c.data.concepts, 'sync', function() {
+                    this.renderDetails();
+                });
+            }
 
             // Short-circuit render if not editable
             if (!this.options.editable) {
                 this.ui.publicIcon.hide();
-                this.ui.nonOwner.hide();
                 this.ui.owner.hide();
+
+                // If we are not the owner and the owner is unknown, hide the
+                // shared by information as it will only lead to confusion.
+                if (!this.model.get('user')) {
+                    this.ui.nonOwner.hide();
+                }
+
                 return;
             }
 
@@ -195,7 +227,7 @@ define([
             this.ui.publicIcon.tooltip({
                 html: true,
                 animation: false,
-                placement: 'right',
+                placement: 'left',
                 container: 'body'
             });
 
@@ -213,7 +245,7 @@ define([
                 this.ui.shareCount.tooltip({
                     html: true,
                     animation: false,
-                    placement: 'right',
+                    placement: 'left',
                     container: 'body'
                 });
             }
