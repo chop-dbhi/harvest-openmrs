@@ -3,9 +3,8 @@
 define([
     'underscore',
     'backbone',
-    '../structs',
     '../constants'
-], function(_, Backbone, structs, constants) {
+], function(_, Backbone, constants) {
 
     // Represents a value as defined in a query condition. For a given list of
     // values, a value can not be specified twice, so it is treated
@@ -68,12 +67,13 @@ define([
             var models = this.where({valid: null, pending: false});
 
             // Nothing to check
-            if (!models.length) return;
+            if (!models.length || !this.url) return;
 
-            // Mark the models as pending to prevent redundant validation
+            // Mark the models as pending to prevent redundant validation.
             _.each(models, function(model) {
-                model.set('pending', true);
+                model.set('pending', true, {silent: true});
             });
+            this.trigger('change');
 
             var _this = this;
 
@@ -86,7 +86,7 @@ define([
                     // Don't add since the value could have been removed
                     // in the meantime. Don't remove since this may only
                     // represent a subset of values in the collection.
-                    _this.set(resp, {add: false, remove: false});
+                    _this.set(resp, {add: false, remove: false, silent: true});
                 },
 
                 complete: function() {
@@ -94,8 +94,9 @@ define([
                     // has completed regardless if the request succeeded
                     // or failed.
                     _.each(models, function(model) {
-                        model.set('pending', false);
+                        model.set('pending', false, {silent: true});
                     });
+                    _this.trigger('change');
                 }
             });
         }

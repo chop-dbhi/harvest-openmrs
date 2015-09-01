@@ -13,6 +13,8 @@ build
 pip-log.txt
 MANIFEST
 build.txt
+openmrs.db
+openmrs.db-journal
 
 # ETL
 etl/harvestdb.properties

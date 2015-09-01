@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
-from avocado.formatters import registry
-from serrano.formatters import HTMLFormatter
+from avocado.formatters import registry, Formatter, process_multiple
 from datetime import date
 
 
@@ -31,10 +30,11 @@ def process_age(dob, date_end):
         return age, time
 
 
-class AgeFormatter(HTMLFormatter):
+class AgeFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
-        dob = values['birthdate']
-        est = values['birthdate_estimated']
+        dob = values.birthdate
+        est = values.birthdate_estimated
 
         if not dob:
             return "Current age not available"
@@ -45,10 +45,9 @@ class AgeFormatter(HTMLFormatter):
         else:
             return "{0} {1} old".format(age, time)
 
-    to_html.process_multiple = True
-
+    @process_multiple
     def to_csv(self, values, **context):
-        dob = values['birthdate']
+        dob = values.birthdate
 
         if not dob:
             return 'N/A'
@@ -57,19 +56,17 @@ class AgeFormatter(HTMLFormatter):
 
         return str(age)
 
-    to_csv.process_multiple = True
-
+    @process_multiple
     def to_excel(self, values, **context):
         return self.to_csv(values, **context)
 
-    to_excel.process_multiple = True
 
-class EncounterAgeFormatter(HTMLFormatter):
-
+class EncounterAgeFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
-        dob = values['birthdate']
-        est = values['birthdate_estimated']
-        enc = values['encounter_datetime']
+        dob = values.birthdate
+        est = values.birthdate_estimated
+        enc = values.encounter_datetime
 
         if not enc or not enc.date:
             return ''
@@ -82,10 +79,8 @@ class EncounterAgeFormatter(HTMLFormatter):
         else:
             return "{0} {1} old".format(age, time)
 
-    to_html.process_multiple = True
 
-
-class GenderFormatter(HTMLFormatter):
+class GenderFormatter(Formatter):
     def to_html(self, value, **context):
         gender_map = {
             'M': 'Male',
@@ -96,127 +91,120 @@ class GenderFormatter(HTMLFormatter):
         return '<span class="muted">Unknown</span>'
 
 
-class CbcPanelFormatter(HTMLFormatter):
+class CbcPanelFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['hgb','wbc','rbc','platelets','mcv','hct','rdw','mchc','mch']
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return "<div class='muted'><h5>No Complete Blood Count Panel</h5></div>"
 
-    to_html.process_multiple = True
 
-
-class Chem7PanelFormatter(HTMLFormatter):
+class Chem7PanelFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['cr','bun','glu','na','k','cl','co2']
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return "<div class='muted'><h5>No Chem7 Panel</h5></div>"
 
-    to_html.process_multiple = True
 
-
-class MiscPanelFormatter(HTMLFormatter):
+class MiscPanelFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['cd4','cd4_percent','cd8','sgpt','alc']
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'labresult', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
-    to_html.process_multiple = True
 
-
-class SystemsFormatter(HTMLFormatter):
+class SystemsFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['heent','chest','abdominal','cardiac','musculoskeletal', 'neurologic']
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'systemsreview', name)
-                if values[name] == 'ABNORMAL':
-                    html_str += "<tr class=error><td>{0}</td><td class=text-error>{1}</td></tr>".format(data_field, values[name])
+                if getattr(values, name) == 'ABNORMAL':
+                    html_str += "<tr class=error><td>{0}</td><td class=text-error>{1}</td></tr>".format(data_field, getattr(values, name))
                 else:
-                    html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                    html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
-    to_html.process_multiple = True
 
-
-class HIVDetailFormatter(HTMLFormatter):
+class HIVDetailFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['plan','treat_adhere','stage_adult','stage_adult_last','stage_peds','cdc_category', 'taking_antiretrovirals', 'discordant_couple']
 
         html_str = ""
         for name in test_names:
-            if values[name] != None:
+            if getattr(values, name) != None:
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'hivdetails', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
-    to_html.process_multiple = True
 
-
-class TBDetailFormatter(HTMLFormatter):
+class TBDetailFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['treat_adhere','treat_plan','pro_adhere','pro_plan']
         html_str = ""
         for name in test_names:
-            if values[name] != None and values[name] != 'NONE':
+            if getattr(values, name) != None and getattr(values, name) != 'NONE':
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'tbdetails', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
-    to_html.process_multiple = True
 
-
-class PCPDetailFormatter(HTMLFormatter):
+class PCPDetailFormatter(Formatter):
+    @process_multiple
     def to_html(self, values, **context):
         from avocado.models import DataField
         test_names = ['plan','pro_adhere']
         html_str = ""
         for name in test_names:
-            if values[name] != None and values[name] != 'NONE':
+            if getattr(values, name) != None and getattr(values, name) != 'NONE':
                 data_field = DataField.objects.get_by_natural_key('openmrs', 'pcpdetails', name)
-                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, values[name])
+                html_str += "<tr><td>{0}</td><td>{1}</td></tr>".format(data_field, getattr(values, name))
         if html_str != "":
             return "<table class='table table-striped'>{0}</table>".format(html_str)
         return ""
 
-    to_html.process_multiple = True
 
-
-class MRNFormatter(HTMLFormatter):
+class MRNFormatter(Formatter):
     def to_html(self, value, **context):
         url = reverse('patient-detail', kwargs={'mrn': value})
         return '<a href="{0}">{1}</a>'.format(url, value)
