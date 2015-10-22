@@ -135,7 +135,39 @@ require({
                 view: c.workflows.queryload
             }];
 
-            // Register routes and start the session.
+            // Workspace supported as of 2.1.0
+            if (c.isSupported('2.1.0')) {
+                c.workflows.workspace = new c.ui.WorkspaceWorkflow({
+                    queries: this.data.queries,
+                    context: this.data.contexts.session,
+                    view: this.data.views.session,
+                    public_queries: this.data.public_queries,  // jshint ignore:line
+                    stats: this.data.stats
+                });
+
+                routes.push({
+                    id: 'workspace',
+                    route: 'workspace/',
+                    view: c.workflows.workspace
+                });
+            }
+
+            // Query URLs supported as of 2.2.0
+            if (c.isSupported('2.2.0')) {
+                c.workflows.queryload = new c.ui.QueryLoader({
+                    queries: this.data.queries,
+                    context: this.data.contexts.session,
+                    view: this.data.views.session
+                });
+
+                routes.push({
+                    id: 'query-load',
+                    route: 'results/:query_id/',
+                    view: c.workflows.queryload
+                });
+            }
+
+            // Register routes and start the session
             this.start(routes);
         });
 

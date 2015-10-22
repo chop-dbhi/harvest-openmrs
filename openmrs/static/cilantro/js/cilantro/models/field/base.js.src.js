@@ -30,20 +30,23 @@ define([
     };
 
     var FieldModel = base.Model.extend({
-        parse: function() {
-            this._cache = {};
-
-            var attrs = base.Model.prototype.parse.apply(this, arguments);
-            attrs.type = getLogicalType(attrs);
-
+        constructor: function() {
+            base.Model.prototype.constructor.apply(this, arguments);
 
             var _this = this;
-            if (attrs.stats_capable) {   // jshint ignore:line
+            if (this.links.stats) {
                 this.stats = new stats.StatCollection();
                 this.stats.url = function() {
                     return _this.links.stats;
                 };
             }
+        },
+
+        parse: function() {
+            this._cache = {};
+
+            var attrs = base.Model.prototype.parse.apply(this, arguments);
+            attrs.type = getLogicalType(attrs);
 
             return attrs;
         },
@@ -51,7 +54,7 @@ define([
         distribution: function(handler, cache) {
             if (cache !== false) cache = true;
 
-            if (!this.links.distribution) {
+            if (this.links.distribution === undefined) {
                 handler();
                 return;
             }
@@ -67,32 +70,6 @@ define([
                     success: function(resp) {
                         if (cache) {
                             _this._cache.distribution = resp;
-                        }
-                        return handler(resp);
-                    }
-                });
-            }
-        },
-
-        dimensions: function(handler, cache) {
-            if (cache !== false) cache = true;
-
-            if (!this.links.dimensions) {
-                handler();
-                return;
-            }
-
-            if (cache && (this._cache.dimensions !== undefined)) {
-                handler(this._cache.dimensions);
-            }
-            else {
-                var _this = this;
-                Backbone.ajax({
-                    url: this.links.dimensions.uri,
-                    dataType: 'json',
-                    success: function(resp) {
-                        if (cache) {
-                            _this._cache.dimensions = resp;
                         }
                         return handler(resp);
                     }

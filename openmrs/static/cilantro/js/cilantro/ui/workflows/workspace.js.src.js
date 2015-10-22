@@ -49,8 +49,10 @@ define([
                 throw new Error('view model required');
             }
 
-            if (!(this.data.stats = this.options.stats)) {
-                throw new Error('stats model required');
+            if (c.isSupported('2.3.6')) {
+                if (!(this.data.stats = this.options.stats)) {
+                    throw new Error('stats model required');
+                }
             }
 
             // When this workflow is loaded, toggle shared components
@@ -117,6 +119,19 @@ define([
             var showStats = c.config.get('statsModelsList') === null ||
                             c.config.get('statsModelsList').length > 0;
             if (showStats) {
+                var dataSummaryView = new this.regionViews.dataSummary({
+                    collection: this.data.stats.counts,
+                    statsModelsList: c.config.get('statsModelsList')
+                });
+
+                this.listenTo(this.data.queries, 'destroy', function(model) {
+                    this.data.publicQueries.remove(model);
+                });
+            }
+
+            var showStats = c.config.get('statsModelsList') === null ||
+                            c.config.get('statsModelsList').length > 0;
+            if (c.isSupported('2.3.6') && showStats) {
                 var dataSummaryView = new this.regionViews.dataSummary({
                     collection: this.data.stats.counts,
                     statsModelsList: c.config.get('statsModelsList')

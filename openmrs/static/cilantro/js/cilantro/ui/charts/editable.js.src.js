@@ -133,7 +133,7 @@ define([
 
                 if (!xAxis) return;
 
-                var url = _this.model.links.distribution;
+                var url = _this.model.get('_links').distribution.href;
 
                 var fields = [xAxis];
                 var data = 'dimension=' + xAxis.id;

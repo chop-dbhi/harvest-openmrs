@@ -169,10 +169,10 @@ define([
             base.Model.prototype.parse.call(this, resp, options);
 
             this.indexes.reset(resp.keys, options);
-            this.series.reset(resp.items, options);
+            this.series.reset(resp.objects, options);
 
             delete resp.keys;
-            delete resp.items;
+            delete resp.objects;
 
             return resp;
         },

@@ -133,15 +133,12 @@ define([
             }
 
             if (xEnum) {
-                if (xLabels.indexOf(x.label) === -1) {
-                    x = xLabels.push(x.label) - 1;
+                if (xLabels.indexOf(x.toString()) === -1) {
+                    x = xLabels.push(x.toString()) - 1;
                 }
             }
-            else if (xType === 'datetime') {
-                x = parseDate(x.value);
-            }
-            else {
-                x = x.value;
+            else if (xType === 'datetime'){
+                x = parseDate(x);
             }
 
             var y;
@@ -153,15 +150,12 @@ define([
                 }
 
                 if (yEnum) {
-                    if (yLabels.indexOf(y.label) === -1) { // jshint ignore:line
-                        y = yLabels.push(y.label) - 1;
+                    if (yLabels.indexOf(y.toString()) === -1) { // jshint ignore:line
+                        y = yLabels.push(y.toString()) - 1;
                     }
                 }
                 else if (yType === 'datetime') {
-                    y = parseDate(y.value);
-                }
-                else {
-                    y = y.value;
+                        y = parseDate(y);
                 }
             }
             else {
@@ -291,7 +285,7 @@ define([
                 formatterFunc = function() {
                     return '<b>' + xName + ':</b>' +
                            Highcharts.numberFormat(parseFloat(this.x)) + '<br /><b>' +
-                           yName + ':</b> ' + Highcharts.numberFormat(parseFloat(this.y));
+                           yName + ':</b>' + Highcharts.numberFormat(parseFloat(this.y));
                 };
             }
         }

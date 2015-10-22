@@ -109,12 +109,6 @@ define([
             };
 
             this.collection.sort();
-        },
-
-        onRender: function() {
-            if (this.collection && this.collection.length > 0) {
-                this.hideLoader();
-            }
         }
     });
 

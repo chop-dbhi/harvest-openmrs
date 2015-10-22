@@ -104,39 +104,23 @@ define([
             this.showLoadView();
 
             var _this = this;
+            this.model.distribution(
+                function(resp) {
+                    if (_this.isClosed) return;
 
-            this.model.distribution(function(resp) {
-                if (_this.isClosed) return;
+                    resp.data = _.sortBy(resp.data, function(element) {
+                        return element.values[0];
+                    });
 
-                // Convert it into the structure the chart renderer expects
-                var data = _.map(resp, function(item) {
-                    return {
-                        count: item.count,
-                        values: [{
-                            label: item.label,
-                            value: item.value
-                        }]
-                    };
-                });
+                    var options = _this.getChartOptions(resp);
 
-                data = _.sortBy(data, function(item) {
-                    return item.values[0];
-                });
-
-                var options = _this.getChartOptions({
-                    clustered: false,
-                    data: data,
-                    outliers: null,
-                    size: data.length
-                });
-
-                if (data.length) {
-                    _this.renderChart(options);
-                }
-                else {
-                    _this.showEmptyView(options);
-                }
-            });
+                    if (resp.size) {
+                        _this.renderChart(options);
+                    }
+                    else {
+                        _this.showEmptyView(options);
+                    }
+              });
         },
 
         setValue: function(value) {
