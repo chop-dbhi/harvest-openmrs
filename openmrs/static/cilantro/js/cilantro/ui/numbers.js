@@ -1,26 +1,2 @@
-/* global define */
-
-define([
-    './core'
-], function(c) {
-
-    // Method for rendering a count. It will prettify the number for display
-    // and set the (delimited) raw number as the title for a popover. If the
-    // count is null, 'n/a' will be displayed.
-    var renderCount = function($el, count, fallback) {
-        if (!fallback) fallback = '<em>n/a</em>';
-
-        if (!count) {
-            $el.html(fallback);
-        }
-        else {
-            $el.html(c.utils.prettyNumber(count, c.config.get('threshold')))
-               .attr('title', c.utils.toDelimitedNumber(count));
-        }
-    };
-
-    return {
-        renderCount: renderCount
-    };
-
-});
+define(["./core"],function(t){var e=function(e,r,n){n||(n="<em>n/a</em>"),r?e.html(t.utils.prettyNumber(r,t.config.get("threshold"))).attr("title",t.utils.toDelimitedNumber(r)):e.html(n)};return{renderCount:e}});
+//# sourceMappingURL=numbers.js.map

@@ -1,24 +1,33 @@
 /* global define */
 
 define([
+    'jquery',
+    'backbone',
     'marionette',
     '../core',
-    '../query'
-], function(Marionette, c, query) {
+    '../query',
+    '../stats'
+], function($, Backbone, Marionette, c, query, stats) {
 
     var WorkspaceWorkflow = Marionette.Layout.extend({
         className: 'workspace-workflow',
 
         template: 'workflows/workspace',
 
+        ui: {
+            loadingOverlay: '.loading-overlay'
+        },
+
         regions: {
-            queries: '.query-region',
+            dataSummary: '.data-summary-region',
             publicQueries: '.public-query-region',
+            queries: '.query-region'
         },
 
         regionViews: {
-            queries: query.QueryList,
-            publicQueries: query.QueryList
+            dataSummary: stats.CountList,
+            publicQueries: query.QueryList,
+            queries: query.QueryList
         },
 
         initialize: function() {
@@ -42,11 +51,28 @@ define([
                 throw new Error('view model required');
             }
 
+            if (c.isSupported('2.3.6')) {
+                if (!(this.data.stats = this.options.stats)) {
+                    throw new Error('stats model required');
+                }
+            }
+
             // When this workflow is loaded, toggle shared components
             this.on('router:load', function() {
                 // Fully hide the panel; do not leave an edge to show/hide
                 c.panels.context.closePanel({full: true});
                 c.panels.concept.closePanel({full: true});
+                this.ui.loadingOverlay.hide();
+            });
+
+            // Query items, when clicked, will update the view and the context
+            // for the user and then, when that is done, will navigate to the
+            // Results page. Instead of listening here for both the view and
+            // the context sync events, we can simply hide the loading view
+            // on the router unload event which the query item will trigger
+            // when it uses the router to navigate to the Results page.
+            this.on('router:unload', function() {
+                this.ui.loadingOverlay.hide();
             });
         },
 
@@ -89,6 +115,24 @@ define([
                     this.data.publicQueries.fetch({reset: true});
                 });
 
+                this.listenTo(this.data.queries, 'destroy', function(model) {
+                    this.data.publicQueries.remove(model);
+                });
+            }
+
+            var showStats = c.config.get('statsModelsList') === null ||
+                            c.config.get('statsModelsList').length > 0;
+            if (c.isSupported('2.3.6') && showStats) {
+                var dataSummaryView = new this.regionViews.dataSummary({
+                    collection: this.data.stats.counts,
+                    statsModelsList: c.config.get('statsModelsList')
+                });
+
+                this.dataSummary.show(dataSummaryView);
+            }
+            else {
+                $(this.dataSummary.el).empty();
+                $(this.queries.el).detach().appendTo(this.dataSummary.el);
             }
 
             this.listenTo(c.data.concepts, 'reset', function() {
@@ -97,6 +141,10 @@ define([
                 if (this.publicQueries) {
                     this.publicQueries.show(publicQueryView);
                 }
+            });
+
+            this.listenTo(this.data.view, 'request', function() {
+                this.ui.loadingOverlay.show();
             });
         }
     });

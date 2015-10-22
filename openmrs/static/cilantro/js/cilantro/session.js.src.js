@@ -28,7 +28,8 @@ define([
         preview: models.Results,
         exporter: models.ExporterCollection,
         queries: models.Queries,
-        public_queries: models.Queries  // jshint ignore:line
+        public_queries: models.Queries,  // jshint ignore:line
+        stats: models.Stats
     };
 
 
@@ -102,7 +103,7 @@ define([
 
                     // Handle redirect
                     if (error === 'FOUND') {
-                        this.timeout(xhr.getResponseHeader('Location'));
+                        _this.timeout(xhr.getResponseHeader('Location'));
                     }
                 }
             });
@@ -129,7 +130,7 @@ define([
             // Auto-refresh after some time
             setTimeout(function() {
                 if (loc) {
-                    window.location = location;
+                    window.location = loc;
                 }
                 else {
                     // `true` argument forces a fetch from the server rather
@@ -251,10 +252,19 @@ define([
             this.end();
             this.opening = this.opened = false;
 
-            // Reset all collections to deference models
-            _.each(this.data, function(collection) {
-                collection.reset();
-                delete collection.url;
+            // Reset all session data to deference models.
+            _.each(this.data, function(item) {
+                // Can't guarantee that all the session data elements are
+                // collections so check for reset before calling it to avoid
+                // calling reset on models.
+                if (item.reset) {
+                    item.reset();
+                }
+                else {
+                    item.clear();
+                }
+
+                delete item.url;
             });
 
             delete this._opening;
@@ -279,10 +289,15 @@ define([
             // When the page loses focus, stop pinging, resume when visibility is regained
             this.listenTo(c, {
                 visible: this.startPing,
-                hidden: this.stopPing
+                hidden: this.stopPing,
+                focus: this.startPing,
+                blur: this.stopPing
             });
 
-            if (!c.isSupported(c.getSerranoVersion())) {
+            // Only show the unsupported warning when debug mode is enabled
+            // as this message is confusing to general users and is meant more
+            // for developers.
+            if (c.config.get('debug') && !c.isSupported(c.getSerranoVersion())) {
                 c.notify({
                     header: 'Serrano Version Unsupported',
                     level: 'warning',
