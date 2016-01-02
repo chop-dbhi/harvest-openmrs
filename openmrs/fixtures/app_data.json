@@ -1,0 +1,4551 @@
+[
+  {
+    "pk": 1,
+    "model": "sites.site",
+    "fields": {
+      "domain": "localhost",
+      "name": "Harvest+OpenMRS"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "Patient Details",
+      "parent": null,
+      "created": "2012-10-10T14:50:02.203",
+      "modified": "2012-10-11T15:48:17.213",
+      "published": true,
+      "keywords": "",
+      "order": 1,
+      "description": ""
+    }
+  },
+  {
+    "pk": 2,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "Lab Measurements",
+      "parent": null,
+      "created": "2012-10-10T14:50:18.412",
+      "modified": "2012-10-11T15:48:58.222",
+      "published": true,
+      "keywords": "",
+      "order": 3,
+      "description": ""
+    }
+  },
+  {
+    "pk": 3,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "Encounter",
+      "parent": null,
+      "created": "2012-10-10T14:52:08.893",
+      "modified": "2012-10-11T15:48:52.818",
+      "published": true,
+      "keywords": "",
+      "order": 2,
+      "description": ""
+    }
+  },
+  {
+    "pk": 4,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "CBC",
+      "parent": 2,
+      "created": "2012-10-10T14:58:30.872",
+      "modified": "2012-10-11T15:49:05.176",
+      "published": true,
+      "keywords": "",
+      "order": 3.1,
+      "description": ""
+    }
+  },
+  {
+    "pk": 5,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "CHEM 7",
+      "parent": 2,
+      "created": "2012-10-10T14:58:41.559",
+      "modified": "2012-10-11T15:49:12.616",
+      "published": true,
+      "keywords": "",
+      "order": 3.2,
+      "description": ""
+    }
+  },
+  {
+    "pk": 6,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "HIV",
+      "parent": 7,
+      "created": "2012-10-10T15:09:57.375",
+      "modified": "2012-10-11T15:50:09.916",
+      "published": true,
+      "keywords": "",
+      "order": 4.2,
+      "description": ""
+    }
+  },
+  {
+    "pk": 7,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "Disease Management",
+      "parent": null,
+      "created": "2012-10-11T13:38:32.799",
+      "modified": "2012-10-11T15:49:26.853",
+      "published": true,
+      "keywords": "",
+      "order": 4,
+      "description": ""
+    }
+  },
+  {
+    "pk": 8,
+    "model": "avocado.datacategory",
+    "fields": {
+      "archived": false,
+      "name": "Medications",
+      "parent": 7,
+      "created": "2012-10-11T15:47:51.070",
+      "modified": "2012-10-11T15:49:43.088",
+      "published": true,
+      "keywords": "",
+      "order": 4.1,
+      "description": ""
+    }
+  },
+  {
+    "pk": 1,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Self-identified gender where gender is the assemblage of properties that distinguish people on the basis of the societal roles (ORDR;HLF Table 0001 (with additions))",
+      "category": null,
+      "archived": false,
+      "field_name": "gender",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Patient Gender",
+      "created": "2012-10-02T17:01:55.990",
+      "modified": "2015-08-28T19:34:31.887",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "patient"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Date patient was born as recorded on birth certificate or passport; the month, day and year on which person was born.",
+      "category": null,
+      "archived": false,
+      "field_name": "birthdate",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Patient Birthdate",
+      "created": "2012-10-02T17:01:56.039",
+      "modified": "2015-08-28T19:34:31.848",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "patient"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Whether birthdate is exact (no) or estimated (yes).",
+      "category": null,
+      "archived": false,
+      "field_name": "birthdate_estimated",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Patient Birthdate Estimated?",
+      "created": "2012-10-02T17:01:56.073",
+      "modified": "2015-08-28T19:34:31.868",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "patient"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "",
+      "category": null,
+      "archived": false,
+      "field_name": "encounter_datetime",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Encounter Date",
+      "created": "2012-10-02T17:01:56.095",
+      "modified": "2015-08-28T19:34:31.390",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "encounter"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": null,
+      "unit_plural": null,
+      "unit": null,
+      "description": null,
+      "category": null,
+      "archived": false,
+      "field_name": "description",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Encounter Description",
+      "created": "2012-10-02T17:01:56.117",
+      "modified": "2015-08-28T19:34:31.410",
+      "order": null,
+      "name_plural": null,
+      "published": true,
+      "model_name": "encounter"
+    }
+  },
+  {
+    "pk": 30,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "The iron-containing respiratory pigment in red blood cells of vertebrates, consisting of about 6 percent heme and 94 percent globin.",
+      "category": null,
+      "archived": false,
+      "field_name": "hgb",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Hemoglobin (HGB)",
+      "created": "2012-10-03T19:50:40.097",
+      "modified": "2015-08-28T19:34:31.519",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 31,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Blood test to measure the number of white blood cells.",
+      "category": null,
+      "archived": false,
+      "field_name": "wbc",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "White Blood Cells (WBC)",
+      "created": "2012-10-03T19:50:40.121",
+      "modified": "2015-08-28T19:34:32.202",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 32,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Blood test to measure the number of white blood cells.",
+      "category": null,
+      "archived": false,
+      "field_name": "rbc",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Red Blood Cells (RBC)",
+      "created": "2012-10-03T19:50:40.143",
+      "modified": "2015-08-28T19:34:31.990",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 33,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Minute, nonnucleated, disklike cytoplasmic bodies found in the blood plasma of mammals, derived from a megakaryocyte and function to promote blood clotting.",
+      "category": null,
+      "archived": false,
+      "field_name": "platelets",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Platelets",
+      "created": "2012-10-03T19:50:40.167",
+      "modified": "2015-08-28T19:34:31.946",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 34,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "The volume of the average red blood cell in a given blood sample that is found by multiplying the hematocrit by 10 and dividing by the estimated number of red blood cells .",
+      "category": null,
+      "archived": false,
+      "field_name": "mcv",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Mean Corpuscular Volume (MCV)",
+      "created": "2012-10-03T19:50:40.191",
+      "modified": "2015-08-28T19:34:31.765",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 35,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Percent of whole blood that is composed of red blood cells.",
+      "category": null,
+      "archived": false,
+      "field_name": "hct",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Hematocrit (HCT)",
+      "created": "2012-10-03T19:50:40.214",
+      "modified": "2015-08-28T19:34:31.495",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 36,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Measurement of the amount that red blood cells vary in size.",
+      "category": null,
+      "archived": false,
+      "field_name": "rdw",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Red Cell Distribution Width (RDW)",
+      "created": "2012-10-03T19:50:40.236",
+      "modified": "2015-08-28T19:34:32.013",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 37,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Average concentration of hemoglobin in a given volume of blood.",
+      "category": null,
+      "archived": false,
+      "field_name": "mchc",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Mean Cell Hemoglobin Concentration (MCHC)",
+      "created": "2012-10-03T19:50:40.260",
+      "modified": "2015-08-28T19:34:31.719",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 38,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "A calculation of the amount of oxygen-carrying hemoglobin inside RBCs. Since macrocytic RBCs are larger than either normal or microcytic RBCs, they would also tend to have higher MCH values.",
+      "category": null,
+      "archived": false,
+      "field_name": "mch",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Mean Corpuscular Hemoglobin (MCH)",
+      "created": "2012-10-03T19:50:40.284",
+      "modified": "2015-08-28T19:34:31.742",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 39,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Laboratory test that determines a blood serum creatinine level.  Often used with BUN to assess kidney function.",
+      "category": null,
+      "archived": false,
+      "field_name": "cr",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Creatinine (Cr)",
+      "created": "2012-10-03T19:50:40.308",
+      "modified": "2015-08-28T19:34:31.257",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Measure of urea levels in the blood often used to assess kidney status.",
+      "category": null,
+      "archived": false,
+      "field_name": "bun",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Blood Urea Nitrogen (BUN)",
+      "created": "2012-10-03T19:50:40.330",
+      "modified": "2015-08-28T19:34:31.080",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 41,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Laboratory measurement of the glucose level in the blood.",
+      "category": null,
+      "archived": false,
+      "field_name": "glu",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Glucose (GLU)",
+      "created": "2012-10-03T19:50:40.353",
+      "modified": "2015-08-28T19:34:31.453",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 42,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Laboratory test that determines a blood serum sodium level.",
+      "category": null,
+      "archived": false,
+      "field_name": "na",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Sodium (Na)",
+      "created": "2012-10-03T19:50:40.375",
+      "modified": "2015-08-28T19:34:32.057",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 43,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Laboratory test that determines a blood serum potassium level.",
+      "category": null,
+      "archived": false,
+      "field_name": "k",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Potassium (K)",
+      "created": "2012-10-03T19:50:40.400",
+      "modified": "2015-08-28T19:34:31.968",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 44,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Laboratory test that determines a blood serum chloride level.",
+      "category": null,
+      "archived": false,
+      "field_name": "cl",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Chloride (Cl)",
+      "created": "2012-10-03T19:50:40.423",
+      "modified": "2015-08-28T19:34:31.234",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 45,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Laboratory test that determines a blood serum carbon dioxide level.",
+      "category": null,
+      "archived": false,
+      "field_name": "co2",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Carbon Dioxide (CO2)",
+      "created": "2012-10-03T19:50:40.446",
+      "modified": "2015-08-28T19:34:31.101",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 46,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Measure of CD4 (T-helper cells) in blood.",
+      "category": null,
+      "archived": false,
+      "field_name": "cd4",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "CD4 Count",
+      "created": "2012-10-03T19:50:40.468",
+      "modified": "2015-08-28T19:34:31.164",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 47,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "CD4 Percentage",
+      "category": null,
+      "archived": false,
+      "field_name": "cd4_percent",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "CD4 %",
+      "created": "2012-10-03T19:50:40.491",
+      "modified": "2015-08-28T19:34:31.142",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 48,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Measure of CD8 (T-Suppressor or killer cells) in blood.",
+      "category": null,
+      "archived": false,
+      "field_name": "cd8",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "CD8 Count",
+      "created": "2012-10-03T19:50:40.514",
+      "modified": "2015-08-28T19:34:31.186",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 49,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Liver function test, which usually is used to detect liver injury.",
+      "category": null,
+      "archived": false,
+      "field_name": "sgpt",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Alanine transaminase (SGPT)",
+      "created": "2012-10-03T19:50:40.536",
+      "modified": "2015-08-28T19:34:31.035",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 50,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Total lymphocyte count in blood.",
+      "category": null,
+      "archived": false,
+      "field_name": "alc",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": false,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "ALC",
+      "created": "2012-10-03T19:50:40.560",
+      "modified": "2015-08-28T19:34:31.058",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "labresult"
+    }
+  },
+  {
+    "pk": 51,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Findings noted on examination of the head, ears, eyes, nose and throat.",
+      "category": null,
+      "archived": false,
+      "field_name": "heent",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HEENT Exam",
+      "created": "2012-10-04T16:56:46.182",
+      "modified": "2015-08-28T19:34:31.474",
+      "order": null,
+      "name_plural": "HEENT Exams",
+      "published": true,
+      "model_name": "systemsreview"
+    }
+  },
+  {
+    "pk": 52,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Findings noted on examination of the chest.",
+      "category": null,
+      "archived": false,
+      "field_name": "chest",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Chest Exam",
+      "created": "2012-10-04T16:56:46.231",
+      "modified": "2015-08-28T19:34:31.209",
+      "order": null,
+      "name_plural": "Chest Exams",
+      "published": true,
+      "model_name": "systemsreview"
+    }
+  },
+  {
+    "pk": 53,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Findings noted on examination of the abdomen.",
+      "category": null,
+      "archived": false,
+      "field_name": "abdominal",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Abdominal Exam",
+      "created": "2012-10-04T16:56:46.262",
+      "modified": "2015-08-28T19:34:30.999",
+      "order": null,
+      "name_plural": "Abdominal Exams",
+      "published": true,
+      "model_name": "systemsreview"
+    }
+  },
+  {
+    "pk": 54,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Findings noted on examination of the heart.",
+      "category": null,
+      "archived": false,
+      "field_name": "cardiac",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Cardiac Exam",
+      "created": "2012-10-04T16:56:46.292",
+      "modified": "2015-08-28T19:34:31.121",
+      "order": null,
+      "name_plural": "Cardiac Exams",
+      "published": true,
+      "model_name": "systemsreview"
+    }
+  },
+  {
+    "pk": 55,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Findings noted on examination of the musculoskeletal region.",
+      "category": null,
+      "archived": false,
+      "field_name": "musculoskeletal",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Musculoskeletal Exam",
+      "created": "2012-10-04T16:56:46.322",
+      "modified": "2015-08-28T19:34:31.806",
+      "order": null,
+      "name_plural": "Musculoskeletal Exams",
+      "published": true,
+      "model_name": "systemsreview"
+    }
+  },
+  {
+    "pk": 56,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Findings noted upon neurologic examination.",
+      "category": null,
+      "archived": false,
+      "field_name": "neurologic",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Neurologic Exam",
+      "created": "2012-10-04T16:56:46.355",
+      "modified": "2015-08-28T19:34:31.827",
+      "order": null,
+      "name_plural": "Neurologic Exam",
+      "published": true,
+      "model_name": "systemsreview"
+    }
+  },
+  {
+    "pk": 57,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Type of referral ordered.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Referral Name",
+      "created": "2012-10-05T19:05:45.760",
+      "modified": "2015-08-28T19:34:32.034",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "referral"
+    }
+  },
+  {
+    "pk": 58,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": null,
+      "unit_plural": null,
+      "unit": null,
+      "description": null,
+      "category": null,
+      "archived": false,
+      "field_name": "status",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Encounter Vaccine Status",
+      "created": "2012-10-05T19:05:45.859",
+      "modified": "2015-08-28T19:34:31.431",
+      "order": null,
+      "name_plural": null,
+      "published": true,
+      "model_name": "encountervaccine"
+    }
+  },
+  {
+    "pk": 59,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "drugs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Name of drug given to a patient.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Drug Name",
+      "created": "2012-10-05T19:06:02.876",
+      "modified": "2015-08-28T19:34:31.348",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "drug"
+    }
+  },
+  {
+    "pk": 60,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "drugs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Disease indication for a drug given to a patient.",
+      "category": null,
+      "archived": false,
+      "field_name": "disease",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Drug Disease",
+      "created": "2012-10-05T19:06:02.911",
+      "modified": "2015-08-28T19:34:31.326",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "drug"
+    }
+  },
+  {
+    "pk": 61,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "drugs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Synonym for name of drug given to a patient.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Drug Synonym Name",
+      "created": "2012-10-05T19:06:02.954",
+      "modified": "2015-08-28T19:34:31.369",
+      "order": null,
+      "name_plural": "",
+      "published": false,
+      "model_name": "drugsynonym"
+    }
+  },
+  {
+    "pk": 62,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "vaccines",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Name of vaccine given to patient.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Vaccine Name",
+      "created": "2012-10-05T19:06:02.988",
+      "modified": "2015-08-28T19:34:32.160",
+      "order": null,
+      "name_plural": "",
+      "published": false,
+      "model_name": "vaccine"
+    }
+  },
+  {
+    "pk": 63,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "vaccines",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Synonym for name of vaccine given to patient.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Vaccine Synonym Name",
+      "created": "2012-10-05T19:06:03.019",
+      "modified": "2015-08-28T19:34:32.181",
+      "order": null,
+      "name_plural": "",
+      "published": false,
+      "model_name": "vaccinesynonym"
+    }
+  },
+  {
+    "pk": 64,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "diagnoses",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Diagnosis or problem for a patient encounter.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Diagnosis Name",
+      "created": "2012-10-05T19:06:16.133",
+      "modified": "2015-08-28T19:34:31.281",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "diagnosis"
+    }
+  },
+  {
+    "pk": 65,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "diagnoses",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Synonym for diagnosis or problem for a patient encounter.",
+      "category": null,
+      "archived": false,
+      "field_name": "name",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "Diagnosis Synonym Name",
+      "created": "2012-10-05T19:06:16.167",
+      "modified": "2015-08-28T19:34:31.303",
+      "order": null,
+      "name_plural": "",
+      "published": false,
+      "model_name": "diagnosissynonym"
+    }
+  },
+  {
+    "pk": 66,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form. Collects information related to HIV drug therapy plans.",
+      "category": null,
+      "archived": false,
+      "field_name": "plan",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV Plan",
+      "created": "2012-10-05T19:26:25.587",
+      "modified": "2015-08-28T19:34:31.632",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 67,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": null,
+      "unit_plural": null,
+      "unit": null,
+      "description": null,
+      "category": null,
+      "archived": false,
+      "field_name": "treat_adhere",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Hiv Details Treatment Adherence Last Week",
+      "created": "2012-10-05T19:26:25.619",
+      "modified": "2015-08-28T19:34:31.588",
+      "order": null,
+      "name_plural": null,
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 68,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question asked on encounter form.  Expects a numeric answer defining the HIV stage at a particular visit.  WHO Stage 1-4.  ",
+      "category": null,
+      "archived": false,
+      "field_name": "stage_adult",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV Stage (Adult)",
+      "created": "2012-10-05T19:26:25.648",
+      "modified": "2015-08-28T19:34:31.654",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 69,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Whether the WHO Stage 1-4 has changed since the last visit.",
+      "category": null,
+      "archived": false,
+      "field_name": "stage_adult_last",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV Stage Change Since Last Visit (Adult)",
+      "created": "2012-10-05T19:26:25.677",
+      "modified": "2015-08-28T19:34:31.675",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 70,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question asked on encounter form.  Expects a numeric answer defining the HIV stage at a particular visit.  WHO Stage 1-4.  ",
+      "category": null,
+      "archived": false,
+      "field_name": "stage_peds",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV Stage (Peds)",
+      "created": "2012-10-05T19:26:25.758",
+      "modified": "2015-08-28T19:34:31.697",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 71,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Category A (Mildly symptomatic conditions.  A patient fits within this category, if there are two of the following associated symptoms, but NONE in category B or C), Category B (Moderately symptomatic conditions.  One or more of the following conditions places a patient at this condition level.), or Category C (Severely symptomatic conditions.  One or more places a patient in this group.)",
+      "category": null,
+      "archived": false,
+      "field_name": "cdc_category",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV CDC Category",
+      "created": "2012-10-05T19:26:25.789",
+      "modified": "2015-08-28T19:34:31.542",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 72,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter forms: \"Is the patient currently taking, or has the patient ever taken, any of the following retroviral medications?\" or \"Current HIV Medications:\". This particular concept stores a history of active use of the associated antiretroviral medications for treatment.",
+      "category": null,
+      "archived": false,
+      "field_name": "taking_antiretrovirals",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV Currently Taking Antiretrovial (ARV) Medications",
+      "created": "2012-10-05T19:26:25.818",
+      "modified": "2015-08-28T19:34:31.566",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 73,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form: \"Discordant couple?\".  Defined as a pair of long-term sexual partners in which one has a sexually transmitted infection and the other does not. ",
+      "category": null,
+      "archived": false,
+      "field_name": "discordant_couple",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "HIV Discordant Couple",
+      "created": "2012-10-05T19:26:25.849",
+      "modified": "2015-08-28T19:34:31.612",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "hivdetails"
+    }
+  },
+  {
+    "pk": 76,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form: \"During the last seven days how many of his/her pills did the patient take?\"",
+      "category": null,
+      "archived": false,
+      "field_name": "treat_adhere",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Tuberculosis Treatment Adherence Last Week",
+      "created": "2012-10-05T19:26:25.945",
+      "modified": "2015-08-28T19:34:32.119",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "tbdetails"
+    }
+  },
+  {
+    "pk": 77,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form: \"During the last seven days how many of his/her pills did the patient take?\"",
+      "category": null,
+      "archived": false,
+      "field_name": "pro_adhere",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Tuberculosis Prophylaxis Adherence Last Week",
+      "created": "2012-10-05T19:26:25.975",
+      "modified": "2015-08-28T19:34:32.078",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "tbdetails"
+    }
+  },
+  {
+    "pk": 78,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form.  Collects information related to pneumocystis drug therapy plans.",
+      "category": null,
+      "archived": false,
+      "field_name": "plan",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "PCP Plan",
+      "created": "2012-10-05T19:26:26.004",
+      "modified": "2015-08-28T19:34:31.906",
+      "order": null,
+      "name_plural": "",
+      "published": false,
+      "model_name": "pcpdetails"
+    }
+  },
+  {
+    "pk": 79,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form: \"During the last seven days how many of his/her pulls did the patient take?\"",
+      "category": null,
+      "archived": false,
+      "field_name": "pro_adhere",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "PCP Prophylaxis Adherence Last Week",
+      "created": "2012-10-05T19:26:26.032",
+      "modified": "2015-08-28T19:34:31.925",
+      "order": null,
+      "name_plural": "",
+      "published": false,
+      "model_name": "pcpdetails"
+    }
+  },
+  {
+    "pk": 80,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form. Collects information related to tuberculosis drug therapy plans.",
+      "category": null,
+      "archived": false,
+      "field_name": "treat_plan",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Tuberculosis Treatment Plan",
+      "created": "2012-10-05T20:17:35.455",
+      "modified": "2015-08-28T19:34:32.139",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "tbdetails"
+    }
+  },
+  {
+    "pk": 81,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "Question on encounter form. Collects information related to tuberculosis drug therapy plans.",
+      "category": null,
+      "archived": false,
+      "field_name": "pro_plan",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": true,
+      "search_field_name": null,
+      "name": "Tuberculosis Prophylaxis Plan",
+      "created": "2012-10-05T20:17:35.494",
+      "modified": "2015-08-28T19:34:32.099",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "tbdetails"
+    }
+  },
+  {
+    "pk": 82,
+    "model": "avocado.datafield",
+    "fields": {
+      "app_name": "openmrs",
+      "label_field_name": null,
+      "code_field_name": null,
+      "keywords": "",
+      "unit_plural": "",
+      "unit": "",
+      "description": "",
+      "category": null,
+      "archived": false,
+      "field_name": "mrn",
+      "sites": [],
+      "data_version": 1,
+      "type": null,
+      "indexable": true,
+      "translator": null,
+      "order_field_name": null,
+      "enumerable": false,
+      "search_field_name": null,
+      "name": "MRN",
+      "created": "2012-10-08T15:36:13.095",
+      "modified": "2015-08-28T19:34:31.787",
+      "order": null,
+      "name_plural": "",
+      "published": true,
+      "model_name": "patient"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 1,
+      "name": "",
+      "created": "2012-10-02T18:19:29.819",
+      "modified": "2012-10-02T18:19:29.819",
+      "field": 2,
+      "name_plural": "",
+      "order": 0
+    }
+  },
+  {
+    "pk": 2,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 1,
+      "name": "",
+      "created": "2012-10-02T18:19:29.835",
+      "modified": "2012-10-02T18:19:29.835",
+      "field": 3,
+      "name_plural": "",
+      "order": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 2,
+      "name": null,
+      "created": "2012-10-04T17:41:44.973",
+      "modified": "2012-10-04T17:41:44.973",
+      "field": 1,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 4,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 3,
+      "name": null,
+      "created": "2012-10-04T18:05:49.732",
+      "modified": "2012-10-04T18:05:49.732",
+      "field": 2,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 5,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 3,
+      "name": null,
+      "created": "2012-10-04T18:05:57.675",
+      "modified": "2012-10-04T18:05:57.675",
+      "field": 3,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 6,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 3,
+      "name": null,
+      "created": "2012-10-04T18:06:06.755",
+      "modified": "2012-10-04T18:06:06.755",
+      "field": 4,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 7,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:14:25.613",
+      "modified": "2012-10-04T20:14:25.613",
+      "field": 30,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 8,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:14:34.284",
+      "modified": "2012-10-04T20:14:34.284",
+      "field": 31,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 9,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:14:39.828",
+      "modified": "2012-10-04T20:14:39.828",
+      "field": 32,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 10,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:14:51.675",
+      "modified": "2012-10-04T20:14:51.676",
+      "field": 33,
+      "name_plural": null,
+      "order": 4
+    }
+  },
+  {
+    "pk": 11,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:15:04.683",
+      "modified": "2012-10-04T20:15:04.683",
+      "field": 34,
+      "name_plural": null,
+      "order": 5
+    }
+  },
+  {
+    "pk": 12,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:15:12.211",
+      "modified": "2012-10-04T20:15:12.211",
+      "field": 35,
+      "name_plural": null,
+      "order": 6
+    }
+  },
+  {
+    "pk": 13,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:15:20.498",
+      "modified": "2012-10-04T20:15:20.498",
+      "field": 36,
+      "name_plural": null,
+      "order": 7
+    }
+  },
+  {
+    "pk": 14,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:15:29.963",
+      "modified": "2012-10-04T20:15:29.963",
+      "field": 37,
+      "name_plural": null,
+      "order": 8
+    }
+  },
+  {
+    "pk": 15,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 4,
+      "name": null,
+      "created": "2012-10-04T20:15:40.407",
+      "modified": "2012-10-04T20:15:40.407",
+      "field": 38,
+      "name_plural": null,
+      "order": 9
+    }
+  },
+  {
+    "pk": 30,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:26:40.218",
+      "modified": "2012-10-05T14:26:40.219",
+      "field": 39,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 31,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:26:47.691",
+      "modified": "2012-10-05T14:26:47.691",
+      "field": 40,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 32,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:26:54.938",
+      "modified": "2012-10-05T14:26:54.938",
+      "field": 41,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 33,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:27:02.530",
+      "modified": "2012-10-05T14:27:02.530",
+      "field": 42,
+      "name_plural": null,
+      "order": 4
+    }
+  },
+  {
+    "pk": 34,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:27:10.706",
+      "modified": "2012-10-05T14:27:10.706",
+      "field": 43,
+      "name_plural": null,
+      "order": 5
+    }
+  },
+  {
+    "pk": 35,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:27:17.978",
+      "modified": "2012-10-05T14:27:17.978",
+      "field": 44,
+      "name_plural": null,
+      "order": 6
+    }
+  },
+  {
+    "pk": 36,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 6,
+      "name": null,
+      "created": "2012-10-05T14:28:19.132",
+      "modified": "2012-10-05T14:28:19.132",
+      "field": 45,
+      "name_plural": null,
+      "order": 7
+    }
+  },
+  {
+    "pk": 37,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 7,
+      "name": null,
+      "created": "2012-10-05T14:46:28.476",
+      "modified": "2012-10-05T14:46:28.476",
+      "field": 46,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 38,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 7,
+      "name": null,
+      "created": "2012-10-05T14:46:54.411",
+      "modified": "2012-10-05T14:46:54.411",
+      "field": 47,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 39,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 7,
+      "name": null,
+      "created": "2012-10-05T14:47:13.657",
+      "modified": "2012-10-05T14:47:13.658",
+      "field": 48,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 40,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 7,
+      "name": null,
+      "created": "2012-10-05T14:47:37.449",
+      "modified": "2012-10-05T14:47:37.449",
+      "field": 49,
+      "name_plural": null,
+      "order": 4
+    }
+  },
+  {
+    "pk": 41,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 7,
+      "name": null,
+      "created": "2012-10-05T14:48:02.592",
+      "modified": "2012-10-05T14:48:02.593",
+      "field": 50,
+      "name_plural": null,
+      "order": 5
+    }
+  },
+  {
+    "pk": 42,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 8,
+      "name": null,
+      "created": "2012-10-05T15:26:58.755",
+      "modified": "2012-10-05T15:26:58.755",
+      "field": 51,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 43,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 8,
+      "name": null,
+      "created": "2012-10-05T15:27:25.698",
+      "modified": "2012-10-05T15:27:25.698",
+      "field": 52,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 44,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 8,
+      "name": null,
+      "created": "2012-10-05T15:27:47.513",
+      "modified": "2012-10-05T15:27:47.514",
+      "field": 53,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 45,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 8,
+      "name": null,
+      "created": "2012-10-05T15:27:58.929",
+      "modified": "2012-10-05T15:27:58.929",
+      "field": 54,
+      "name_plural": null,
+      "order": 4
+    }
+  },
+  {
+    "pk": 46,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 8,
+      "name": null,
+      "created": "2012-10-05T15:28:08.505",
+      "modified": "2012-10-05T15:28:08.505",
+      "field": 55,
+      "name_plural": null,
+      "order": 5
+    }
+  },
+  {
+    "pk": 47,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 8,
+      "name": "",
+      "created": "2012-10-05T15:28:15.433",
+      "modified": "2016-01-02T07:35:52.397",
+      "field": 56,
+      "name_plural": "",
+      "order": 6
+    }
+  },
+  {
+    "pk": 49,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 9,
+      "name": null,
+      "created": "2012-10-05T20:19:20.760",
+      "modified": "2012-10-05T20:19:20.760",
+      "field": 62,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 50,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 9,
+      "name": null,
+      "created": "2012-10-05T20:19:20.787",
+      "modified": "2012-10-05T20:19:20.787",
+      "field": 58,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 51,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 10,
+      "name": "",
+      "created": "2012-10-08T15:37:06.753",
+      "modified": "2012-10-08T15:37:06.754",
+      "field": 82,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 53,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.330",
+      "modified": "2012-10-08T18:17:36.330",
+      "field": 66,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 54,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.341",
+      "modified": "2012-10-08T18:17:36.341",
+      "field": 67,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 55,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.352",
+      "modified": "2012-10-08T18:17:36.352",
+      "field": 68,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 56,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.365",
+      "modified": "2012-10-08T18:17:36.365",
+      "field": 69,
+      "name_plural": null,
+      "order": 4
+    }
+  },
+  {
+    "pk": 57,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.377",
+      "modified": "2012-10-08T18:17:36.377",
+      "field": 70,
+      "name_plural": null,
+      "order": 5
+    }
+  },
+  {
+    "pk": 58,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.389",
+      "modified": "2012-10-08T18:17:36.389",
+      "field": 71,
+      "name_plural": null,
+      "order": 6
+    }
+  },
+  {
+    "pk": 59,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.401",
+      "modified": "2012-10-08T18:17:36.401",
+      "field": 72,
+      "name_plural": null,
+      "order": 7
+    }
+  },
+  {
+    "pk": 60,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 11,
+      "name": null,
+      "created": "2012-10-08T18:17:36.412",
+      "modified": "2012-10-08T18:17:36.412",
+      "field": 73,
+      "name_plural": null,
+      "order": 8
+    }
+  },
+  {
+    "pk": 61,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 12,
+      "name": null,
+      "created": "2012-10-08T19:02:28.307",
+      "modified": "2012-10-08T19:02:28.307",
+      "field": 76,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 62,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 12,
+      "name": null,
+      "created": "2012-10-08T19:02:28.320",
+      "modified": "2012-10-08T19:02:28.320",
+      "field": 80,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 63,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 12,
+      "name": null,
+      "created": "2012-10-08T19:02:28.336",
+      "modified": "2012-10-08T19:02:28.336",
+      "field": 77,
+      "name_plural": null,
+      "order": 3
+    }
+  },
+  {
+    "pk": 64,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 12,
+      "name": null,
+      "created": "2012-10-08T19:02:28.350",
+      "modified": "2012-10-08T19:02:28.350",
+      "field": 81,
+      "name_plural": null,
+      "order": 4
+    }
+  },
+  {
+    "pk": 71,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 16,
+      "name": null,
+      "created": "2012-10-08T19:49:18.779",
+      "modified": "2012-10-08T19:49:18.779",
+      "field": 78,
+      "name_plural": null,
+      "order": 1
+    }
+  },
+  {
+    "pk": 72,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 16,
+      "name": null,
+      "created": "2012-10-08T19:49:18.791",
+      "modified": "2012-10-08T19:49:18.791",
+      "field": 79,
+      "name_plural": null,
+      "order": 2
+    }
+  },
+  {
+    "pk": 73,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 17,
+      "name": null,
+      "created": "2012-10-10T14:59:53.784",
+      "modified": "2012-10-10T14:59:53.784",
+      "field": 49,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 74,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 18,
+      "name": null,
+      "created": "2012-10-10T14:59:53.798",
+      "modified": "2012-10-10T14:59:53.798",
+      "field": 50,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 75,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 19,
+      "name": null,
+      "created": "2012-10-10T14:59:53.803",
+      "modified": "2012-10-10T14:59:53.803",
+      "field": 40,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 76,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 20,
+      "name": null,
+      "created": "2012-10-10T14:59:53.808",
+      "modified": "2012-10-10T14:59:53.808",
+      "field": 45,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 77,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 21,
+      "name": null,
+      "created": "2012-10-10T14:59:53.813",
+      "modified": "2012-10-10T14:59:53.813",
+      "field": 47,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 78,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 22,
+      "name": null,
+      "created": "2012-10-10T14:59:53.818",
+      "modified": "2012-10-10T14:59:53.818",
+      "field": 46,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 79,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 23,
+      "name": null,
+      "created": "2012-10-10T14:59:53.823",
+      "modified": "2012-10-10T14:59:53.823",
+      "field": 48,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 80,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 24,
+      "name": null,
+      "created": "2012-10-10T14:59:53.829",
+      "modified": "2012-10-10T14:59:53.829",
+      "field": 44,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 81,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 25,
+      "name": null,
+      "created": "2012-10-10T14:59:53.834",
+      "modified": "2012-10-10T14:59:53.834",
+      "field": 39,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 82,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 26,
+      "name": null,
+      "created": "2012-10-10T14:59:53.839",
+      "modified": "2012-10-10T14:59:53.839",
+      "field": 41,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 83,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 27,
+      "name": null,
+      "created": "2012-10-10T14:59:53.843",
+      "modified": "2012-10-10T14:59:53.843",
+      "field": 35,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 84,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 28,
+      "name": null,
+      "created": "2012-10-10T14:59:53.849",
+      "modified": "2012-10-10T14:59:53.849",
+      "field": 30,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 85,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 29,
+      "name": null,
+      "created": "2012-10-10T14:59:53.855",
+      "modified": "2012-10-10T14:59:53.855",
+      "field": 37,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 86,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 30,
+      "name": null,
+      "created": "2012-10-10T14:59:53.860",
+      "modified": "2012-10-10T14:59:53.860",
+      "field": 38,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 87,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 31,
+      "name": null,
+      "created": "2012-10-10T14:59:53.865",
+      "modified": "2012-10-10T14:59:53.865",
+      "field": 34,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 88,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 32,
+      "name": null,
+      "created": "2012-10-10T14:59:53.871",
+      "modified": "2012-10-10T14:59:53.871",
+      "field": 33,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 89,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 33,
+      "name": null,
+      "created": "2012-10-10T14:59:53.876",
+      "modified": "2012-10-10T14:59:53.876",
+      "field": 43,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 90,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 34,
+      "name": null,
+      "created": "2012-10-10T14:59:53.881",
+      "modified": "2012-10-10T14:59:53.881",
+      "field": 32,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 91,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 35,
+      "name": null,
+      "created": "2012-10-10T14:59:53.886",
+      "modified": "2012-10-10T14:59:53.886",
+      "field": 36,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 92,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 36,
+      "name": null,
+      "created": "2012-10-10T14:59:53.890",
+      "modified": "2012-10-10T14:59:53.890",
+      "field": 42,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 93,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 37,
+      "name": null,
+      "created": "2012-10-10T14:59:53.895",
+      "modified": "2012-10-10T14:59:53.895",
+      "field": 31,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 94,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 38,
+      "name": null,
+      "created": "2012-10-10T15:08:33.998",
+      "modified": "2012-10-10T15:08:33.998",
+      "field": 5,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 95,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 39,
+      "name": null,
+      "created": "2012-10-10T15:08:34.006",
+      "modified": "2012-10-10T15:08:34.006",
+      "field": 71,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 96,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 40,
+      "name": null,
+      "created": "2012-10-10T15:08:34.012",
+      "modified": "2012-10-10T15:08:34.012",
+      "field": 72,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 97,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 41,
+      "name": null,
+      "created": "2012-10-10T15:08:34.015",
+      "modified": "2012-10-10T15:08:34.015",
+      "field": 67,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 98,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 42,
+      "name": null,
+      "created": "2012-10-10T15:08:34.018",
+      "modified": "2012-10-10T15:08:34.018",
+      "field": 73,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 99,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 43,
+      "name": null,
+      "created": "2012-10-10T15:08:34.022",
+      "modified": "2012-10-10T15:08:34.022",
+      "field": 66,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 100,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 44,
+      "name": null,
+      "created": "2012-10-10T15:08:34.026",
+      "modified": "2012-10-10T15:08:34.026",
+      "field": 68,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 101,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 45,
+      "name": null,
+      "created": "2012-10-10T15:08:34.030",
+      "modified": "2012-10-10T15:08:34.030",
+      "field": 69,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 102,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 46,
+      "name": "",
+      "created": "2012-10-11T13:14:28.751",
+      "modified": "2016-01-02T08:01:22.616",
+      "field": 2,
+      "name_plural": "",
+      "order": 0
+    }
+  },
+  {
+    "pk": 103,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 47,
+      "name": null,
+      "created": "2012-10-11T13:16:15.481",
+      "modified": "2012-10-11T13:16:15.481",
+      "field": 57,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 104,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 48,
+      "name": null,
+      "created": "2012-10-11T13:20:35.169",
+      "modified": "2012-10-11T13:20:35.169",
+      "field": 64,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 105,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 49,
+      "name": null,
+      "created": "2012-10-11T13:25:34.917",
+      "modified": "2012-10-11T13:25:34.917",
+      "field": 60,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 106,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 50,
+      "name": "Medication",
+      "created": "2012-10-11T13:25:34.923",
+      "modified": "2012-10-11T16:57:26.605",
+      "field": 59,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 107,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 51,
+      "name": "Treatment Plan",
+      "created": "2012-10-11T13:28:24.411",
+      "modified": "2012-10-11T13:32:40.603",
+      "field": 78,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 109,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 53,
+      "name": null,
+      "created": "2012-10-11T13:28:24.422",
+      "modified": "2012-10-11T13:28:24.422",
+      "field": 77,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 110,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 54,
+      "name": null,
+      "created": "2012-10-11T13:28:24.425",
+      "modified": "2012-10-11T13:28:24.425",
+      "field": 81,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 111,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 55,
+      "name": null,
+      "created": "2012-10-11T13:28:24.429",
+      "modified": "2012-10-11T13:28:24.429",
+      "field": 76,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 112,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 56,
+      "name": null,
+      "created": "2012-10-11T13:28:24.434",
+      "modified": "2012-10-11T13:28:24.434",
+      "field": 80,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 113,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 57,
+      "name": null,
+      "created": "2012-10-11T13:28:24.438",
+      "modified": "2012-10-11T13:28:24.438",
+      "field": 62,
+      "name_plural": null,
+      "order": null
+    }
+  },
+  {
+    "pk": 114,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 51,
+      "name": "Prophylaxis Adherence",
+      "created": "2012-10-11T13:29:34.749",
+      "modified": "2012-10-11T13:32:40.599",
+      "field": 79,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 130,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 61,
+      "name": "Prophylaxis Adherence (last week)",
+      "created": "2012-10-11T16:44:34.662",
+      "modified": "2012-10-11T16:46:35.151",
+      "field": 77,
+      "name_plural": "",
+      "order": 0
+    }
+  },
+  {
+    "pk": 131,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 61,
+      "name": "Prophylaxis Plan",
+      "created": "2012-10-11T16:44:34.671",
+      "modified": "2012-10-11T16:46:35.156",
+      "field": 81,
+      "name_plural": "",
+      "order": 1
+    }
+  },
+  {
+    "pk": 132,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 61,
+      "name": "Treatment Adherence (last week)",
+      "created": "2012-10-11T16:44:34.672",
+      "modified": "2012-10-11T16:46:35.160",
+      "field": 76,
+      "name_plural": "",
+      "order": 2
+    }
+  },
+  {
+    "pk": 133,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 61,
+      "name": "Treatment Plan",
+      "created": "2012-10-11T16:44:34.673",
+      "modified": "2012-10-11T16:46:35.164",
+      "field": 80,
+      "name_plural": "",
+      "order": 3
+    }
+  },
+  {
+    "pk": 134,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 62,
+      "name": "",
+      "created": "2012-10-12T20:05:04.828",
+      "modified": "2012-10-12T20:05:04.828",
+      "field": 2,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 135,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 62,
+      "name": "",
+      "created": "2012-10-12T20:05:04.840",
+      "modified": "2012-10-12T20:05:04.840",
+      "field": 3,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 136,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 63,
+      "name": "",
+      "created": "2012-10-12T20:07:21.421",
+      "modified": "2012-10-12T20:07:21.421",
+      "field": 1,
+      "name_plural": "",
+      "order": null
+    }
+  },
+  {
+    "pk": 137,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 64,
+      "name": "",
+      "created": "2012-10-16T23:07:56.097",
+      "modified": "2012-10-16T23:07:56.097",
+      "field": 51,
+      "name_plural": "",
+      "order": 1
+    }
+  },
+  {
+    "pk": 138,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 64,
+      "name": "",
+      "created": "2012-10-16T23:07:56.147",
+      "modified": "2012-10-16T23:07:56.147",
+      "field": 52,
+      "name_plural": "",
+      "order": 2
+    }
+  },
+  {
+    "pk": 139,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 64,
+      "name": "",
+      "created": "2012-10-16T23:07:56.235",
+      "modified": "2012-10-16T23:07:56.235",
+      "field": 53,
+      "name_plural": "",
+      "order": 3
+    }
+  },
+  {
+    "pk": 140,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 64,
+      "name": "",
+      "created": "2012-10-16T23:07:56.267",
+      "modified": "2012-10-16T23:07:56.267",
+      "field": 54,
+      "name_plural": "",
+      "order": 4
+    }
+  },
+  {
+    "pk": 141,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 64,
+      "name": "",
+      "created": "2012-10-16T23:07:56.298",
+      "modified": "2012-10-16T23:07:56.298",
+      "field": 56,
+      "name_plural": "",
+      "order": 5
+    }
+  },
+  {
+    "pk": 142,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 64,
+      "name": "",
+      "created": "2012-10-16T23:07:56.330",
+      "modified": "2012-10-16T23:07:56.330",
+      "field": 55,
+      "name_plural": "",
+      "order": 5
+    }
+  },
+  {
+    "pk": 143,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 46,
+      "name": "",
+      "created": "2016-01-02T08:01:22.625",
+      "modified": "2016-01-02T08:01:22.625",
+      "field": 3,
+      "name_plural": "",
+      "order": 1
+    }
+  },
+  {
+    "pk": 144,
+    "model": "avocado.dataconceptfield",
+    "fields": {
+      "concept": 46,
+      "name": "",
+      "created": "2016-01-02T08:01:22.640",
+      "modified": "2016-01-02T08:01:22.640",
+      "field": 4,
+      "name_plural": "",
+      "order": 2
+    }
+  },
+  {
+    "pk": 1,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 1,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Age",
+      "created": "2012-10-02T18:19:29.801",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:33.657",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": "Age",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 2,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 1,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Gender",
+      "created": "2012-10-04T17:41:21.088",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:33.796",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": "Gender",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 3,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_encounterage",
+      "created": "2012-10-04T18:05:30.107",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.052",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "EncounterAge",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 4,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_cbclab",
+      "created": "2012-10-04T20:14:04.988",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:33.926",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "CbcPanel",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 6,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_chem7",
+      "created": "2012-10-05T14:24:19.755",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:33.990",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "Chem7",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 7,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_misclab",
+      "created": "2012-10-05T14:42:43.071",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.265",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "MiscLab",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 8,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 3,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Review of Systems",
+      "created": "2012-10-05T15:19:28.925",
+      "indexable": true,
+      "modified": "2016-01-02T07:35:52.309",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": "SystemsReview",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 9,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_vaccines",
+      "created": "2012-10-05T19:58:52.487",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.513",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "Vaccine",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 10,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 1,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "MRN",
+      "created": "2012-10-08T15:37:06.730",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.577",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": "MRN",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 11,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_hivdetail",
+      "created": "2012-10-08T18:17:36.276",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.204",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "HIVDetail",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 12,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_tbdetail",
+      "created": "2012-10-08T19:02:28.267",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.449",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "TBDetail",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 16,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_pcpdetail",
+      "created": "2012-10-08T19:49:18.757",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.326",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "PCPDetail",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 17,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 2,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Alanine transaminase (SGPT)",
+      "created": "2012-10-10T14:59:53.779",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:22.989",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Liver function test, which usually is used to detect liver injury."
+    }
+  },
+  {
+    "pk": 18,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 2,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "ALC",
+      "created": "2012-10-10T14:59:53.796",
+      "indexable": true,
+      "modified": "2012-10-11T14:19:04.005",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Total lymphocyte count in blood."
+    }
+  },
+  {
+    "pk": 19,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Blood Urea Nitrogen (BUN)",
+      "created": "2012-10-10T14:59:53.801",
+      "indexable": true,
+      "modified": "2012-10-11T18:32:01.073",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Measure of urea levels in the blood often used to assess kidney status."
+    }
+  },
+  {
+    "pk": 20,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Carbon Dioxide (CO2)",
+      "created": "2012-10-10T14:59:53.806",
+      "indexable": true,
+      "modified": "2012-10-11T18:32:01.129",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Laboratory test that determines a blood serum carbon dioxide level."
+    }
+  },
+  {
+    "pk": 21,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 2,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "CD4 %",
+      "created": "2012-10-10T14:59:53.811",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.036",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "CD4 Percentage"
+    }
+  },
+  {
+    "pk": 22,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 2,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "CD4 Count",
+      "created": "2012-10-10T14:59:53.816",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.047",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Measure of CD4 (T-helper cells) in blood."
+    }
+  },
+  {
+    "pk": 23,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 2,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "CD8 Count",
+      "created": "2012-10-10T14:59:53.821",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.077",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Measure of CD8 (T-Suppressor or killer cells) in blood."
+    }
+  },
+  {
+    "pk": 24,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Chloride (Cl)",
+      "created": "2012-10-10T14:59:53.827",
+      "indexable": true,
+      "modified": "2012-10-11T19:07:29.761",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Laboratory test that determines a blood serum chloride level."
+    }
+  },
+  {
+    "pk": 25,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Creatinine (Cr)",
+      "created": "2012-10-10T14:59:53.832",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.100",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Laboratory test that determines a blood serum creatinine level.  Often used with BUN to assess kidney function."
+    }
+  },
+  {
+    "pk": 26,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Glucose (GLU)",
+      "created": "2012-10-10T14:59:53.837",
+      "indexable": true,
+      "modified": "2012-10-11T18:32:01.246",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Laboratory measurement of the glucose level in the blood."
+    }
+  },
+  {
+    "pk": 27,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Hematocrit (HCT)",
+      "created": "2012-10-10T14:59:53.842",
+      "indexable": true,
+      "modified": "2012-10-11T19:42:45.957",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Percent of whole blood that is composed of red blood cells."
+    }
+  },
+  {
+    "pk": 28,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Hemoglobin (HGB)",
+      "created": "2012-10-10T14:59:53.847",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.274",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "The iron-containing respiratory pigment in red blood cells of vertebrates, consisting of about 6 percent heme and 94 percent globin."
+    }
+  },
+  {
+    "pk": 29,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Mean Cell Hemoglobin Concentration (MCHC)",
+      "created": "2012-10-10T14:59:53.852",
+      "indexable": true,
+      "modified": "2012-10-11T19:42:59.690",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Average concentration of hemoglobin in a given volume of blood."
+    }
+  },
+  {
+    "pk": 30,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Mean Corpuscular Hemoglobin (MCH)",
+      "created": "2012-10-10T14:59:53.859",
+      "indexable": true,
+      "modified": "2012-10-11T19:43:13.891",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "A calculation of the amount of oxygen-carrying hemoglobin inside RBCs. Since macrocytic RBCs are larger than either normal or microcytic RBCs, they would also tend to have higher MCH values."
+    }
+  },
+  {
+    "pk": 31,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Mean Corpuscular Volume (MCV)",
+      "created": "2012-10-10T14:59:53.863",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.577",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "The volume of the average red blood cell in a given blood sample that is found by multiplying the hematocrit by 10 and dividing by the estimated number of red blood cells ."
+    }
+  },
+  {
+    "pk": 32,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Platelets",
+      "created": "2012-10-10T14:59:53.869",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.590",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Minute, nonnucleated, disklike cytoplasmic bodies found in the blood plasma of mammals, derived from a megakaryocyte and function to promote blood clotting."
+    }
+  },
+  {
+    "pk": 33,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Potassium (K)",
+      "created": "2012-10-10T14:59:53.874",
+      "indexable": true,
+      "modified": "2012-10-11T18:32:01.304",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Laboratory test that determines a blood serum potassium level."
+    }
+  },
+  {
+    "pk": 34,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Red Blood Cells (RBC)",
+      "created": "2012-10-10T14:59:53.879",
+      "indexable": true,
+      "modified": "2012-10-11T19:43:38.773",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Blood test to measure the number of white blood cells."
+    }
+  },
+  {
+    "pk": 35,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Red Cell Distribution Width (RDW)",
+      "created": "2012-10-10T14:59:53.884",
+      "indexable": true,
+      "modified": "2012-10-11T19:43:51.060",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Measurement of the amount that red blood cells vary in size."
+    }
+  },
+  {
+    "pk": 36,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 5,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Sodium (Na)",
+      "created": "2012-10-10T14:59:53.889",
+      "indexable": true,
+      "modified": "2012-10-11T18:32:01.347",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Laboratory test that determines a blood serum sodium level."
+    }
+  },
+  {
+    "pk": 37,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 4,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "White Blood Cells (WBC)",
+      "created": "2012-10-10T14:59:53.893",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.355",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Blood test to measure the number of white blood cells."
+    }
+  },
+  {
+    "pk": 38,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 3,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Encounter Description",
+      "created": "2012-10-10T15:08:33.997",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.066",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 39,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "HIV CDC Category",
+      "created": "2012-10-10T15:08:34.004",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.134",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Category A (Mildly symptomatic conditions.  A patient fits within this category, if there are two of the following associated symptoms, but NONE in category B or C), Category B (Moderately symptomatic conditions.  One or more of the following conditions places a patient at this condition level.), or Category C (Severely symptomatic conditions.  One or more places a patient in this group.)"
+    }
+  },
+  {
+    "pk": 40,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "HIV Currently Taking Antiretrovial (ARV) Medications",
+      "created": "2012-10-10T15:08:34.010",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.146",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter forms: \"Is the patient currently taking, or has the patient ever taken, any of the following retroviral medications?\" or \"Current HIV Medications:\". This particular concept stores a history of active use of the associated antiretroviral medications for treatment."
+    }
+  },
+  {
+    "pk": 41,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Hiv Details Treatment Adherence Last Week",
+      "created": "2012-10-10T15:08:34.014",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.158",
+      "queryable": true,
+      "sites": [],
+      "name_plural": null,
+      "published": true,
+      "keywords": null,
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": null
+    }
+  },
+  {
+    "pk": 42,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "HIV Discordant Couple",
+      "created": "2012-10-10T15:08:34.017",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.170",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter form: \"Discordant couple?\".  Defined as a pair of long-term sexual partners in which one has a sexually transmitted infection and the other does not. "
+    }
+  },
+  {
+    "pk": 43,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "HIV Plan",
+      "created": "2012-10-10T15:08:34.021",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.181",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter form. Collects information related to HIV drug therapy plans."
+    }
+  },
+  {
+    "pk": 44,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "HIV Stage (Adult)",
+      "created": "2012-10-10T15:08:34.024",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.193",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question asked on encounter form.  Expects a numeric answer defining the HIV stage at a particular visit.  WHO Stage 1-4.  "
+    }
+  },
+  {
+    "pk": 45,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 6,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "HIV Stage Change Since Last Visit (Adult)",
+      "created": "2012-10-10T15:08:34.028",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.206",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Whether the WHO Stage 1-4 has changed since the last visit."
+    }
+  },
+  {
+    "pk": 46,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 3,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Encounter Date",
+      "created": "2012-10-11T13:14:28.741",
+      "indexable": true,
+      "modified": "2016-01-02T08:01:22.584",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": "EncounterAge",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 47,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 3,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Referral",
+      "created": "2012-10-11T13:16:15.480",
+      "indexable": true,
+      "modified": "2012-10-11T16:56:27.186",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Type of referral ordered."
+    }
+  },
+  {
+    "pk": 48,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 3,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Diagnosis",
+      "created": "2012-10-11T13:20:35.168",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.449",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Diagnosis or problem for a patient encounter."
+    }
+  },
+  {
+    "pk": 49,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 7,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Drug Indication",
+      "created": "2012-10-11T13:25:34.915",
+      "indexable": true,
+      "modified": "2012-10-11T15:47:13.035",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Disease indication for a drug given to a patient."
+    }
+  },
+  {
+    "pk": 50,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 7,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Medication",
+      "created": "2012-10-11T13:25:34.921",
+      "indexable": true,
+      "modified": "2012-10-11T16:57:26.600",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Name of medication given to a patient."
+    }
+  },
+  {
+    "pk": 51,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 7,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Pneumocystis",
+      "created": "2012-10-11T13:28:24.410",
+      "indexable": true,
+      "modified": "2012-10-11T16:42:56.981",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 53,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Tuberculosis Prophylaxis Adherence Last Week",
+      "created": "2012-10-11T13:28:24.420",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.495",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter form: \"During the last seven days how many of his/her pills did the patient take?\""
+    }
+  },
+  {
+    "pk": 54,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Tuberculosis Prophylaxis Plan",
+      "created": "2012-10-11T13:28:24.424",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.506",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter form. Collects information related to tuberculosis drug therapy plans."
+    }
+  },
+  {
+    "pk": 55,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Tuberculosis Treatment Adherence Last Week",
+      "created": "2012-10-11T13:28:24.427",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.518",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter form: \"During the last seven days how many of his/her pills did the patient take?\""
+    }
+  },
+  {
+    "pk": 56,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Tuberculosis Treatment Plan",
+      "created": "2012-10-11T13:28:24.433",
+      "indexable": true,
+      "modified": "2012-10-11T13:56:23.530",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Question on encounter form. Collects information related to tuberculosis drug therapy plans."
+    }
+  },
+  {
+    "pk": 57,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 7,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Vaccine",
+      "created": "2012-10-11T13:28:24.437",
+      "indexable": true,
+      "modified": "2012-10-11T16:55:44.110",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": null,
+      "type": null,
+      "order": null,
+      "description": "Name of vaccine given to patient."
+    }
+  },
+  {
+    "pk": 61,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": 7,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "Tuberculosis",
+      "created": "2012-10-11T16:44:34.660",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.704",
+      "queryable": true,
+      "sites": [],
+      "name_plural": "",
+      "published": true,
+      "keywords": "",
+      "formatter": "TBDetail",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 62,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_birthdate",
+      "created": "2012-10-12T20:05:04.792",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:33.860",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "Age",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 63,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_gender",
+      "created": "2012-10-12T20:06:49.191",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.141",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "Gender",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 64,
+    "model": "avocado.dataconcept",
+    "fields": {
+      "category": null,
+      "archived": false,
+      "viewable": true,
+      "sortable": true,
+      "name": "inter_systemsreview",
+      "created": "2012-10-16T23:07:56.045",
+      "indexable": true,
+      "modified": "2015-08-30T07:48:34.388",
+      "queryable": false,
+      "sites": [],
+      "name_plural": "",
+      "published": false,
+      "keywords": "",
+      "formatter": "SystemsReview",
+      "type": "",
+      "order": null,
+      "description": ""
+    }
+  },
+  {
+    "pk": 1,
+    "model": "avocado.dataview",
+    "fields": {
+      "name": null,
+      "parent": null,
+      "created": "2013-06-26T12:56:55.466",
+      "default": true,
+      "modified": "2013-06-26T12:56:55.466",
+      "json": "{\"columns\":[10,1,2]}",
+      "session": false,
+      "user": null,
+      "template": true,
+      "keywords": null,
+      "accessed": "2013-06-26T12:56:55.466",
+      "session_key": null,
+      "description": null
+    }
+  }
+]
