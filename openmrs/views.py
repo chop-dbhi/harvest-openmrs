@@ -72,7 +72,7 @@ def patient_view(request, mrn):
             r.chem_table = table
 
             dc = DataConcept.objects.get(pk=7)
-            table, = format_concept(dc, [r.cd4, r.cd4_percent, r.cd8, r.sgpt, r.sgpt, r.alc], formats=['html'])
+            table, = format_concept(dc, [r.cd4, r.cd4_percent, r.cd8, r.sgpt, r.alc], formats=['html'])
             r.misc_table = table
 
         # Likewise, get all SystemReview objects and pass into
