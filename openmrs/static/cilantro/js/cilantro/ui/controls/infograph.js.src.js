@@ -175,28 +175,10 @@ define ([
 
             var _this = this;
 
-            // Fetch the field distribution, do not cache
+            // Fetch the field distribution, do not cache.
             this.model.distribution(function(dist) {
-                _this.model.values({'limit': 0}, function(resp) {
-                    var valueLabels = {};
-
-                    _.each(resp.values, function(item) {
-                        valueLabels[item.value] = item.label;
-                    });
-
-                    var models = _.map(dist.data, function(item) {
-                        var value = item.values[0];
-
-                        return {
-                            count: item.count,
-                            value: value,
-                            label: valueLabels[value]
-                        };
-                    });
-
-                    _this.collection.reset(models);
-                    _this.ready();
-                });
+                _this.collection.reset(dist);
+                _this.ready();
             });
         },
 

@@ -56,9 +56,11 @@ define([
         },
 
         showLoad: function() {
-            this.ui.count.hide();
-            this.ui.units.hide();
-            this.ui.loading.show();
+            if (c.config.get('distinctCountAutoRefresh')) {
+                this.ui.count.hide();
+                this.ui.units.hide();
+                this.ui.loading.show();
+            }
         },
 
         showCount: function() {
@@ -70,8 +72,8 @@ define([
 
         enableRefreshButton: function() {
             if (!c.config.get('distinctCountAutoRefresh')) {
-                this.ui.refresh.show();
                 this.$el.addClass('muted');
+                this.ui.refresh.show();
             }
         },
 

@@ -11,6 +11,10 @@ define([
     };
 
     var parseDate = function(str) {
+        // Short-circut if the string is empty or if it does not conform to
+        // the expected YYYY-MM-DD format.
+        if (!str || str.length !== 10) return;
+
         var year = parseInt(str.substr(0, 4));
         var month = parseInt(str.substr(5, 2)) -1;
         var day = parseInt(str.substr(8, 2));
@@ -133,12 +137,15 @@ define([
             }
 
             if (xEnum) {
-                if (xLabels.indexOf(x.toString()) === -1) {
-                    x = xLabels.push(x.toString()) - 1;
+                if (xLabels.indexOf(x.label) === -1) {
+                    x = xLabels.push(x.label) - 1;
                 }
             }
-            else if (xType === 'datetime'){
-                x = parseDate(x);
+            else if (xType === 'datetime') {
+                x = parseDate(x.value);
+            }
+            else {
+                x = x.value;
             }
 
             var y;
@@ -150,12 +157,15 @@ define([
                 }
 
                 if (yEnum) {
-                    if (yLabels.indexOf(y.toString()) === -1) { // jshint ignore:line
-                        y = yLabels.push(y.toString()) - 1;
+                    if (yLabels.indexOf(y.label) === -1) { // jshint ignore:line
+                        y = yLabels.push(y.label) - 1;
                     }
                 }
                 else if (yType === 'datetime') {
-                        y = parseDate(y);
+                    y = parseDate(y.value);
+                }
+                else {
+                    y = y.value;
                 }
             }
             else {
@@ -285,7 +295,7 @@ define([
                 formatterFunc = function() {
                     return '<b>' + xName + ':</b>' +
                            Highcharts.numberFormat(parseFloat(this.x)) + '<br /><b>' +
-                           yName + ':</b>' + Highcharts.numberFormat(parseFloat(this.y));
+                           yName + ':</b> ' + Highcharts.numberFormat(parseFloat(this.y));
                 };
             }
         }

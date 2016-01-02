@@ -2,8 +2,8 @@ Django>=1.5,<1.6
 Markdown
 
 # Harvest components
--e git+https://github.com/chop-dbhi/avocado@c88562e025535#egg=avocado
--e git+https://github.com/chop-dbhi/serrano@f5c4419566147#egg=serrano
+avocado>=2.4,<2.5
+serrano>=2.4,<2.5
 
 # Harvest extensions
 django-haystack==2.0.0
