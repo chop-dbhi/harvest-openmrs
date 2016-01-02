@@ -78,7 +78,7 @@ def patient_view(request, mrn):
         # Likewise, get all SystemReview objects and pass into
         sys_reviews = SystemsReview.objects.filter(encounter=e)
         for s in sys_reviews:
-            dc = DataConcept.objects.get(pk=64)
+            dc = DataConcept.objects.get(pk=8)
             table, = format_concept(dc, [s.heent, s.chest, s.abdominal, s.cardiac, s.musculoskeletal, s.neurologic], formats=['html'])
             s.table = table
 
