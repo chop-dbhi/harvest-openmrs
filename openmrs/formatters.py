@@ -45,6 +45,15 @@ class AgeFormatter(Formatter):
         else:
             return "{0} {1} old".format(age, time)
 
+    # `get_html_header` is not strictly needed, but it is used here
+    # to set the name of the column to "Age"; the column name would
+    # otherwise be the name of the first field of the concept ('Patient
+    # Birthdate').
+    def get_html_header(self):
+        header = self.get_default_header()[:1]
+        header[0]['label'] = 'Age'
+        return header
+
     @process_multiple
     def to_csv(self, values, **context):
         dob = values.birthdate
@@ -56,9 +65,16 @@ class AgeFormatter(Formatter):
 
         return str(age)
 
+    # When the number of input fields for `to_FOO` is not equal to the number
+    # of output fields, `get_FOO_header` is required (except for `to_html`)
+    # when using Harvest 2.4+.
+    get_csv_header = get_html_header
+
     @process_multiple
     def to_excel(self, values, **context):
         return self.to_csv(values, **context)
+
+    get_excel_header = get_html_header
 
 
 class EncounterAgeFormatter(Formatter):
