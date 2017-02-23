@@ -1,20 +1,23 @@
-Django>=1.5,<1.6
-python-memcached
+Django>=1.6,<1.7
+django-markup-deprecated
 
 # Database Drivers, the Python stdlib has support for SQLite
-psycopg2
+# psycopg2
+# cx_oracle
+# mysql-python
 
 # WSGI server
 # uWSGI
 
 # Deployment with fabfile.py
-
+# Fabric
 
 # Harvest components
-avocado>=2.4,<2.5
-serrano>=2.4,<2.5
+avocado>=2.4.0,<2.5.0
+serrano>=2.4.0,<2.5.0
+modeltree>=1.1.10,<2.0.0
 
 # Harvest extensions
-django-haystack==2.0.0
-whoosh==2.4.1
+django-haystack>=2.4.1,<2.5
+Whoosh>=2.5,<2.6
 openpyxl
