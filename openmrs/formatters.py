@@ -225,6 +225,9 @@ class MRNFormatter(Formatter):
         url = reverse('patient-detail', kwargs={'mrn': value})
         return '<a href="{0}">{1}</a>'.format(url, value)
 
+    def to_excel(self, value, **context):
+        return value
+
 
 registry.register(AgeFormatter, 'Age')
 registry.register(GenderFormatter, 'Gender')
